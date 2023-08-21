@@ -1,0 +1,42 @@
+{
+  "name": "pjapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-input/mask": "^1.0.11",
+    "@react-pdf/renderer": "^3.1.12",
+    "@supabase/supabase-js": "^2.22.0",
+    "autoprefixer": "10.4.14",
+    "browser-image-compression": "^2.0.2",
+    "chromium": "^3.0.3",
+    "express": "^4.18.2",
+    "html-pdf-chrome": "^0.8.4",
+    "html-pdf-node": "^1.0.8",
+    "htmltojsx": "^0.3.0",
+    "jsx-to-html": "^1.1.0",
+    "next": "13.4.3",
+    "next-pwa": "^5.6.0",
+    "postcss": "8.4.23",
+    "puppeteer": "^20.7.4",
+    "qrcode-decoder": "^0.3.3",
+    "qrcode-parser": "^2.1.3",
+    "qrcode.react": "^3.1.0",
+    "react": "18.2.0",
+    "react-audio-player": "^0.17.0",
+    "react-confetti": "^6.1.0",
+    "react-dom": "18.2.0",
+    "react-player": "^2.12.0",
+    "react-qr-reader": "^3.0.0-beta-1",
+    "tailwindcss": "3.3.2",
+    "video-react": "^0.16.0"
+  },
+  "devDependencies": {
+    "standard": "^17.0.0"
+  }
+}
