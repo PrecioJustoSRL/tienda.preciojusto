@@ -57,7 +57,7 @@ function Home() {
         if (userDB && userDB[0]['nombre']) {
             setUserSuccess('Cargando')
             await updateUserData('Administrador', { ...state }, user.uuid)
-            postImage && uploadStorage('Administrador', postImage, user.uuid, updateUserData)
+            postImage && uploadStorage('Administrador', postImage, user.uuid, updateUserData, true)
             router.push('/Administrador/Perfil')
             setUserSuccess('')
         } else {
