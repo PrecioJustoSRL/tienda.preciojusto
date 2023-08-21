@@ -68,7 +68,7 @@ function Home() {
          setUserSuccess('')
 
         }
-    }
+    }      
         
     useEffect(() => {
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
