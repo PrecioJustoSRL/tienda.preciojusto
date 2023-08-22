@@ -68,7 +68,6 @@ function Home() {
                     </div>
                     <br />
                     <Button theme="Success" click={() => redirectHandler('Distribuidor/')}>Editar Perfil</Button>
-                    <img className="fixed bottom-5 right-5" src="/whatsapp.svg" alt="" />
                 </div>
                 : <div className='w-full flex justify-center'>
                     <div className=" w-full max-w-[800px] p-5 flex flex-col items-center justify-center bg-white h-[80vh]">
