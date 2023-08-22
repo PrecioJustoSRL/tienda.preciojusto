@@ -158,8 +158,6 @@ function Home({ children }) {
               && distributorPDB !== null
               && distributorPDB !== undefined
               && distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).map((i, index) => {
-
-
                 // return (`${i['nombre de producto 1']} ${i['nombre de producto 2'] !== undefined && i['nombre de producto 2'] !== null && i['nombre de producto 2']} ${i['nombre de producto 3'] !== undefined && i['nombre de producto 3'] !== null && i['nombre de producto 3']}`).toLowerCase().includes(filter)
 
                 if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) {
