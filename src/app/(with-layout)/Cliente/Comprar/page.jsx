@@ -66,7 +66,7 @@ function Comprar({ theme, styled, click, children }) {
           <Input type="text" name="referencia del paciente" onChange={onChangeHandler} require />
         </div>
         <div>
-          <div className="mb-5">
+          <div className="mb-2">
             <Label htmlFor="">REFERENCIA DEL LUGAR</Label>
             <div className="flex items-center" onClick={() => handlerCheck(false)}>
               <div className="flex  mt-[2px] h-5 mr-5">
