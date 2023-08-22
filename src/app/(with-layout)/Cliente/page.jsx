@@ -11,6 +11,7 @@ import QRreader from '@/components/QRreader'
 import Tag from '../../../components/Tag'
 import Cart from '../../../components/Cart'
 import Modal from '@/components/Modal'
+import QRscanner from '@/components/QRscanner'
 
 
 import { useRouter } from 'next/navigation';
@@ -124,6 +125,13 @@ function Home() {
                 </label>
                 <input id="qr" type="file" className='hidden' onChange={HandlerOnChange} accept="image/* " />
             </div>}
+            <div className='lg:hidden'>
+            <QRscanner></QRscanner>
+
+            </div>
+
+
+
             {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-30'>
                 <h3 className='text-[14px] font-medium mb-4'>Receta Médica</h3>
 
