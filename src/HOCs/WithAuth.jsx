@@ -20,10 +20,10 @@ export function WithAuth(Component) {
                 console.log('ejecu')
                 readUserData(user.rol, user.uuid, setUserData)
             }
-            if (user !== undefined) {
+            if (user !== undefined && user !== null && user.rol && businessData === undefined) {
                 readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData)
             }
-        }, [user, userDB])
+        }, [user, userDB, businessData])
 
         return (
             <>

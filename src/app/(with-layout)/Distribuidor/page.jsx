@@ -83,11 +83,11 @@ function Home() {
                         <Select arr={['La Paz', 'Cochabamba', 'Santa Cruz']} name='ciudad' click={onClickHandler} />
                     </div>
 
-                    <div>
+                    {/* <div>
                         <Label htmlFor="">Direccion</Label>
                         <Input type="text" name="direccion" onChange={onChangeHandler} />
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <Label htmlFor="">Dias de atención</Label>
                         <div className="flex justify-between">
                             <Checkbox name="L" change={onChangeHandlerCheck} />
@@ -105,31 +105,16 @@ function Home() {
                             <Checkbox name="D" change={onChangeHandlerCheck} />
                             <Label htmlFor="D">D</Label>
                         </div>
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <Label htmlFor="">Horarios de Atención</Label>
                         <div className='w-full flex justify-between'>
                             <Input type="time" name={'horarios de apertura'} onChange={onChangeHandler} />
                             <span className='w-6/12 flex justify-center items-center'>a</span>
                             <Input type="time" name={'horarios de cierre'} onChange={onChangeHandler} />
                         </div>
-                    </div>
-                    <div>
-                        <Label htmlFor="">Numero de tarjeta</Label>
-                        <Input type="text" reference={inputRefCard} name="numero de tarjeta" styled={{ textAlign: 'center' }} onChange={onChangeHandler} />
-                    </div>
-                    <div>
-                        <div className='w-full flex justify-between'>
-                            <div className='w-5/12'>
-                                <Label htmlFor="">Fecha</Label>
-                                <Input reference={inputRefDate} name="fecha de tarjeta" styled={{ textAlign: 'center' }} onChange={onChangeHandler} />
-                            </div>
-                            <div className='w-5/12'>
-                                <Label htmlFor="">CVC</Label>
-                                <Input reference={inputRefCVC} name="cvc" styled={{ textAlign: 'center' }} onChange={onChangeHandler} />
-                            </div>
-                        </div>
-                    </div>
+                    </div> */}
+                    
                     <div>
                         <Label htmlFor="">Teléfono</Label>
                         <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} />
@@ -154,7 +139,22 @@ export default WithAuth(Home)
 
 
 
-
+// <div>
+//                         <Label htmlFor="">Numero de tarjeta</Label>
+//                         <Input type="text" reference={inputRefCard} name="numero de tarjeta" styled={{ textAlign: 'center' }} onChange={onChangeHandler} />
+//                     </div>
+//                     <div>
+//                         <div className='w-full flex justify-between'>
+//                             <div className='w-5/12'>
+//                                 <Label htmlFor="">Fecha</Label>
+//                                 <Input reference={inputRefDate} name="fecha de tarjeta" styled={{ textAlign: 'center' }} onChange={onChangeHandler} />
+//                             </div>
+//                             <div className='w-5/12'>
+//                                 <Label htmlFor="">CVC</Label>
+//                                 <Input reference={inputRefCVC} name="cvc" styled={{ textAlign: 'center' }} onChange={onChangeHandler} />
+//                             </div>
+//                         </div>
+//                     </div>
 
 
 
