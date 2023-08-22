@@ -115,7 +115,7 @@ function Comprar({ theme, styled, click, children }) {
           {qr !== '' && <QRCode
             id='qr'
             size={256}
-            style={{ height: "auto", maxWidth: "100%", width: "100%", border: 'none', backgroundColor: 'red' }}
+            style={{ height: "auto", maxWidth: "100%", width: "100%", border: '10px', backgroundColor: 'white' }}
             value={qr}
             level={'H'}
             includeMargin={false}
