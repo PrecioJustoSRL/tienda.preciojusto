@@ -60,7 +60,7 @@ input:focus {
     ::-webkit-scrollbar {
       width: 7px;
       height: 7px;
-      z-index: 10000000000000000000;
+      z-index: 100000000000000000000000;
 
   }
 
@@ -68,15 +68,26 @@ input:focus {
   ::-webkit-scrollbar-track {
       background: rgb(255, 255, 255);
       border-radius: 5px;
+      z-index: 100000000000000000000000;
+
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
       background: #a8a8a8;
       border-radius: 5px;
-      z-index: 10000000000000000000;
+      z-index: 100000000000000000000000;
   }
 }
+
+
+
+
+
+
+
+
+
   /* Handle on hover */
   /* ::-webkit-scrollbar-thumb:hover {
       background: #ffffff;

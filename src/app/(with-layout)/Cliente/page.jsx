@@ -35,7 +35,7 @@ function Home() {
         router.push('/Cliente/Recetar')
     }
     function HandlerOnChange(e) {
-        QRreaderUtils(e, setFilterQR)
+        QRreaderUtils(e, setFilterQR, setFilter)
     }
 
     function storeHandler(db) {
@@ -70,7 +70,7 @@ function Home() {
         return 0
     }
     function handlerSearchFilter(data) {
-      
+
         setFilter(data)
         setSearch(false)
     }
@@ -95,7 +95,7 @@ function Home() {
             {(modal == 'Recetar' || modal == 'Comprar') && <Modal funcion={storeConfirm}>Estas seguro de cambiar a {modal}. <br /> {Object.keys(cart).length > 0 && 'Tus datos se borraran'}</Modal>}
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
 
-          
+
 
             {(user.rol == 'Medico' || user.rol == 'Administrador') && <div className='relative flex justify-between left-0 right-0 m-auto  w-[90vw] max-w-[600px] mb-5'>
                 <Button theme="MiniSuccessRecetar" click={() => storeHandler('Recetar')}>Recetar</Button>
@@ -124,59 +124,32 @@ function Home() {
                 </label>
                 <input id="qr" type="file" className='hidden' onChange={HandlerOnChange} accept="image/* " />
             </div>}
+            {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-30'>
+                <h3 className='text-[14px] font-medium mb-4'>Receta Médica</h3>
 
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => setFilterQR('')}>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
 
-
-            {/* {
- distributorPDB !== null && distributorPDB !== undefined && console.log(distributorPDB.map(i=>i['nombre de producto 1']))
-}
-{
- distributorPDB !== null && distributorPDB !== undefined && console.log(distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).map(i=>i['nombre de producto 1']))
-} */}
-
-
-
-
-
-            {/* <div className='w-[100vw] fixed top-[75px] z-30 bg-white'>
-                {search 
-                && filter.length > 0 
-                && distributorPDB !== null 
-                && distributorPDB !== undefined 
-                && distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).map((i, index) => {
-
-                    // i['nombre de producto 1']
-                        if (i.distribuidor !== 'Precio-Justo-SRL-Data' && i.disponibilidad !== 'No disponible') {
-                            // return (`${i['nombre de producto 1']} ${i['nombre de producto 2'] !== undefined && i['nombre de producto 2'] !== null && i['nombre de producto 2']} ${i['nombre de producto 3'] !== undefined && i['nombre de producto 3'] !== null && i['nombre de producto 3']}`).toLowerCase().includes(filter)
-
-                            if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) {
-                                return <div className='w-full flex justify-between text-[12px] px-5 py-2' onClick={()=>handlerSearchFilter(i['nombre de producto 1'])}>
-                                   <div className='w-[80%]'>{i['nombre de producto 1']}</div> 
-                                    <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-                                </div>
-                            }
-                            if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) {
-                                return <div className='w-full flex justify-between text-[12px] px-5 py-2' onClick={()=>handlerSearchFilter(i['nombre de producto 2'])}>
-                                     <div className='w-[80%]'>{i['nombre de producto 2'] && i['nombre de producto 2']}</div>
-                                    <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-                                </div>
-                            }
-                            if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) {
-                                return <div className='w-full flex justify-between text-[12px] px-5 py-2' onClick={()=>handlerSearchFilter(i['nombre de producto 3'])}> 
-                                <div className='w-[80%]'>{i['nombre de producto 3'] && i['nombre de producto 3']}</div> 
-                                    <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-                                </div>
-                            }
-                        }
-                    }
+                {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
+                    recetaDBP.sort(sortArray).map((i, index) =>
+                        i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <><div className={`w-full text-[12px] px-5 py-2 rounded-full mr-2 bg-gray-100`} style={{ display: 'grid', gridTemplateColumns: 'auto 30px', }} onClick={() => handlerSearchFilter(i['nombre de producto 3'])}>
+                            <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
+                        </div>
+                            <br />
+                        </>
                     )}
-            </div> */}
-
+                <br />
+                <div className='w-full lg:w-[50%] bg-cyan-500 text-white text-center p-5 text-[14px] rounded-full z-30'>
+                    Sus productos estan debajo <br /> le sugerimos elijir los productos <br /> recomendados por su medico
+                </div>
+            </div>}
 
 
             <div className="w-screen lg:w-auto relative z-10">
-
-
                 <div className={`relative  px-5  bg-white rounded-[20px]  mx-auto  left-0 right-0 w-[90vw] max-w-[600px]  lg:flex lg:flex-wrap lg:justify-around lg:z-0 border border-gray-200 transition-all ${filterNav ? ' h-[280px] lg:h-[250px]' : 'h-[45px] overflow-hidden'} ]`}>
                     <h3 onClick={() => setFilterNav(!filterNav)} className='w-[100%] bg-white relative left-0 right-0 mx-auto relative  max-w-[600px] lg:min-w-[600px] flex justify-center items-center text-[16px] h-[45px] rounded-full py-[5px] px-[0px] cursor-pointer'>Filtrar Productos <span className={filterNav ? ' ml-5 rotate-[270deg]' : ' ml-5 rotate-90'}>{'>'}</span></h3>
 
@@ -198,11 +171,10 @@ function Home() {
                 </div>
 
                 <div className="relative bg-transparent lg:bg-transparent mt-6  rounded-t-[50px]  w-full flex flex-col items-center justify-center px-5 pt-8 pb-16 lg:pt-0">
-                   
-                   
-                {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
+
+                    {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
                         recetaDBP.sort(sortArray).map((i, index) =>
-                            tienda === 'Recetar' 
+                            tienda === 'Recetar'
                                 ? i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />
                                 : i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <Card i={i} recetado={true} key={index} />
                         )}
@@ -211,7 +183,7 @@ function Home() {
                         productDB.sort(sortArray).map((i, index) => {
                             if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar'
                                 ? i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />
-                                : i.disponibilidad !== 'No disponible' &&  <Card i={i} key={index} />
+                                : i.disponibilidad !== 'No disponible' && <Card i={i} key={index} />
                         }
                         )}
                     {filter.length > 0 && productDB !== null && productDB !== undefined &&
@@ -219,41 +191,14 @@ function Home() {
                             if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar' && i.distribuidor !== 'Precio-Justo-SRL-Data'
                                 ? (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
-                                    (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())))  && i.disponibilidad !== 'No disponible' && 
+                                    (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&
                                 <CardM i={i} key={index} />
                                 : (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
-                                    (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) &&  i.disponibilidad !== 'No disponible' && 
+                                    (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&
                                 <Card i={i} key={index} />
                         }
                         )}
-                   
-                   
-                   
-                   
-                   
-                    {/* {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
-                        recetaDBP.map((i, index) =>
-                            tienda === 'Recetar'
-                                ? i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />
-                                : i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <Card i={i} recetado={true} key={index} />
-                        )}
-                    {filter.length == 0 && filterQR.length == 0 &&
-                        productDB !== null && productDB !== undefined &&
-                        productDB.map((i, index) => {
-                            if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar'
-                                ? (i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />)
-                                : (i.disponibilidad !== 'No disponible' && <Card i={i} key={index} />)
-                        }
-                        )}
-                    {filter.length > 0 && productDB !== null && productDB !== undefined &&
-                        productDB.map((i, index) => {
-                            if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar' && i.distribuidor !== 'Precio-Justo-SRL-Data'
-                                ? (i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />)
-                                : (`${i['nombre de producto 1']} ${i['nombre de producto 2'] !== undefined && i['nombre de producto 2'] !== null && i['nombre de producto 2']} ${i['nombre de producto 3'] !== undefined && i['nombre de producto 3'] !== null && i['nombre de producto 3']}`).toLowerCase().split(' ').some(e => filter.split(' ').includes(e))
-                                && i.disponibilidad !== 'No disponible' && <Card i={i} key={index} />
-                        }
-                        )} */}
                 </div>
             </div>
 
@@ -280,8 +225,164 @@ function Home() {
 export default WithAuth(Home)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
+                        recetaDBP.sort(sortArray).map((i, index) =>
+                            tienda === 'Recetar' &&  <div className={`w-full text-[12px] px-5 py-2 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 3'])}>
+                            <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                            <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
+                        </div>
+                )
+            } */}
+
+
+
+
+{/* {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
+                recetaDBP.sort(sortArray).map((i, index) =>
+                    i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <div className={`w-full text-[12px] px-5 py-2 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 3'])}>
+                        <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                        <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
+                    </div>
+                )} */}
+
+
+{/* <Card i={i} key={index} /> */ }
+
+
+
+{/* {
+ distributorPDB !== null && distributorPDB !== undefined && console.log(distributorPDB.map(i=>i['nombre de producto 1']))
+}
+{
+ distributorPDB !== null && distributorPDB !== undefined && console.log(distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).map(i=>i['nombre de producto 1']))
+} */}
+
+
+
+
+
+
+
+
+{/* {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
+                        recetaDBP.map((i, index) =>
+                            tienda === 'Recetar'
+                                ? i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />
+                                : i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <Card i={i} recetado={true} key={index} />
+                        )}
+                    {filter.length == 0 && filterQR.length == 0 &&
+                        productDB !== null && productDB !== undefined &&
+                        productDB.map((i, index) => {
+                            if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar'
+                                ? (i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />)
+                                : (i.disponibilidad !== 'No disponible' && <Card i={i} key={index} />)
+                        }
+                        )}
+                    {filter.length > 0 && productDB !== null && productDB !== undefined &&
+                        productDB.map((i, index) => {
+                            if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar' && i.distribuidor !== 'Precio-Justo-SRL-Data'
+                                ? (i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />)
+                                : (`${i['nombre de producto 1']} ${i['nombre de producto 2'] !== undefined && i['nombre de producto 2'] !== null && i['nombre de producto 2']} ${i['nombre de producto 3'] !== undefined && i['nombre de producto 3'] !== null && i['nombre de producto 3']}`).toLowerCase().split(' ').some(e => filter.split(' ').includes(e))
+                                && i.disponibilidad !== 'No disponible' && <Card i={i} key={index} />
+                        }
+                        )} */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
 //                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
 //                                     (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) &&
 //                                 <Card i={i} key={index} />
+
+
+
+{/* <div className='w-[100vw] fixed top-[75px] z-30 bg-white'>
+    //   {search 
+    //     && filter.length > 0 
+    //     && distributorPDB !== null 
+    //     && distributorPDB !== undefined 
+    //     && distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).map((i, index) => {
+
+    //         // i['nombre de producto 1']
+    //             if (i.distribuidor !== 'Precio-Justo-SRL-Data' && i.disponibilidad !== 'No disponible') {
+    //                 // return (`${i['nombre de producto 1']} ${i['nombre de producto 2'] !== undefined && i['nombre de producto 2'] !== null && i['nombre de producto 2']} ${i['nombre de producto 3'] !== undefined && i['nombre de producto 3'] !== null && i['nombre de producto 3']}`).toLowerCase().includes(filter)
+
+    //                 if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) {
+    //                     return <div className='w-full flex justify-between text-[12px] px-5 py-2' onClick={()=>handlerSearchFilter(i['nombre de producto 1'])}>
+    //                        <div className='w-[80%]'>{i['nombre de producto 1']}</div> 
+    //                         <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+    //                     </div>
+    //                 }
+    //                 if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) {
+    //                     return <div className='w-full flex justify-between text-[12px] px-5 py-2' onClick={()=>handlerSearchFilter(i['nombre de producto 2'])}>
+    //                          <div className='w-[80%]'>{i['nombre de producto 2'] && i['nombre de producto 2']}</div>
+    //                         <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+    //                     </div>
+    //                 }
+    //                 if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) {
+    //                     return <div className='w-full flex justify-between text-[12px] px-5 py-2' onClick={()=>handlerSearchFilter(i['nombre de producto 3'])}> 
+    //                     <div className='w-[80%]'>{i['nombre de producto 3'] && i['nombre de producto 3']}</div> 
+    //                         <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+    //                     </div>
+    //                 }
+    //             }
+    //         }
+    //         )}
+    // </div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
