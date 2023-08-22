@@ -24,16 +24,8 @@ function Home() {
     return (
         userDB !== undefined && userDB !== null
             ? <div className=" bg-white p-5">
+                <h3 className='text-center text-[14px] pb-3 font-bold'>Datos Empresariales</h3>
                 <br />
-                <div className="flex justify-center">
-                    <img className='h-[100px] w-[100px] rounded-full' src={userDB[0].url} alt="" />
-                </div>
-                <br />
-                <h3 className='w-full text-[14px] text-center '>{userDB[0]['nombre'].toUpperCase()}</h3>
-                <br />
-                <h3 className='w-full text-[14px] text-center '>{userDB[0]['especialidad']}</h3>
-                <br />
-                <Subtitle>Contactos</Subtitle>
                 <div className=''>
                     <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB[0]['whatsapp']}</Paragraph>
                     <Paragraph> <img className="inline pr-5" src="/telefono.svg" alt="" />{userDB[0]['telefono']}</Paragraph>

@@ -45,17 +45,15 @@ function Home() {
     }
     async function save(e) {
         e.preventDefault()
-        if (userDB && userDB[0]['nombre']) {
+        if (userDB && userDB[0]['whatsapp']) {
             setUserSuccess('Cargando')
-            await updateUserData('Medico', { ...state, ciudad: user.ciudad }, user.uuid)
-            postImage && uploadStorage('Medico', postImage, user.uuid, updateUserData, true)
-            router.push('/Medico/Perfil')
+            await updateUserData('Administrador', { ...state, ciudad: user.ciudad }, user.uuid)
+            router.push('/Administrador/Perfil')
             setUserSuccess('')
         } else {
             setUserSuccess('Cargando')
-            await writeUserData('Medico', {especialidad: 'Traumatologo', ...state, uuid: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
-            await uploadStorage('Medico', postImage, user.uuid, updateUserData)
-            router.push('/Medico/Perfil')
+            await writeUserData('Administrador', {...state, uuid: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
+            router.push('/Administrador/Perfil')
             setUserSuccess('')
         }
     }
@@ -65,27 +63,13 @@ function Home() {
     }, [user]);
 
     return (
-        <form className='p-5' onSubmit={save} >
+        <div className='w-full flex justify-center'>
+
+        <form className='p-5 bg-white w-full max-w-[800px]' onSubmit={save} >
             {success === "Cargando" && <LoaderBlack></LoaderBlack>}
-            <h3 className='text-center text-[14px] pb-3'>Agregar Perfil</h3>
-            <div className="w-full flex justify-center">
-                <label htmlFor="file" className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" >
-                    {urlPostImage || (userDB && userDB[0].url) ? <img className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" style={{ objectPosition: 'center' }} src={urlPostImage ? urlPostImage : userDB[0].url} alt="" />
-                        : 'Subir Imagen'}
-                </label>
-                <input className="sr-only" onChange={manageInputIMG} accept="image/*" id='file' type="file" required={userDB && userDB[0]['nombre'] ? false : true} />
-            </div>
-            <br />
+            <h3 className='text-center text-[14px] pb-3 font-bold'>Datos Empresariales</h3>
             <br />
             <div class="grid gap-6 mb-6 md:grid-cols-2">
-                <div>
-                    <Label htmlFor="">Nombre</Label>
-                    <Input type="text" name="nombre" onChange={onChangeHandler} defValue={userDB && userDB[0]['nombre']} require />
-                </div>
-                <div>
-                    <Label htmlFor="">Especialidad</Label>
-                    <Select arr={['Traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' defaultValue={userDB && userDB[0]['especialidad']} click={onClickHandler} />
-                </div>
                 <div>
                     <Label htmlFor="">Teléfono</Label>
                     <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} defValue={userDB && userDB[0]['telefono']} />
@@ -101,6 +85,7 @@ function Home() {
                 <Button theme='Primary'>Guardar</Button>
             </div>
         </form>
+        </div>
     )
 }
 
