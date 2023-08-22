@@ -67,7 +67,7 @@ const PDFView = ({ dbUrl, style }) => {
     });
 
     return (
-        <div className="w-full p-5 height-[30px]">
+        <div className="w-full height-[30px]">
             {isCliente && <PDFDownloadLink document={
                 <Document>
                     <Page size='A4' style={styles.body} >
@@ -122,11 +122,9 @@ const PDFView = ({ dbUrl, style }) => {
                         </View>
                         <View style={{ width: '100%', paddingTop: '25px' }}>
                             <Text style={{ fontSize: '12px' }}>
-
                                 El médico especialista que le está atendiendo cuenta con la idoneidad necesaria para emitir esta receta de implantes de osteosíntesis.
                                 Precio justo recomienda seguir siempre el criterio de su médico tratante, puesto su experiencia es invaluable.
                                 Precio Justo. La mejor calidad al menor precio.
-
                             </Text>
                         </View>
                     </Page>

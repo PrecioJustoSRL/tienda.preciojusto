@@ -29,6 +29,9 @@ function Home() {
     function HandlerCheckOut() {
         router.push('/Cliente/Comprar')
     }
+    function HandlerReceta() {
+        router.push('/Cliente/Recetar')
+    }
     function seeMore() {
         router.push('/Producto')
     }
@@ -53,7 +56,6 @@ function Home() {
             ? setUserCart(obj)
             : setUserCart({ ...cart, [i.uuid]: { ...i, cantidad: cart[i.uuid].cantidad - 1 } })
     }
-
     console.log(item)
     return (
         item !== undefined ? <main className="relative left-0 right-0 mx-auto p-5 mt-12 max-w-[900px] flex flex-col items-center lg:flex-row lg:justify-between lg:items-center pt-[20px] pb-[20px] bg-white rounded-[5px]">
@@ -88,7 +90,6 @@ function Home() {
                 <br />
                 <Subtitle>Cantidad</Subtitle>
                 <div className='relative flex w-full justify-between items-center pr-4'>
-
                     {cart && cart[item.uuid] && cart[item.uuid].cantidad !== undefined && cart[item.uuid].cantidad !== 0
                         ? <div className='flex w-[150px]'>
                             <Button theme='MiniPrimary' click={(e) => addLessCart(e, item)}>-</Button>
@@ -99,11 +100,10 @@ function Home() {
                     }
                 </div>
                 <br />
-
             </div>
             {Object.entries(cart).length !== 0 && <div className="fixed w-screen px-5 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
                 {tienda === 'Recetar'
-                    ? <Button theme="SuccessReceta" click={HandlerRecetar}>Completar Receta</Button>
+                    ? <Button theme="SuccessReceta" click={HandlerReceta}>Completar Receta</Button>
                     : <Button theme="SuccessBuy" click={HandlerCheckOut}>Ir a pagar</Button>}
             </div>}
         </main> : <div ></div>
