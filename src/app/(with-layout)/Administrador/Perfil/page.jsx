@@ -1,117 +1,55 @@
 'use client'
-
-import { writeUserData, readUserData, updateUserData } from '@/supabase/utils'
-import { uploadStorage } from '@/supabase/storage'
+import { readUserData } from '@/supabase/utils'
 import { useState, useEffect } from 'react'
-import { useUser } from '@/context/Context.js'
-import Input from '@/components/Input'
-import Select from '@/components/Select'
-import Label from '@/components/Label'
-import LoaderBlack from '@/components/LoaderBlack'
-
-
-import Button from '@/components/Button'
-import { useMask } from '@react-input/mask';
 import { useRouter } from 'next/navigation';
+import { useUser } from '../../../../context/Context.js'
+import Button from '../../../../components/Button'
+import Subtitle from '@/components/Subtitle'
+import Paragraph from '@/components/Paragraph'
 import { WithAuth } from '@/HOCs/WithAuth'
-
 
 function Home() {
     const router = useRouter()
 
-    const { user, userDB, setUserData, success, setUserSuccess } = useUser()
-    const [state, setState] = useState({})
+    const { user, userDB, setUserData } = useUser()
 
-    const [postImage, setPostImage] = useState(null)
-    const [urlPostImage, setUrlPostImage] = useState(null)
-
-
-    const inputRefCard = useMask({ mask: '____ ____ ____ ____', replacement: { _: /\d/ } });
-    const inputRefDate = useMask({ mask: '__/__', replacement: { _: /\d/ } });
-    const inputRefCVC = useMask({ mask: '___', replacement: { _: /\d/ } });
-    const inputRefPhone = useMask({ mask: '+ 591 _ ___ ___', replacement: { _: /\d/ } });
-    const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
-
-    function manageInputIMG(e) {
-        // const fileName = `${e.target.name}`
-        const file = e.target.files[0]
-
-        setPostImage(file)
-        setUrlPostImage(URL.createObjectURL(file))
-
-    }
-    function onChangeHandler(e) {
-        setState({ ...state, [e.target.name]: e.target.value })
-    }
-    function onChangeHandlerCheck(e) {
-        setState({ ...state, ['dias de atencion']: { ...state['dias de atencion'], [e.target.name]: e.target.checked } })
-    }
-    function onClickHandler(name, value) {
-        setState({ ...state, [name]: value })
+    const redirectHandler = (ref) => {
+        router.push(ref)
     }
 
     console.log(userDB)
-
-    async function save(e) {
-        e.preventDefault()
-        if (userDB && userDB[0]['nombre']) {
-            setUserSuccess('Cargando')
-            await updateUserData('Medico', { ...state }, user.uuid)
-            postImage && await console.log('image')
-            router.push('/Medico/Perfil')
-            setUserSuccess('')
-        } else {
-            setUserSuccess('Cargando')
-            await writeUserData('Medico', { ...state, uuid: user.uuid }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
-            await uploadStorage('Medico', postImage, user.uuid, updateUserData)
-            router.push('/Medico/Perfil')
-         setUserSuccess('')
-
-        }
-    }
-
     useEffect(() => {
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
     }, [user]);
-
     return (
-        <form className='p-5' >
-            {success === "Cargando" && <LoaderBlack></LoaderBlack>}
-            <h3 className='text-center text-[14px] pb-3'>Agregar Perfil</h3>
-            <div className="w-full flex justify-center">
-                <label htmlFor="file" className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" >
-                    {urlPostImage || (userDB && userDB[0].url) ? <img className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" style={{ objectPosition: 'center' }} src={urlPostImage ? urlPostImage : userDB[0].url} alt="" />
-                        : 'Subir Imagen'}
-                </label>
-                <input className="hidden" onChange={manageInputIMG} accept=".jpg, .jpeg, .png, .mp4, webm" id='file' type="file" require={userDB && userDB[0]['nombre'] ? true : false}/>
+        userDB !== undefined && userDB !== null
+            ? <div className=" bg-white p-5">
+                <br />
+                <div className="flex justify-center">
+                    <img className='h-[100px] w-[100px] rounded-full' src={userDB[0].url} alt="" />
+                </div>
+                <br />
+                <h3 className='w-full text-[14px] text-center '>{userDB[0]['nombre'].toUpperCase()}</h3>
+                <br />
+                <h3 className='w-full text-[14px] text-center '>{userDB[0]['especialidad']}</h3>
+                <br />
+                <Subtitle>Contactos</Subtitle>
+                <div className=''>
+                    <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB[0]['whatsapp']}</Paragraph>
+                    <Paragraph> <img className="inline pr-5" src="/telefono.svg" alt="" />{userDB[0]['telefono']}</Paragraph>
+                    <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB[0]['ciudad']}</Paragraph>
+                </div>
+                <br />
+                <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Editar Perfil</Button>
+                <img className="fixed bottom-5 right-5" src="/whatsapp.svg" alt="" />
             </div>
-            <br />
-            <br />
-            <div class="grid gap-6 mb-6 md:grid-cols-2">
-                <div>
-                    <Label htmlFor="">Nombre</Label>
-                    <Input type="text" name="nombre" onChange={onChangeHandler} defValue={userDB && userDB[0]['nombre']} require />
-                </div>
-                <div>
-                    <Label htmlFor="">Especialidad</Label>
-                    <Select arr={['traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' click={onClickHandler} />
-                </div>
-                <div>
-                    <Label htmlFor="">Teléfono</Label>
-                    <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} defValue={userDB && userDB[0]['telefono']} />
-                </div>
-                <div>
-                    <Label htmlFor="">Whatsapp</Label>
-                    <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB[0]['whatsapp']} require />
-                </div>
+            :
+            <div className="flex flex-col items-center justify-center h-[80vh] p-5">
+                <img src="/logo-circle.png"  className='w-[150px] h-[150px]' alt="" />
+                <br />
+                <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Completa tu Perfil</Button>
             </div>
-            <br />
-            <br />
-            <div className='flex w-full justify-around'>
-                <Button theme='Primary' click={save}>Guardar</Button>
-            </div>
-        </form>
     )
 }
-
+        
 export default WithAuth(Home)

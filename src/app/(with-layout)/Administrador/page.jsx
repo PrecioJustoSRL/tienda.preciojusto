@@ -3,14 +3,12 @@
 import { writeUserData, readUserData, updateUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import { useState, useEffect } from 'react'
-import { useUser } from '@/context/Context.js'
-import Input from '@/components/Input'
-import Select from '@/components/Select'
+import { useUser } from '../../../context/Context.js'
+import Input from '../../../components/Input'
+import Select from '../../../components/Select'
 import Label from '@/components/Label'
 import LoaderBlack from '@/components/LoaderBlack'
-
-
-import Button from '@/components/Button'
+import Button from '../../../components/Button'
 import { useMask } from '@react-input/mask';
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
@@ -33,40 +31,32 @@ function Home() {
     const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
 
     function manageInputIMG(e) {
-        // const fileName = `${e.target.name}`
         const file = e.target.files[0]
 
         setPostImage(file)
         setUrlPostImage(URL.createObjectURL(file))
-
     }
     function onChangeHandler(e) {
         setState({ ...state, [e.target.name]: e.target.value })
     }
-    function onChangeHandlerCheck(e) {
-        setState({ ...state, ['dias de atencion']: { ...state['dias de atencion'], [e.target.name]: e.target.checked } })
-    }
+   
     function onClickHandler(name, value) {
         setState({ ...state, [name]: value })
     }
-
-    console.log(userDB)
-
     async function save(e) {
         e.preventDefault()
         if (userDB && userDB[0]['nombre']) {
             setUserSuccess('Cargando')
-            await updateUserData('Administrador', { ...state }, user.uuid)
-            postImage && uploadStorage('Administrador', postImage, user.uuid, updateUserData)
-            router.push('/Administrador/Perfil')
+            await updateUserData('Medico', { ...state, ciudad: user.ciudad }, user.uuid)
+            postImage && uploadStorage('Medico', postImage, user.uuid, updateUserData, true)
+            router.push('/Medico/Perfil')
             setUserSuccess('')
         } else {
             setUserSuccess('Cargando')
-            await writeUserData('Administrador', { ...state, uuid: user.uuid }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
-            await uploadStorage('Administrador', postImage, user.uuid, updateUserData)
-            router.push('/Administrador/Perfil')
-         setUserSuccess('')
-
+            await writeUserData('Medico', {especialidad: 'Traumatologo', ...state, uuid: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
+            await uploadStorage('Medico', postImage, user.uuid, updateUserData)
+            router.push('/Medico/Perfil')
+            setUserSuccess('')
         }
     }
 
@@ -83,7 +73,7 @@ function Home() {
                     {urlPostImage || (userDB && userDB[0].url) ? <img className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" style={{ objectPosition: 'center' }} src={urlPostImage ? urlPostImage : userDB[0].url} alt="" />
                         : 'Subir Imagen'}
                 </label>
-                <input className="hidden" onChange={manageInputIMG} accept=".jpg, .jpeg, .png, .mp4, webm" id='file' type="file" require={userDB && userDB[0]['nombre'] ? true : false}/>
+                <input className="sr-only" onChange={manageInputIMG} accept="image/*" id='file' type="file" required={userDB && userDB[0]['nombre'] ? false : true} />
             </div>
             <br />
             <br />
@@ -94,7 +84,7 @@ function Home() {
                 </div>
                 <div>
                     <Label htmlFor="">Especialidad</Label>
-                    <Select arr={['traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' click={onClickHandler} />
+                    <Select arr={['Traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' defaultValue={userDB && userDB[0]['especialidad']} click={onClickHandler} />
                 </div>
                 <div>
                     <Label htmlFor="">Teléfono</Label>
@@ -115,3 +105,7 @@ function Home() {
 }
 
 export default WithAuth(Home)
+
+
+
+
