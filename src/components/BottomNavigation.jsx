@@ -19,7 +19,7 @@ function Button({ click, children, name }) {
 
 
 export default function BottomNavigation({ rol }) {
-    const { user, userDB, setUserProfile, filter, setFilter, nav, setNav, setIntroClientVideo, introClientVideo, videoClientRef, setSoundClient, whatsapp, setWhatsapp } = useUser()
+    const { user, userDB, setUserProfile, filter, setFilter, nav, setNav, setIntroClientVideo, introClientVideo, videoClientRef, setSoundClient, whatsapp, setWhatsapp, businessData } = useUser()
 
     const router = useRouter()
 
@@ -55,16 +55,15 @@ export default function BottomNavigation({ rol }) {
     }
 
     const redirectHandlerWindow = (ref) => {
-        window.open(ref, '_blank')
+        businessData && businessData[0] && businessData[0].whatsapp 
+        ? window.open(`https://api.whatsapp.com/send?phone=${businessData[0].whatsapp}&text=hola%20mundo`, '_blank')
+        : window.open(`https://api.whatsapp.com/send?phone=+59169941749&text=hola%20mundo`, '_blank')
         // setWhatsapp(!whatsapp)
     }
-
 
     // const  handlerSoport = () => {
 
     // }
-
-
     switch (rol) {
         case 'Cliente':
             return <div className={`grid h-full max-w-lg grid-cols-4 mx-auto font-medium `}>
