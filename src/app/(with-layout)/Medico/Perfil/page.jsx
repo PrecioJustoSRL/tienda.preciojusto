@@ -29,12 +29,15 @@ function Home() {
                     <img className='h-[100px] w-[100px] rounded-full' src={userDB[0].url} alt="" />
                 </div>
                 <br />
-                <h3 className='w-full text-[14px] text-center '>{userDB[0]['nombre']}</h3>
+                <h3 className='w-full text-[14px] text-center '>{userDB[0]['nombre'].toUpperCase()}</h3>
+                <br />
+                <h3 className='w-full text-[14px] text-center '>{userDB[0]['especialidad']}</h3>
                 <br />
                 <Subtitle>Contactos</Subtitle>
                 <div className=''>
+                    <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB[0]['whatsapp']}</Paragraph>
                     <Paragraph> <img className="inline pr-5" src="/telefono.svg" alt="" />{userDB[0]['telefono']}</Paragraph>
-                    <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB[0]['direccion']}</Paragraph>
+                    <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB[0]['ciudad']}</Paragraph>
                 </div>
                 <br />
                 <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Editar Perfil</Button>
