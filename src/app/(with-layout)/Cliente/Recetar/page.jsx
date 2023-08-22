@@ -134,7 +134,7 @@ function Comprar({ theme, styled, click, children }) {
       <br />
       {qr !== '' && <InvoicePDF dbUrl={QRurl} />}
       <br />
-      {qr !== '' && <Button theme='Danger' click={finish}>Finalizar Receta</Button>}
+      {qr !== '' && <Button theme='Danger' click={finish}>Receta Completada</Button>}
     </div>
   </div>)
 }
