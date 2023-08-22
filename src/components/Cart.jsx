@@ -14,7 +14,7 @@ export default function Button({ theme, styled, click, children }) {
 
     function HandlerCheckOut() {
         Object.keys(cart).length > 0 
-        ? user.rol === 'Medico' ? router.push('/Cliente/Recetar') : router.push('/Cliente/Comprar') 
+        ? (tienda === 'Recetar' ? router.push('/Cliente/Recetar') : router.push('/Cliente/Comprar') )
         : success !== 'noProduct' && setUserSuccess('noProduct')
     }
 
