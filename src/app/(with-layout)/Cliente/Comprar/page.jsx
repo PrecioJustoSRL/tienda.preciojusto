@@ -40,16 +40,16 @@ function Comprar({ theme, styled, click, children }) {
 
     window.navigator.vibrate([1000])
   }
- function handlerCheck (data) {
+  function handlerCheck(data) {
     setCheck(data)
-    setState({ ...state,  check: data  })
+    setState({ ...state, check: data })
 
- }
+  }
 
 
   console.log(userDB)
   return (<div className='w-full relative p-5 pb-[50px]'>
-    <InvoicePDF  />
+    <InvoicePDF />
     <form >
       <h3 className='text-center text-[16px] pb-3'>DATOS DEL PACIENTE</h3>
       <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -66,10 +66,8 @@ function Comprar({ theme, styled, click, children }) {
           <Input type="text" name="referencia del paciente" onChange={onChangeHandler} require />
         </div>
         <div>
-
-          <div className="">
+          <div className="mb-5">
             <Label htmlFor="">REFERENCIA DEL LUGAR</Label>
-
             <div className="flex items-center" onClick={() => handlerCheck(false)}>
               <div className="flex  mt-[2px] h-5 mr-5">
                 <input id="remember" type="radio" value="" checked={check == false ? true : false} onClick={() => handlerCheck(false)} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
@@ -79,8 +77,8 @@ function Comprar({ theme, styled, click, children }) {
           </div>
 
           <div className="flex items-center">
-            <div className="flex items-start" onClick={() => handlerCheck(true)}>
-              <div className="flex items-center h-5 mr-5">
+            <div className="flex items-center" onClick={() => handlerCheck(true)}>
+              <div className="flex  mt-[2px] h-5 mr-5">
                 <input id="remember" type="radio" value="" checked={check == true ? true : false} onClick={() => handlerCheck(true)} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
               </div>
               <label htmlFor="remember" className="ml-2 text-[14px] font-medium " onClick={() => handlerCheck(true)} >Para provincia (+350bs)</label>
@@ -90,13 +88,13 @@ function Comprar({ theme, styled, click, children }) {
 
       </div>
       {user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora'
-      ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
-        <Button theme="SuccessBuy" click={handlerPay}> Solicitar</Button>
-      </div>
-      : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
-        <Button theme="SuccessBuy" click={handlerPay}> Pagar por QR</Button>
-      </div>
-    }
+        ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+          <Button theme="SuccessBuy" click={handlerPay}> Solicitar</Button>
+        </div>
+        : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+          <Button theme="SuccessBuy" click={handlerPay}> Pagar por QR</Button>
+        </div>
+      }
     </form>
 
 
@@ -141,7 +139,7 @@ function Comprar({ theme, styled, click, children }) {
     <br />
     <br />
 
-   
+
 
 
 
