@@ -43,13 +43,14 @@ function Home() {
                 <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Editar Perfil</Button>
                 <img className="fixed bottom-5 right-5" src="/whatsapp.svg" alt="" />
             </div>
-            :
-            <div className="flex flex-col items-center justify-center h-[80vh] p-5">
-                <img src="/logo-circle.png"  className='w-[150px] h-[150px]' alt="" />
-                <br />
-                <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Completa tu Perfil</Button>
+            : <div className='w-full flex justify-center'>
+                <div className=" w-full max-w-[800px] p-5 flex flex-col items-center justify-center bg-white h-[80vh]">
+                    <img src="/logo-circle.png" className='w-[150px] h-[150px]' alt="" />
+                    <br />
+                    <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Completa tu Perfil</Button>
+                </div>
             </div>
     )
 }
-        
+
 export default WithAuth(Home)
