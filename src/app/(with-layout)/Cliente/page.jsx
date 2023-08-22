@@ -142,7 +142,7 @@ function Home() {
 
 
 
-            {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-30'>
+            {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-20'>
                 <h3 className='text-[14px] font-medium mb-4'>Receta Médica</h3>
 
                 <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => setFilterQR('')}>
@@ -161,7 +161,7 @@ function Home() {
                         </>
                     )}
                 <br />
-                <div className='w-full lg:w-[50%] bg-cyan-500 text-white text-center p-5 text-[14px] rounded-full z-30'>
+                <div className='w-full lg:w-[50%] bg-cyan-500 text-white text-center p-5 text-[14px] rounded-full z-20'>
                     Sus productos estan debajo <br /> le sugerimos elijir los productos <br /> recomendados por su medico
                 </div>
             </div>}
