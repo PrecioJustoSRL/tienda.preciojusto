@@ -162,7 +162,7 @@ function Home() {
                     )}
                 <br />
                 <div className='w-full lg:w-[50%] bg-cyan-500 text-white text-center p-5 text-[14px] rounded-full z-20'>
-                    Sus productos estan debajo <br /> le sugerimos elijir los productos <br /> recomendados por su medico
+                    Sus productos estan debajo <br /> le sugerimos elejir los productos <br /> recomendados por su medico
                 </div>
             </div>}
 
