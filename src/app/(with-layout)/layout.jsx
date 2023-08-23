@@ -33,7 +33,7 @@ function Home({ children }) {
 
   const handlerFilter = (e) => {
     const data = e.target.value
-    setSearch(true)
+    data.length > 0 ? setSearch(true) : setSearch(false)
     setFilter(data)
     setFilterQR('')
   }
@@ -109,7 +109,7 @@ function Home({ children }) {
       {nav && <div className='fixed top-0 left-0 w-screen h-screen bg-[#000000C2] z-40' onClick={() => setNav(false)}></div>}
       {introClientVideo && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerClientVideo}></div>}
       {whatsapp && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerWhatsapp}></div>}
-      {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={()=>setSearch(false)}></div>}
+      {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
 
       <main className={`relative min-w-screen  lg:pb-0  lg:min-w-auto my-[0px]  lg:bg-blue-50 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
         {/* <img src="/bg.png" className='fixed bottom-[60px] lg:bottom-0 right-[20px] w-[60vw] lg:w-[40vw]' alt="" /> */}
@@ -149,7 +149,65 @@ function Home({ children }) {
           {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/Cliente' && <Cart />}
         </nav>
 
+
+
+
+
+
+
         {search
+          && filter.length > 0
+          && distributorPDB !== null
+          && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-30 bg-white'>
+            {search
+              && filter.length > 0
+              && distributorPDB !== null
+              && distributorPDB !== undefined
+              && distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).filter((i, index) => {
+                if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) { return i}
+                if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) { return i}
+                if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) { return i}}
+              ).map((i, index)=><div className={`w-full text-[12px] px-5 py-2 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 1'])}>
+              <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+              <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
+            </div>)}
+          </div>}
+
+
+
+
+
+
+
+
+
+
+
+        <div className="lg:px-[50px] pt-[85px] pb-[65px] md:pt-[85px] md:pb-5 h-screen overflow-y-auto">
+          <VideoClient />
+          {children}
+        </div>
+        {user && user !== undefined && <div className="fixed bottom-0  z-50 w-full h-[65px] bg-[#2A52BE] rounded-t-[40px] border-t-[1px] border-gray-50 border- lg:hidden">
+          <BottomNavigation rol={user.rol} />
+        </div>}
+        {/* {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-gray-50 border-t-8 border-white rounded-t-[40px] lg:hidden">
+          <BottomNavigation rol={user.rol} />
+        </div>} */}
+      </main>
+      {/* <Whatsapp /> */}
+    </div>
+  )
+}
+
+
+
+
+
+
+export default Home
+
+
+        {/* {search
           && filter.length > 0
           && distributorPDB !== null
           && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-30 bg-white'>
@@ -181,27 +239,4 @@ function Home({ children }) {
 
               }
               )}
-          </div>}
-        <div className="lg:px-[50px] pt-[85px] pb-[65px] md:pt-[85px] md:pb-5 h-screen overflow-y-auto">
-          <VideoClient />
-          {children}
-        </div>
-        {user && user !== undefined && <div className="fixed bottom-0  z-50 w-full h-[65px] bg-[#2A52BE] rounded-t-[40px] border-t-[1px] border-gray-50 border- lg:hidden">
-          <BottomNavigation rol={user.rol} />
-        </div>}
-        {/* {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-gray-50 border-t-8 border-white rounded-t-[40px] lg:hidden">
-          <BottomNavigation rol={user.rol} />
-        </div>} */}
-      </main>
-      {/* <Whatsapp /> */}
-    </div>
-  )
-}
-
-
-
-
-
-
-export default Home
-
+          </div>} */} 

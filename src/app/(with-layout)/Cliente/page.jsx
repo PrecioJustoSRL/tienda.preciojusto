@@ -109,7 +109,7 @@ function Home() {
                 <Button theme="MiniPrimaryComprar" click={() => storeHandler('Comprar')}>Comprar</Button>
             </div>}
 
-            {user.rol !== 'Distribuidor' && <div>
+            {user.rol !== 'Distribuidor' && filterQR.length < 1 && <div>
                 <label htmlFor="qr" className='block w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[5px] px-[20px] z-20' >
                     <svg width="32" height="32" viewBox="0 0 323 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M138.71 0.669922H12.4399C9.25734 0.669922 6.20509 1.93419 3.95465 4.18463C1.70421 6.43507 0.439941 9.48732 0.439941 12.6699V138.93C0.439941 142.112 1.70421 145.165 3.95465 147.415C6.20509 149.666 9.25734 150.93 12.4399 150.93H138.71C141.893 150.93 144.945 149.666 147.195 147.415C149.446 145.165 150.71 142.112 150.71 138.93V12.6699C150.71 9.48732 149.446 6.43507 147.195 4.18463C144.945 1.93419 141.893 0.669922 138.71 0.669922ZM129.24 43.5999V129.47H21.9099V22.1299H129.24V43.5999Z" fill="black" />
@@ -154,7 +154,7 @@ function Home() {
 
                 {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined &&
                     recetaDBP.sort(sortArray).map((i, index) =>
-                        i.qr.includes(filterQR) && i.disponibilidad !== 'No disponible' && <><div className={`w-full text-[12px] px-5 py-2 rounded-full mr-2 bg-gray-100`} style={{ display: 'grid', gridTemplateColumns: 'auto 30px', }} onClick={() => handlerSearchFilter(i['nombre de producto 3'])}>
+                        i.qr.includes(filterQR) && <><div className={`w-full text-[12px] px-5 py-2 rounded-full mr-2 bg-gray-100`} style={{ display: 'grid', gridTemplateColumns: 'auto 30px', }} onClick={() => handlerSearchFilter(i['nombre de producto 3'])}>
                             <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
                         </div>
                             <br />
@@ -166,9 +166,8 @@ function Home() {
                 </div>
             </div>}
 
-
             <div className="w-screen lg:w-auto relative z-10">
-                <div className={`relative  px-5  bg-white rounded-[20px]  mx-auto  left-0 right-0 w-[90vw] max-w-[600px]  lg:flex lg:flex-wrap lg:justify-around lg:z-0 border border-gray-200 transition-all ${filterNav ? ' h-[280px] lg:h-[250px]' : 'h-[45px] overflow-hidden'} ]`}>
+                {filterQR.length < 1 && <div className={`relative  px-5  bg-white rounded-[20px]  mx-auto  left-0 right-0 w-[90vw] max-w-[600px]  lg:flex lg:flex-wrap lg:justify-around lg:z-0 border border-gray-200 transition-all ${filterNav ? ' h-[280px] lg:h-[250px]' : 'h-[45px] overflow-hidden'} ]`}>
                     <h3 onClick={() => setFilterNav(!filterNav)} className='w-[100%] bg-white relative left-0 right-0 mx-auto relative  max-w-[600px] lg:min-w-[600px] flex justify-center items-center text-[16px] h-[45px] rounded-full py-[5px] px-[0px] cursor-pointer'>Filtrar Productos <span className={filterNav ? ' ml-5 rotate-[270deg]' : ' ml-5 rotate-90'}>{'>'}</span></h3>
 
                     <div className='lg:w-[250px]'>
@@ -186,7 +185,7 @@ function Home() {
                             <Tag theme={categoria == 'Otros' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Otros' ? 'Todas' : 'Otros')}>Otros</Tag>
                         </div>
                     </div>
-                </div>
+                </div>}
 
                 <div className="relative bg-transparent lg:bg-transparent mt-6  rounded-t-[50px]  w-full flex flex-col items-center justify-center px-5 pt-8 pb-16 lg:pt-0">
 
@@ -301,11 +300,6 @@ export default WithAuth(Home)
 {
  distributorPDB !== null && distributorPDB !== undefined && console.log(distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).map(i=>i['nombre de producto 1']))
 } */}
-
-
-
-
-
 
 
 
