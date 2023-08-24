@@ -66,7 +66,7 @@ function Comprar({ theme, styled, click, children }) {
     const req = { amount: 1000 }
     try {
       console.log('her')
-      const res = await fetch('http://localhost:3000/api', {
+      const res = await fetch('https://tienda.preciojusto.pro/api', {
         method: 'POST',
         body: JSON.stringify(req),
         headers: new Headers({
