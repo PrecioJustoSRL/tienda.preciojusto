@@ -50,8 +50,12 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                         </div>
                     </td>
                     <td class="px-3 py-4 font-semibold text-gray-900">
+                        <div  class="lg:flex lg:w-full lg:justify-center">
+
+
+                 
                         {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0
-                            ? <div className='flex w-[80px] items-center justify-center flex-col flex-col-reverse lg:flex-row justify-between'>
+                            ? <div className='flex w-[80px] items-center justify-center flex-col flex-col-reverse lg:flex-row lg:w-full lg:max-w-[150px] justify-between'>
                                 <Button theme='MiniPrimary' click={(e) => addLessCart(e, i)}>-</Button>
                                 <span className='px-4'>
                                     {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0 && <span className='block text-[16px] text-center '>{cart[i.uuid].cantidad}</span>}
@@ -59,7 +63,8 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                                 <Button theme='MiniSecondary' click={(e) => addPlussCart(e, i)}>+</Button>
                             </div>
                             : <Button theme='MiniPrimary' click={(e) => addCart(e, i)}>Comprar</Button>
-                        }
+                        } 
+                              </div>
                     </td>
                     <td class="px-3 py-4 font-semibold text-gray-900">
                         <div class="flex items-baseline text-gray-900">

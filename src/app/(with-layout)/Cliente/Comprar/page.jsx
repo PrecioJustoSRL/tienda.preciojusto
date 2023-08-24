@@ -18,10 +18,12 @@ const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
 
 function Comprar({ theme, styled, click, children }) {
 
-  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, state, setState, qrBCP, setQrBCP } = useUser()
+  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP } = useUser()
   const [add, setAdd] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [check, setCheck] = useState(false)
+  const [payQR, setPayQR] = useState(false)
+
 
   const router = useRouter()
 
@@ -36,16 +38,28 @@ function Comprar({ theme, styled, click, children }) {
 
 
   function handlerPay() {
-    Object.values(cart).map((i) => {
-      const data = { ...i }
-      delete data['created_at']
-      delete data['id']
-      writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
-    })
-    router.push('/Cliente/Comprar/Detalle')
+
+    if (state['nombre del paciente'] && state['celular del paciente'] && state['referencia del paciente']) {
+      setModal('SuccessFull')
+
+      const val = calculator()
+      console.log(val)
+      return val !== 0 && requestQR()
+    }
 
 
-    window.navigator.vibrate([1000])
+
+
+    // Object.values(cart).map((i) => {
+    //   const data = { ...i }
+    //   delete data['created_at']
+    //   delete data['id']
+    //   writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
+    // })
+    // router.push('/Cliente/Comprar/Detalle')
+
+
+    // window.navigator.vibrate([1000])
   }
   function handlerCheck(data) {
     setCheck(data)
@@ -63,12 +77,12 @@ function Comprar({ theme, styled, click, children }) {
   }
 
   const requestQR = async () => {
-    const req = calculator()
+    const amount = calculator()
     try {
       console.log('her')
-      const res = await fetch('https://tienda.preciojusto.pro/api', {
+      const res = await fetch('http://localhost:3000/api', {
         method: 'POST',
-        body: JSON.stringify(req),
+        body: JSON.stringify({ amount: amount + (check ? 350 : 0) }),
         headers: new Headers({
           'Content-Type': 'application/json; charset=UTF-8'
         })
@@ -85,12 +99,16 @@ function Comprar({ theme, styled, click, children }) {
     //   .then(data => console.log(data));
   }
 
-  useEffect(() => {
-    const val = calculator()
-    console.log(val)
-    qrBCP === undefined && val !== 0 && requestQR()
-  }, [qrBCP])
+  // useEffect(() => {
+  //   const val = calculator()
+  //   console.log(val)
+  //   qrBCP === undefined && val !== 0 && requestQR()
+  // }, [qrBCP])
 
+  function closeModal() {
+    setModal('')
+    setQrBCP(undefined)
+  }
 
   console.log(userDB)
   return (<div className='w-full relative p-5 pb-[50px]'>
@@ -141,15 +159,46 @@ function Comprar({ theme, styled, click, children }) {
         </div>
       }
     </form>
-    <br />
-    
-    <div className="w-full flex flex-col justify-center items-center">
-    <br />
-    Escanea el QR y Adquiere tus propuctos
-    <br />
-    {qrBCP !== undefined && <img src={`data:image/png;base64,${qrBCP}`} className='h-[300px] w-[300px]' alt="" />}
-    </div>
-    <br />
+
+
+
+
+
+
+    {modal === 'SuccessFull' && <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
+      <div className='relative p-10 bg-white'>
+        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={closeModal}>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+        <br />
+        Paga por QR y adquiere tus productos
+        <br />
+        {
+          qrBCP !== undefined
+            ? <img src={`data:image/png;base64,${qrBCP}`} className=' w-[80vw] max-w-[300px]' alt="" />
+            : <div aria-label="Loading..." role="status" className="flex items-center justify-center space-x-2 py-10">
+              <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
+              <span className="text-[12px] text-gray-950">Generando QR...</span>
+            </div>
+        }
+        <br />
+        {qrBCP !== undefined && <a
+          className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
+          href={`data:image/png;base64,${qrBCP}`} download>Guardar ImagenQR</a>}
+      </div>
+    </div>}
+
+
+
+
+
+
+
+
+
     <h3 className='text-center text-[16px] px-5 py-2 bg-[#2A52BE] text-white' >MIS COMPRAS</h3>
 
     <div className='relative overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >
