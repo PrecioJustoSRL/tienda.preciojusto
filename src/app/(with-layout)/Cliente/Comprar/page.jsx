@@ -37,8 +37,8 @@ function Comprar({ theme, styled, click, children }) {
 
 
 
-  function handlerPay() {
-
+  function handlerPay(e) {
+    e.preventDefault()
     if (state['nombre del paciente'] && state['celular del paciente'] && state['referencia del paciente']) {
       setModal('SuccessFull')
 

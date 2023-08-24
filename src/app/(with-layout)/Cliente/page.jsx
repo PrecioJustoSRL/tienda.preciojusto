@@ -233,6 +233,9 @@ function Home() {
                             <Tag theme={categoria == 'Otros' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Otros' ? 'Todas' : 'Otros')}>Otros</Tag>
                         </div>
                     </div>
+
+                    <Button theme="Primary"></Button>
+
                 </div>}
 
                 <div className="relative bg-transparent lg:bg-transparent mt-6  rounded-t-[50px]  w-full flex flex-col items-center justify-center px-5 pt-8 pb-16 lg:pt-0">
