@@ -187,7 +187,7 @@ function Home({ children }) {
           <VideoClient />
           {children}
         </div>
-        {user && user !== undefined && <div className="fixed bottom-0  z-50 w-full h-[65px] bg-[#2A52BE] rounded-t-[40px] border-t-[1px] border-gray-50 border- lg:hidden">
+        {user && user !== undefined && <div className="fixed bottom-0  z-40 w-full h-[65px] bg-[#2A52BE] rounded-t-[40px] border-t-[1px] border-gray-50 border- lg:hidden">
           <BottomNavigation rol={user.rol} />
         </div>}
         {/* {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-gray-50 border-t-8 border-white rounded-t-[40px] lg:hidden">
