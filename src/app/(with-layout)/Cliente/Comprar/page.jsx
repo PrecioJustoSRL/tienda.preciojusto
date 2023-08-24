@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '@/components/Button';
 import { useUser } from '@/context/Context.js'
 import Subtitle from '@/components/Subtitle'
@@ -18,7 +18,7 @@ const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
 
 function Comprar({ theme, styled, click, children }) {
 
-  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, state, setState } = useUser()
+  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, state, setState, qrBCP, setQrBCP } = useUser()
   const [add, setAdd] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [check, setCheck] = useState(false)
@@ -28,6 +28,13 @@ function Comprar({ theme, styled, click, children }) {
   function onChangeHandler(e) {
     setState({ ...state, [e.target.name]: e.target.value })
   }
+
+
+
+
+
+
+
   function handlerPay() {
     Object.values(cart).map((i) => {
       const data = { ...i }
@@ -45,6 +52,44 @@ function Comprar({ theme, styled, click, children }) {
     setState({ ...state, check: data })
 
   }
+
+
+  function calculator() {
+    const val = Object.values(cart).reduce((acc, i, index) => {
+      const sum = i['costo'] * i['cantidad']
+      return sum + acc
+    }, 0)
+    return val
+  }
+
+  const requestQR = async () => {
+    const req = { amount: 1000 }
+    try {
+      console.log('her')
+      const res = await fetch('http://localhost:3000/api', {
+        method: 'POST',
+        body: JSON.stringify(req),
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8'
+        })
+      })
+      const data = await res.json()
+      console.log(data.data.qrImage)
+      setQrBCP(data.data.qrImage)
+    } catch (err) {
+      console.log(err)
+    }
+    //     console.log('click')
+    //     fetch('http://localhost:3000/api')
+    //   .then(response => console.log(response))
+    //   .then(data => console.log(data));
+  }
+
+  useEffect(() => {
+    const val = calculator()
+    console.log(val)
+    qrBCP === undefined && val !== 0 && requestQR()
+  }, [qrBCP])
 
 
   console.log(userDB)
@@ -96,8 +141,15 @@ function Comprar({ theme, styled, click, children }) {
         </div>
       }
     </form>
-
-
+    <br />
+    
+    <div className="w-full flex justify-center">
+    <br />
+    Escanea el QR y Adquiere tus propuctos
+    <br />
+    {qrBCP !== undefined && <img src={`data:image/png;base64,${qrBCP}`} className='h-[300px] w-[300px]' alt="" />}
+    </div>
+    <br />
     <h3 className='text-center text-[16px] px-5 py-2 bg-[#2A52BE] text-white' >MIS COMPRAS</h3>
 
     <div className='relative overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >

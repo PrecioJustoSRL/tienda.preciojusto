@@ -47,6 +47,8 @@ export function UserProvider({ children }) {
 	const [state, setState] = useState({})
 	const [webScann, setWebScann] = useState(false)
 	const [businessData, setBusinessData] = useState(undefined)
+	const [qrBCP, setQrBCP] = useState(undefined)
+
 
 
 	const setUserProfile = (data) => {
@@ -139,6 +141,7 @@ export function UserProvider({ children }) {
 			whatsappMSG,
 			businessData, 
 			webScann, 
+			qrBCP, setQrBCP,
 			setWebScann, 
 			setBusinessData,
 			setWhatsappMSG,
@@ -181,7 +184,8 @@ export function UserProvider({ children }) {
 		sound1,
 		sound2, whatsapp,
 		businessData,
-		webScann])
+		webScann,
+		qrBCP])
 
 	return (
 		<UserContext.Provider value={value} >

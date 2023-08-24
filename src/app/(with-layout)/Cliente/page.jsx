@@ -23,7 +23,7 @@ import { QRreaderUtils } from '@/utils/QRreader'
 import { useState } from 'react'
 
 function Home() {
-    const { user, userDB, cart, modal, setModal, productDB, setUserProduct, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann } = useUser()
+    const { user, userDB, cart, modal, setModal, productDB, setUserProduct, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann, qrBCP, setQrBCP} = useUser()
     const [disponibilidad, setDisponibilidad] = useState('Todas')
     const [categoria, setCategoria] = useState('Todas')
     const router = useRouter()
@@ -83,6 +83,35 @@ function Home() {
     }
 
 
+    const requestQR = async () => {
+        // const req = { amount: 1000 }
+        // try {
+        //     console.log('her')
+        //     const res = await fetch('http://localhost:3000/api', {
+        //         method: 'POST',
+        //         body: JSON.stringify(req),
+        //         headers: new Headers({
+        //             'Content-Type': 'application/json; charset=UTF-8'
+        //         })
+        //     })
+        //     const data = await res.json()
+        //     console.log(data.data.qrImage)
+        //     setQrBCP(data.data.qrImage)
+        // } catch (err) {
+        //     console.log(err)
+        // }
+        // //     console.log('click')
+        // //     fetch('http://localhost:3000/api')
+        // //   .then(response => console.log(response))
+        // //   .then(data => console.log(data));
+    }
+
+
+
+
+
+
+
 
 
     useEffect(() => {
@@ -108,6 +137,10 @@ function Home() {
                 <Button theme="MiniSuccessRecetar" click={() => storeHandler('Recetar')}>Recetar</Button>
                 <Button theme="MiniPrimaryComprar" click={() => storeHandler('Comprar')}>Comprar</Button>
             </div>}
+
+            {/* {qrBCP !== undefined && <img src={`data:image/png;base64,${qrBCP}`} className='h-[300px] w-[300px]' alt="" />} */}
+
+            {/* <button onClick={requestQR}>click me</button> */}
 
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && <div>
                 <label htmlFor="qr" className='block w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[5px] px-[20px] z-20' >
@@ -240,7 +273,6 @@ function Home() {
 }
 
 export default WithAuth(Home)
-
 
 
 

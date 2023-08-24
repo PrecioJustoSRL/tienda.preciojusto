@@ -6,6 +6,10 @@
 const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
+    // experimental: {
+    //   appDir: true
+    // },
+    // staticPageGenerationTimeout: 1000
   }
   
   const withPWA = require('next-pwa')({
