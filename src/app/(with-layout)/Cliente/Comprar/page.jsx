@@ -12,6 +12,7 @@ import MiniCard from '@/components/MiniCard'
 import Input from '@/components/Input'
 import { useRouter } from 'next/navigation';
 import dynamic from "next/dynamic";
+import Msg from "@/components/Msg"
 const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
   ssr: false,
 });
@@ -45,7 +46,10 @@ function Comprar({ theme, styled, click, children }) {
       const val = calculator()
       console.log(val)
       return val !== 0 && requestQR()
+    } else {
+      setUserSuccess('Complete')
     }
+
 
 
 
@@ -80,7 +84,7 @@ function Comprar({ theme, styled, click, children }) {
     const amount = calculator()
     try {
       console.log('her')
-      const res = await fetch('http://localhost:3000/api', {
+      const res = await fetch('http://tienda.preciojusto.pro/api', {
         method: 'POST',
         body: JSON.stringify({ amount: amount + (check ? 350 : 0) }),
         headers: new Headers({
@@ -112,6 +116,7 @@ function Comprar({ theme, styled, click, children }) {
 
   console.log(userDB)
   return (<div className='w-full relative p-5 pb-[50px]'>
+    {success == 'Complete' && <Msg>Complete el formulario</Msg>}
     <InvoicePDF />
     <form >
       <h3 className='text-center text-[16px] pb-3'>DATOS DEL PACIENTE</h3>
