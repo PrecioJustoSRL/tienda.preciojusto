@@ -63,7 +63,7 @@ function Comprar({ theme, styled, click, children }) {
   }
 
   const requestQR = async () => {
-    const req = { amount: 1000 }
+    const req = calculator()
     try {
       console.log('her')
       const res = await fetch('https://tienda.preciojusto.pro/api', {
@@ -143,7 +143,7 @@ function Comprar({ theme, styled, click, children }) {
     </form>
     <br />
     
-    <div className="w-full flex justify-center">
+    <div className="w-full flex flex-col justify-center items-center">
     <br />
     Escanea el QR y Adquiere tus propuctos
     <br />
