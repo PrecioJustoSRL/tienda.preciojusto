@@ -84,7 +84,7 @@ function Comprar({ theme, styled, click, children }) {
     const amount = calculator()
     try {
       console.log('her')
-      const res = await fetch('https://tienda.preciojusto.pro/api', {
+      const res = await fetch('http://localhost:3000/api', {
         method: 'POST',
         body: JSON.stringify({ amount: amount + (check ? 350 : 0) }),
         headers: new Headers({
@@ -113,6 +113,27 @@ function Comprar({ theme, styled, click, children }) {
     setModal('')
     setQrBCP(undefined)
   }
+
+
+  function fetchApiCallback() {
+    fetchData(API, function (error1, data1) {
+
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   console.log(userDB)
   return (<div className='w-full relative p-5 pb-[50px]'>

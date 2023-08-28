@@ -143,7 +143,7 @@ function Home() {
             {/* <button onClick={requestQR}>click me</button> */}
 
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && <div>
-                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[5px] px-[10px] z-20' >
+                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[5px] px-[10px] lg:px-[20px] z-20' >
                     <span className=''>
                         <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.0699999 3.258C-6.70552e-08 3.626 0 4.068 0 4.95V12C0 15.771 -1.19209e-07 17.657 1.172 18.828C2.343 20 4.229 20 8 20H12C15.771 20 17.657 20 18.828 18.828C20 17.657 20 15.771 20 12V9.798C20 7.166 20 5.849 19.23 4.994C19.1594 4.91508 19.0846 4.83997 19.006 4.769C18.151 4 16.834 4 14.202 4H13.828C12.675 4 12.098 4 11.56 3.847C11.2648 3.7626 10.9802 3.64449 10.712 3.495C10.224 3.224 9.816 2.815 9 2L8.45 1.45C8.176 1.176 8.04 1.04 7.896 0.92C7.27667 0.40664 6.51694 0.0919439 5.716 0.017C5.53 -4.09782e-08 5.336 0 4.95 0C4.067 0 3.626 -6.70552e-08 3.258 0.0699999C2.46784 0.219224 1.741 0.603137 1.17231 1.17165C0.603613 1.74017 0.219472 2.46789 0.0699999 3.258ZM14.282 1C14.648 1 14.832 1 14.985 1.02C16.003 1.16 16.813 1.963 16.999 3C16.8467 2.96552 16.6929 2.93849 16.538 2.919C15.898 2.835 15.09 2.835 14.088 2.835H13.754C12.812 2.835 12.454 2.83 12.129 2.734C11.9398 2.67789 11.7579 2.59969 11.587 2.501C11.291 2.331 11.035 2.073 10.369 1.383L10 1H14.284H14.282ZM11 7.25C10.8011 7.25 10.6103 7.32902 10.4697 7.46967C10.329 7.61032 10.25 7.80109 10.25 8C10.25 8.19891 10.329 8.38968 10.4697 8.53033C10.6103 8.67098 10.8011 8.75 11 8.75H16C16.1989 8.75 16.3897 8.67098 16.5303 8.53033C16.671 8.38968 16.75 8.19891 16.75 8C16.75 7.80109 16.671 7.61032 16.5303 7.46967C16.3897 7.32902 16.1989 7.25 16 7.25H11Z" fill="black" />
@@ -152,8 +152,6 @@ function Home() {
 
 
                     <span className=' left-0 top-0 bottom-0 my-auto text-center text-[14px] font-bold'>{user.rol == 'Cliente' ? 'Ya tengo una RECETA QR...' : 'Ver recetas QR...'}</span>
-
-
 
                     <span className=''>
                         <svg width="32" height="32" viewBox="0 0 323 323" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -174,8 +172,6 @@ function Home() {
                         </svg>
                     </span>
 
-
-
                     <span onClick={handlerWebScann} className='h-full text-right z-50 lg:hidden'>
                         <svg className='h-[55px]' viewBox="0 0 20 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18 3H15.414L12.707 0.293001C12.6143 0.199958 12.5041 0.126171 12.3828 0.0758854C12.2614 0.0256001 12.1313 -0.000189449 12 1.04767e-06H8C7.86866 -0.000189449 7.73857 0.0256001 7.61724 0.0758854C7.4959 0.126171 7.38571 0.199958 7.293 0.293001L4.586 3H2C0.897 3 0 3.897 0 5V16C0 17.103 0.897 18 2 18H18C19.103 18 20 17.103 20 16V5C20 3.897 19.103 3 18 3ZM10 15C7.29 15 5 12.71 5 10C5 7.29 7.29 5 10 5C12.71 5 15 7.29 15 10C15 12.71 12.71 15 10 15Z" fill="black" />
@@ -187,8 +183,6 @@ function Home() {
             {webScann && <div className={`lg:hidden`}>
                 <QRscanner></QRscanner>
             </div>}
-
-
 
             {filterQR.length > 0 && recetaDBP !== null && recetaDBP !== undefined && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-20'>
                 <h3 className='text-[14px] font-medium mb-4'>Receta Médica</h3>
@@ -225,7 +219,7 @@ function Home() {
                             <Tag theme={disponibilidad == 'Inmediato' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'Inmediato' ? 'Todas' : 'Inmediato')}>Inmediatamente</Tag>
                         </div>
                     </div>
-                    <div className='lg:w-[250px]'>
+                    <div className='lg:w-[250px] pb-[10px]'>
                         <Subtitle styled='' htmlFor="">Categorias</Subtitle>
                         <div className="grid grid-cols-3  gap-x-4  justify-between">
                             <Tag theme={categoria == 'Titanio' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Titanio' ? 'Todas' : 'Titanio')}>Titanio</Tag>
@@ -234,7 +228,7 @@ function Home() {
                         </div>
                     </div>
 
-                    <Button theme="Primary"></Button>
+                    <Button theme="Primary">Filtrar</Button>
 
                 </div>}
 
