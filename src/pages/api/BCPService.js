@@ -5,12 +5,22 @@ class BCPServices {
     constructor() {
         this.certificatePFX =  path.join(process.cwd(), 'src/pages/api/CertificateSandBoxApi.pfx');
         this.passwordPFX = 'Pa$$Bcp2021';
-        this.appUserId = 'PRECJUSTOUser29032023';
-        this.businessCode = '0261';
-        this.publicToken = '6AE52A5E-3A70-4140-9DEE-E9155750A41F';
+        this.appUserId = 'PRECJUSTOUser20230809';
+        this.businessCode = '0256';
+        this.publicToken = 'C8EAA25E-50F5-45B2-9FBA-3EA791895DB7';
         this.usuario = 'PRECJUSTO_USER';
-        this.passwordUsuario = 'ed6ce73a0234d3b45876abd2494bb53b';
-        this.qrV2 = 'https://www99.bancred.com.bo/sandbox/api/v4/Qr';
+        this.passwordUsuario = 'ujpw4CmvFo(c.D19';
+        this.qrV2 = 'https://apis.bcp.com.bo/OpenAPI_Qr/WebApi_Qr/api/v4/Qr/';
+
+
+        // this.certificatePFX =  path.join(process.cwd(), 'src/pages/api/CertificateSandBoxApi.pfx');
+        // this.passwordPFX = 'Pa$$Bcp2021';
+        // this.appUserId = 'PRECJUSTOUser29032023';
+        // this.businessCode = '0261';
+        // this.publicToken = '6AE52A5E-3A70-4140-9DEE-E9155750A41F';
+        // this.usuario = 'PRECJUSTO_USER';
+        // this.passwordUsuario = 'ed6ce73a0234d3b45876abd2494bb53b';
+        // this.qrV2 = 'https://www99.bancred.com.bo/sandbox/api/v4/Qr';
     }
 
     consultQr(id, correlationId) {

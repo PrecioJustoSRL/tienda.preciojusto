@@ -8,6 +8,8 @@ import { useUser } from '@/context/Context.js'
 
 import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/router'
+
 import Modal from '@/components/Modal'
 
 import { WithAuth } from '@/HOCs/WithAuth'
@@ -17,7 +19,7 @@ import { uploadStorage } from '@/supabase/storage'
 
 
 function Home() {
-    const { user, userDB, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, item, setUserData, setUserSuccess, } = useUser()
+    const { user, userDB, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, item,  setUserUuid, setUserData, setUserSuccess, } = useUser()
 
     const router = useRouter()
 
@@ -71,8 +73,8 @@ function Home() {
         setModal(data)
     }
     async function blockConfirm() {
-        console.log(item) 
-        await updateUserData('Medico', {bloqueado: !item.bloqueado}, item.uuid, null)
+        console.log(item)
+        await updateUserData('Medico', { bloqueado: !item.bloqueado }, item.uuid, null)
         await readUserAllData('Medico', null, setTemporal)
         setModal('')
     }
@@ -80,23 +82,25 @@ function Home() {
         await deleteUserData('Medico', i.uuid)
         readUserAllData('Medico', null, setTemporal)
     }
-    function redirect() {
-        router.push('/Distribuidor/Agregar')
+    function redirect(id) {
+        setUserUuid(id)
+       router.push('/Administrador/Medicos/Recetas',)
     }
     function sortArray(x, y) {
-        if (x['nombre de producto 1'].toLowerCase() < y['nombre de producto 1'].toLowerCase()) { return -1 }
-        if (x['nombre de producto 1'].toLowerCase() > y['nombre de producto 1'].toLowerCase()) { return 1 }
+        if (x['nombre'].toLowerCase() < y['nombre'].toLowerCase()) { return -1 }
+        if (x['nombre'].toLowerCase() > y['nombre'].toLowerCase()) { return 1 }
         return 0
     }
-console.log(filter)
+    console.log(filter)
     useEffect(() => {
         readUserAllData('Medico', null, setTemporal)
     }, [])
 
     return (
 
-        <div class="relative overflow-x-auto shadow-md p-5 bg-white min-h-[80vh]">
-               {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de ELIMINAR al siguiente usuario: {item.nombre}</Modal>}
+        <div className='h-full'> 
+        <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh]">
+            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de ELIMINAR al siguiente usuario: {item.nombre}</Modal>}
             {modal === 'Block' && <Modal funcion={blockConfirm}>Estas seguro de BLOQUEAR al siguiente usuario {item.nombre}</Modal>}
 
             <h3 className='font-medium text-[16px]'>Medicos</h3>
@@ -108,9 +112,9 @@ console.log(filter)
 
             <div className='min-w-[1500px] flex justify-start items-center my-5 '>
                 <h3 className="flex pr-12 text-[14px]" htmlFor="">Ciudad</h3>
-                <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(9, 110px)' }}>
-                    <Tag theme={ciudad == 'Sucre' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'Sucre' ? '' : 'Sucre')}>Sucre</Tag>
-                    <Tag theme={ciudad == 'La paz' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'La paz' ? '' : 'La paz')}>La paz</Tag>
+                <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 100px) 100px 100px' }}>
+                    <Tag theme={ciudad == 'Chuquisaca' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'Chuquisaca' ? '' : 'Chuquisaca')}>Chuquisaca</Tag>
+                    <Tag theme={ciudad == 'La Paz' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'La Paz' ? '' : 'La Paz')}>La Paz</Tag>
                     <Tag theme={ciudad == 'Cochabamba' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'Cochabamba' ? '' : 'Cochabamba')}>Cochabamba</Tag>
                     <Tag theme={ciudad == 'Santa Cruz' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'Santa Cruz' ? '' : 'Santa Cruz')}>Santa Cruz</Tag>
                     <Tag theme={ciudad == 'Oruro' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'Oruro' ? '' : 'Oruro')}>Oruro</Tag>
@@ -120,34 +124,35 @@ console.log(filter)
                     <Tag theme={ciudad == 'Potosi' ? 'Primary' : 'Secondary'} click={() => setCiudad(ciudad == 'Potosi' ? '' : 'Potosi')}>Potosi</Tag>
                 </div>
             </div>
-            <table class="w-[1500px]  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
-                <thead class="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-[1500px]  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
+                <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3">
                             #
                         </th>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3">
                             Nombre
                         </th>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3">
                             Especialidad
                         </th>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3">
                             Ciudad
                         </th>
-                        <th scope="col" class="px-3 py-3">
-                            Dirección
-                        </th>
-                        <th scope="col" class="px-8 py-3">
+
+                        <th scope="col" className="px-8 py-3">
                             Telefono
                         </th>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3">
                             Whatsapp
                         </th>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3  text-center">
+                            Recetas
+                        </th>
+                        <th scope="col" className="px-3 py-3  text-center">
                             Bloqueado
                         </th>
-                        <th scope="col" class="px-3 py-3">
+                        <th scope="col" className="px-3 py-3  text-center">
                             Eliminar
                         </th>
                     </tr>
@@ -155,42 +160,42 @@ console.log(filter)
                 <tbody>
                     {temporal && temporal !== undefined && temporal.sort(sortArray).map((i, index) => {
 
-                        return i.ciudad.includes(ciudad) &&  i.nombre.toLowerCase().includes(filter) && <tr class="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                            <td class="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
+                        return i.ciudad.includes(ciudad) && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                            <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
                                 <span className='h-full flex py-2'>{index + 1}</span>
                             </td>
-                            <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} class="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
+                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                 {i['nombre']}
                             </td>
-                            <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 2' defaultValue={i['nombre de producto 2']} class="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
+                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 2' defaultValue={i['nombre de producto 2']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                 {i['especialidad']}
                             </td>
-                            <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 3' defaultValue={i['nombre de producto 3']} class="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
+                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 3' defaultValue={i['nombre de producto 3']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                 {i['ciudad']}
                             </td>
-                            <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='descripcion basica' defaultValue={i['descripcion basica']} class="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
-                                {i['direccion']}
-                            </td>
-                            <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} class="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
+
+                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                 {i['telefono']}
                             </td>
-                            <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} class="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
+                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                 {i['whatsapp']}
                             </td>
 
-                            <td class="px-3 py-4">
+                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <Button theme={"Primary"} click={() => redirect(i.uuid)}>Ver recetas</Button>
+                            </td>
+                            <td className="px-3 py-4">
                                 {i.bloqueado == true
                                     ? <Button theme={"Success"} click={() => delet(i, 'Block')}>Desbloquear</Button>
                                     : <Button theme={"Secondary"} click={() => delet(i, 'Block')}>Bloquear</Button>
                                 }
                             </td>
-                            <td class="px-3 py-4">
+                            <td className="px-3 py-4">
                                 <Button theme={"Danger"} click={() => delet(i, 'Delete')}>Eliminar</Button>
                             </td>
                         </tr>
@@ -198,11 +203,8 @@ console.log(filter)
                     }
                 </tbody>
             </table>
-
-
-        
         </div>
-
+        </div>
     )
 }
 
@@ -221,7 +223,7 @@ export default WithAuth(Home)
         // console.log({ bloqueado: !item.bloqueado })
         // await updateUserData('Producto', { bloqueado: !item.bloqueado }, item.uuid, eq)
         // readUserData('Producto', userUuid, distributorPDB, setUserDistributorPDB, null, null, 'distribuidor', true)
-        // updateUserData = async (rute, object, uuid, eq) 
+        // updateUserData = async (rute, object, uuid, eq)
         // postImage[userUuid] && uploadStorage('Producto', postImage[userUuid], userUuid, updateUserData, true)
         // const obj = { ...state }
         // delete obj[userUuid]

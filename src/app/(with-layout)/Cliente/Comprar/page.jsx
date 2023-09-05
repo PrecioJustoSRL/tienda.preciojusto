@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import Button from '@/components/Button';
 import { useUser } from '@/context/Context.js'
-import Subtitle from '@/components/Subtitle'
+import Title from '@/components/Title'
 import { WithAuth } from '@/HOCs/WithAuth'
 import { writeUserData, readUserData, updateUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
@@ -19,7 +19,7 @@ const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
 
 function Comprar({ theme, styled, click, children }) {
 
-  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP } = useUser()
+  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP, paySuccess, setPaySuccess } = useUser()
   const [add, setAdd] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [check, setCheck] = useState(false)
@@ -32,45 +32,23 @@ function Comprar({ theme, styled, click, children }) {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
-
-
-
-
-
-
   function handlerPay(e) {
     e.preventDefault()
     if (state['nombre del paciente'] && state['celular del paciente'] && state['referencia del paciente']) {
       setModal('SuccessFull')
 
       const val = calculator()
-      console.log(val)
-      return val !== 0 && requestQR()
+
+      return val !== 0 && requestQR() 
     } else {
       setUserSuccess('Complete')
     }
-
-
-
-
-
-    // Object.values(cart).map((i) => {
-    //   const data = { ...i }
-    //   delete data['created_at']
-    //   delete data['id']
-    //   writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
-    // })
-    // router.push('/Cliente/Comprar/Detalle')
-
-
-    // window.navigator.vibrate([1000])
   }
+
   function handlerCheck(data) {
     setCheck(data)
     setState({ ...state, check: data })
-
   }
-
 
   function calculator() {
     const val = Object.values(cart).reduce((acc, i, index) => {
@@ -79,12 +57,14 @@ function Comprar({ theme, styled, click, children }) {
     }, 0)
     return val
   }
+  console.log(window.location.href.includes('https'))
 
   const requestQR = async () => {
     const amount = calculator()
     try {
       console.log('her')
-      const res = await fetch('http://localhost:3000/api', {
+      //**********************BCP*************************
+      const res = await fetch(window.location.href.includes('https') ? 'https://preciojusto.pro/api' : 'http://localhost:3000/api', {
         method: 'POST',
         body: JSON.stringify({ amount: amount + (check ? 350 : 0) }),
         headers: new Headers({
@@ -92,85 +72,82 @@ function Comprar({ theme, styled, click, children }) {
         })
       })
       const data = await res.json()
-      console.log(data.data.qrImage)
       setQrBCP(data.data.qrImage)
+
+      const write = {
+        idBCP: data.data.id, 
+        expiration: data.data.expirationDate, 
+        amount: amount + (check ? 350 : 0), 
+        message: 'Inconcluso'
+      }
+      const arr = Object.values(cart).map((i) => {
+        const data = { ...i }
+        delete data['created_at']
+        delete data['id']           
+        // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
+     return data
+      })
+      writeUserData('Pedido', { compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
+
+      // router.push('/Cliente/Comprar/Detalle')
+      // setTimeout(() => { updateUserData('Pedido', { message: 'Correcto' }, data.data.id, 'idBCP') }, 6000)
+
+      // const interval = setInterval(() => {
+      //   readUserData('Pedido', data.data.id, setPaySuccess, 'idBCP' )
+      // }, 3000)
+
     } catch (err) {
       console.log(err)
     }
-    //     console.log('click')
-    //     fetch('http://localhost:3000/api')
-    //   .then(response => console.log(response))
-    //   .then(data => console.log(data));
   }
-
-  // useEffect(() => {
-  //   const val = calculator()
-  //   console.log(val)
-  //   qrBCP === undefined && val !== 0 && requestQR()
-  // }, [qrBCP])
-
+             
   function closeModal() {
     setModal('')
     setQrBCP(undefined)
   }
 
+  console.log(user)
 
-  function fetchApiCallback() {
-    fetchData(API, function (error1, data1) {
-
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  useEffect(() => {
+    paySuccess !== null && paySuccess !== undefined && router.push('/Cliente/Comprar/Detalle')
+  }, [paySuccess]);
 
   console.log(userDB)
-  return (<div className='w-full relative p-5 pb-[50px]'>
+  return (<div className='w-full min-h-screen relative px-5 pb-[50px] bg-gray-100'>
     {success == 'Complete' && <Msg>Complete el formulario</Msg>}
     <InvoicePDF />
     <form >
-      <h3 className='text-center text-[16px] pb-3'>DATOS DEL PACIENTE</h3>
+      <Title>DATOS DEL PACIENTE</Title>
       <div className="grid gap-6 mb-6 md:grid-cols-2">
         <div>
-          <Label htmlFor="">NOMBRE DEL PACIENTE</Label>
+          <Label htmlFor="">Nombre del paciente</Label>
           <Input type="text" name="nombre del paciente" onChange={onChangeHandler} require />
         </div>
         <div>
-          <Label htmlFor="">NÚMERO DE CELULAR</Label>
+          <Label htmlFor="">Celular del paciente</Label>
           <Input type="text" name="celular del paciente" onChange={onChangeHandler} require />
         </div>
         <div>
-          <Label htmlFor="">NÚMERO DE CELULAR REFERENCIA</Label>
+          <Label htmlFor="">Numero de celular de referencia</Label>
           <Input type="text" name="referencia del paciente" onChange={onChangeHandler} require />
         </div>
         <div>
           <div className="mb-2">
-            <Label htmlFor="">REFERENCIA DEL LUGAR</Label>
+            <Label htmlFor="">Referencia de lugar</Label>
             <div className="flex items-center" onClick={() => handlerCheck(false)}>
               <div className="flex  mt-[2px] h-5 mr-5">
                 <input id="remember" type="radio" value="" checked={check == false ? true : false} onClick={() => handlerCheck(false)} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
               </div>
-              <label htmlFor="remember" className="ml-2 text-[14px] font-medium " onClick={() => handlerCheck(false)}>Para la ciudad</label>
+              <label htmlFor="remember" className="ml-2 text-[14px] " onClick={() => handlerCheck(false)}>Para la ciudad</label>
             </div>
           </div>
 
           <div className="flex items-center">
             <div className="flex items-center" onClick={() => handlerCheck(true)}>
               <div className="flex  mt-[2px] h-5 mr-5">
-                <input id="remember" type="radio" value="" checked={check == true ? true : false} onClick={() => handlerCheck(true)} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                <input id="remember1" type="radio" value="" checked={check == true ? true : false} onClick={() => handlerCheck(true)} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
               </div>
-              <label htmlFor="remember" className="ml-2 text-[14px] font-medium " onClick={() => handlerCheck(true)} >Para provincia (+350bs)</label>
+              <label htmlFor="remember1" className="ml-2 text-[14px] " onClick={() => handlerCheck(true)} >Para provincia (+350bs)</label>
             </div>
           </div>
         </div>
@@ -186,18 +163,13 @@ function Comprar({ theme, styled, click, children }) {
       }
     </form>
 
-
-
-
-
-
     {modal === 'SuccessFull' && <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
       <div className='relative p-10 bg-white'>
-        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={closeModal}>
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={closeModal}>
+          <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
           </svg>
-          <span class="sr-only">Close modal</span>
+          <span className="sr-only">Close modal</span>
         </button>
         <br />
         Paga por QR y adquiere tus productos
@@ -218,27 +190,20 @@ function Comprar({ theme, styled, click, children }) {
     </div>}
 
 
+    <div className='relative border-t-4 border-t-gray-400 bg-white overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >
+    <h3 className='text-center  border-[1px] border-gray-200  bg-white text-[16px] px-5 py-2  font-bold' >MIS COMPRAS</h3>
 
+      <table className="w-full shadow-2xl lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
 
-
-
-
-
-
-    <h3 className='text-center text-[16px] px-5 py-2 bg-[#2A52BE] text-white' >MIS COMPRAS</h3>
-
-    <div className='relative overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >
-
-      <table class="w-full lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
-        {Object.values(cart).length > 0 && <thead class="text-[12px] text-gray-700 uppercase bg-gray-50">
+        {Object.values(cart).length > 0 && <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col-3" class="w-1/2 px-2 py-3">
+            <th scope="col-3" className="w-1/2 px-2 py-3 text-[16px]">
               Producto
             </th>
-            <th scope="col" class="px-0 py-3 text-center">
+            <th scope="col" className="px-0 py-3 text-center text-[16px]">
               Cantidad
             </th>
-            <th scope="col" class="px-2 w-[200px] py-3">
+            <th scope="col" className="px-2 w-[200px] py-3 text-[16px]">
               Costo total
             </th>
           </tr>
@@ -247,12 +212,12 @@ function Comprar({ theme, styled, click, children }) {
         {Object.values(cart).length > 0 ? Object.values(cart).map((i, index) => <MiniCard i={i} />) : <span className='block text-[16px] text-center'>No tienes productos <br /> selecciona alguno <br /> </span>}
 
         {Object.values(cart).length > 0 && <tbody>
-          <tr class="bg-white text-[12px] border-b">
-            <td class="px-2 py-4  flex text-[16px] text-gray-700 font-extrabold text-gray-900">
+          <tr className="bg-white text-[12px] border-b">
+            <td className="px-2 py-4  flex text-[16px] text-gray-700  text-gray-900">
               TOTAL:
             </td>
             <td>{check && '+350 Bs *Para provincia'}</td>
-            <td class="px-2 py-4 font-extrabold  text-[16px] text-gray-700">
+            <td className="px-2 py-4   text-[16px] text-gray-700">
               {Object.values(cart).reduce((acc, i, index) => {
                 const sum = i['costo'] * i['cantidad']
                 return sum + acc
@@ -266,18 +231,32 @@ function Comprar({ theme, styled, click, children }) {
     <br />
     <br />
 
-
-
-
-
-
   </div>)
 }
 
 export default WithAuth(Comprar)
 
+   // Object.values(cart).map((i) => {
+    //   const data = { ...i }
+    //   delete data['created_at']
+    //   delete data['id']
+    //   writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
+    // })
+    // router.push('/Cliente/Comprar/Detalle')
 
 
+    // window.navigator.vibrate([1000])
+
+
+
+
+
+    //     console.log('click')
+    //     fetch('http://localhost:3000/api')
+    //   .then(response => console.log(response))
+    //   .then(data => console.log(data));
+
+      // writeUserData('Transacciones', { uuid: data.data.id, expiration: data.data.expirationDate, amount: amount + (check ? 350 : 0), message: 'Inconcluso' }, null, null, null, null, null, null)
 
 
 // import Page from '@/components/Page'

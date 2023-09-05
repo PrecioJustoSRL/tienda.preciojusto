@@ -19,13 +19,8 @@ import Whatsapp from '@/components/Whatsapp'
 
 function Home({ children }) {
   const router = useRouter()
-  const { user, userDB, setUserProfile, setUserCart, setUserProduct, setRecetaDB, distributorPDB, setUserDistributorPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR } = useUser()
+  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, distributorPDB, setUserDistributorPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, } = useUser()
   const pathname = usePathname()
-
-
-  console.log(pathname)
-
-
 
   const redirectHandler = (ref) => {
     router.push(ref)
@@ -64,7 +59,6 @@ function Home({ children }) {
     return 0
   }
   function handlerSearchFilter(data) {
-
     setFilter(data)
     setSearch(false)
   }
@@ -81,27 +75,40 @@ function Home({ children }) {
     setWhatsapp(false)
   }
 
-
+  const soporte = () => {
+    businessData && window.open(`https://api.whatsapp.com/send?phone=${businessData[0].whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20y%20mi%20cuenta%20esta%20bloqueada%20¿Pueden%20ayudarme?%20`, '_blank')
+    setNav(false)
+    // setWhatsapp(!whatsapp)
+  }
   useEffect(() => {
     readUserData('Producto', 'Precio-Justo-SRL-Data', setUserDistributorPDB, 'distribuidor')
-
+    // user && user.bloqueado === true && setModal('Bloqueado')
     readUserAllData('Producto', productDB, setUserProduct)
-    readUserAllData('Receta', recetaDBP, setRecetaDBP)
+    // readUserAllData('Receta', recetaDBP, setRecetaDBP)
   }, [user]);
 
 
   return (
     // <div className="pt-[65px] pb-[65px] min-h-screen bg-gray-white"  style={{ backgroundImage: `url(bg.png)`, backgroundAttachment: 'fixed', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom' }}>
     <div className="h-screen bg-gray-white">
-
+      {user && user.bloqueado === true && <Modal funcion={soporte} alert={true} close={true}>
+        Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
+        <br /><br />
+        <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
+          Contactar
+        </button>
+      </Modal>}
       {modal == 'SignOut' && <Modal funcion={signOutConfirm}>
         Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
       </Modal>}
       {modal == 'Verifica' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
-        Completa tu perfil para hacer tu primera compra
+        Completa tu perfil para hacer tu primera compra.
+      </Modal>}
+      {modal == 'VerificaM' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
+        Completa tu perfil para hacer tu primera receta.
       </Modal>}
       <div className={`fixed top-0 w-[220px] lg:w-[280px]   h-screen bg-[#2A52BE] h-screen transition-all	z-40  ${nav ? 'left-0  ' : 'left-[-220px] lg:left-[-280px] '} z-50`} >
-        <div class="py-4 overflow-y-auto ">
+        <div className="py-4 overflow-y-auto ">
           {user && user !== undefined && <Navbar rol={user.rol} />}
         </div>
       </div>
@@ -110,8 +117,9 @@ function Home({ children }) {
       {introClientVideo && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerClientVideo}></div>}
       {whatsapp && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerWhatsapp}></div>}
       {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
+      {webScann && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setWebScann(false)}></div>}
 
-      <main className={`relative min-w-screen  lg:pb-0  lg:min-w-auto my-[0px]  lg:bg-blue-50 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
+      <main className={`relative min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
         {/* <img src="/bg.png" className='fixed bottom-[60px] lg:bottom-0 right-[20px] w-[60vw] lg:w-[40vw]' alt="" /> */}
         <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm flex items-center justify-between bg-[#2A52BE]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
           {pathname !== '/Cliente' && <div className='flex  hidden lg:block'>
@@ -134,7 +142,7 @@ function Home({ children }) {
             :
             <button type="button" className="inline-flex items-center lg:hidden p-2 text-[14px] text-white rounded-lg  dark:hover:bg-gray-700 dark:focus:ring-gray-600" onClick={() => back(!nav)}>
               <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 32L2 17L17 2" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>}
 
@@ -149,39 +157,24 @@ function Home({ children }) {
           {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/Cliente' && <Cart />}
         </nav>
 
-
-
-
-
-
-
         {search
           && filter.length > 0
           && distributorPDB !== null
-          && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-30 bg-white'>
+          && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-50 bg-white'>
             {search
               && filter.length > 0
               && distributorPDB !== null
               && distributorPDB !== undefined
               && distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).filter((i, index) => {
-                if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) { return i}
-                if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) { return i}
-                if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) { return i}}
-              ).map((i, index)=><div className={`w-full text-[12px] px-5 py-2 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 1'])}>
-              <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-              <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
-            </div>)}
+                if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) { return i }
+                if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) { return i }
+                if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) { return i }
+              }
+              ).map((i, index) => <div className={`w-full text-[12px] px-5 py-2 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 1'])}>
+                <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
+              </div>)}
           </div>}
-
-
-
-
-
-
-
-
-
-
 
         <div className="lg:px-[50px] pt-[85px] pb-[65px] md:pt-[85px] md:pb-5 h-screen overflow-y-auto">
           <VideoClient />
@@ -207,7 +200,7 @@ function Home({ children }) {
 export default Home
 
 
-        {/* {search
+{/* {search
           && filter.length > 0
           && distributorPDB !== null
           && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-30 bg-white'>

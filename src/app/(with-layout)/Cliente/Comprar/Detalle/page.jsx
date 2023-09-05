@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '@/components/Button';
 import { useUser } from '@/context/Context.js'
 import Subtitle from '@/components/Subtitle'
@@ -12,6 +12,7 @@ import MiniCard from '@/components/MiniCard'
 import Input from '@/components/Input'
 import { useRouter } from 'next/navigation';
 import Confeti from '@/components/Confeti';
+// import { useEffect } from 'react/ts5.0';
 
 function Comprar({ theme, styled, click, children }) {
 
@@ -32,9 +33,15 @@ function Comprar({ theme, styled, click, children }) {
   }
   function seguimiento() {
  
-    router.push('/Cliente/Seguimiento')
+    router.push('/Cliente/Pedidos')
+  }
+  function redirect () {
+    router.push('/Cliente')
   }
 
+  useEffect(() => {
+    window.navigator.vibrate([1000])
+  }, []);
   console.log(cart)
   return (<div className='w-screen p-5'>
     <Confeti />
@@ -60,25 +67,25 @@ function Comprar({ theme, styled, click, children }) {
       <ul className="flex flex-col bg-gray-100 p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg   ">
         <h3 className='text-center text-[16px] pb-3'>DETALLES DE LA COMPRA</h3>
         <li>{Object.values(cart).length > 0 ? Object.values(cart).map((i, index) => {
-          return <div class="relative w-full max-w-[500px] py-4" onClick={(e) => seeMore(e, i)} style={{ display: 'grid', gridTemplateColumns: 'auto 80px' }}>
-            <div class=" flex  flex-col justify-between ">
-              <div class=" font-bold text-[12px]  text-gray-950">
+          return <div className="relative w-full max-w-[500px] py-4" onClick={(e) => seeMore(e, i)} style={{ display: 'grid', gridTemplateColumns: 'auto 80px' }}>
+            <div className=" flex  flex-col justify-between ">
+              <div className=" font-bold text-[12px]  text-gray-950">
                 Nombre de producto: {i['nombre de producto 1']}
               </div>
 
-              <div class=" font-bold text-[12px]  text-gray-950">
+              <div className=" font-bold text-[12px]  text-gray-950">
                 Cantidad: {i['cantidad']}u
               </div>
-              <div class=" font-bold text-[12px]  text-gray-950">
+              <div className=" font-bold text-[12px]  text-gray-950">
                 Costo Total: {i['costo'] * i['cantidad']}bs
               </div>
-              <div class=" font-bold text-[12px]  text-gray-950">
+              <div className=" font-bold text-[12px]  text-gray-950">
                 Empresa: {i['empresa']}
               </div>
-              <div class=" font-bold text-[12px]  text-gray-950">
+              <div className=" font-bold text-[12px]  text-gray-950">
                 Telefono: {i['telefono']}
               </div>
-              <div class=" font-bold text-[12px]  text-gray-950">
+              <div className=" font-bold text-[12px]  text-gray-950">
                 Celular: {i['whatsapp']}
               </div>
             </div>
@@ -95,8 +102,12 @@ function Comprar({ theme, styled, click, children }) {
         </li>
         {Object.values(cart).length > 0 && <span className='text-[12px] pt-[12px]'>En uno momento ellos se comunicaran contigo</span>}
       </ul>
+      <br />
+    <Button theme="Primary" click={redirect}>Volver a la pagina Principal</Button>
     </div>
     <br />
+   
+
 {/* { Object.values(cart).length > 0 && <>
       <Button theme="Success" click={handlerPay}> Pagar por QR</Button>
       <br />

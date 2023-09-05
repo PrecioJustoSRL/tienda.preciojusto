@@ -13,7 +13,7 @@ export function UserProvider({ children }) {
 	const [productDB, setProduct] = useState(undefined)
 	const [item, setItem] = useState(undefined)
 	const [cart, setCart] = useState({})
-	const [success, setSuccess] = useState('')
+	const [success, setSuccess] = useState(null)
 	const [pedidos, setPedidos] = useState([])
 	const [qr, setQr] = useState('');
 	const [QRurl, setQRurl] = useState('');
@@ -26,7 +26,7 @@ export function UserProvider({ children }) {
 	const [userUuid, setUserUuid] = useState(undefined)
 	const [modal, setModal] = useState('')
 	const [msg, setMsg] = useState('')
-	const [tienda, setTienda] = useState(null)
+	const [tienda, setTienda] = useState(undefined)
 
 	const timer = useRef(null);
 
@@ -48,6 +48,8 @@ export function UserProvider({ children }) {
 	const [webScann, setWebScann] = useState(false)
 	const [businessData, setBusinessData] = useState(undefined)
 	const [qrBCP, setQrBCP] = useState(undefined)
+	const [paySuccess, setPaySuccess] = useState(undefined)
+    const [filterDis, setFilterDis] = useState('')
 
 
 
@@ -72,9 +74,15 @@ export function UserProvider({ children }) {
 	const setUserItem = (data) => {
 		setItem(data)
 	}
-	const setUserSuccess = (data) => {
-		setSuccess(data)
-		setTimeout(() => { setUserSuccess(null) }, 6000)
+	const setUserSuccess = (data, time) => {
+		if (success === null) {
+			setSuccess(data)
+			const timer = setTimeout(() => { 			
+				console.log(success)
+				setUserSuccess(null), 
+				clearTimeout(timer) 
+			}, time ? time : 6000)
+		}
 	}
 
 	const setIntroVideo = (data) => {
@@ -84,7 +92,7 @@ export function UserProvider({ children }) {
 		// }
 		const interval = setInterval(() => {
 			console.log('int')
-			if (videoRef.current.ended) {
+			if (videoRef && videoRef.current && videoRef.current.ended) {
 				setUserIntroVideo(false)
 				clearInterval(interval)
 			}
@@ -141,7 +149,8 @@ export function UserProvider({ children }) {
 			whatsappMSG,
 			businessData, 
 			webScann, 
-			qrBCP, setQrBCP,
+			qrBCP,paySuccess, filterDis, setFilterDis,
+			setPaySuccess, setQrBCP,
 			setWebScann, 
 			setBusinessData,
 			setWhatsappMSG,
@@ -185,7 +194,8 @@ export function UserProvider({ children }) {
 		sound2, whatsapp,
 		businessData,
 		webScann,
-		qrBCP])
+		qrBCP,
+		paySuccess, filterDis])
 
 	return (
 		<UserContext.Provider value={value} >

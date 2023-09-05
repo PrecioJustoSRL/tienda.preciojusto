@@ -1,6 +1,5 @@
 'use client'
 
-import ReactAudioPlayer from 'react-audio-player';
 import { useUser } from '@/context/Context'
 
 function App() {

@@ -40,17 +40,17 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
     return (
         
             <tbody>
-                <tr class="bg-white text-[12px] border-b hover:bg-gray-50 " >
-                    <td class="px-3 py-4  flex flex-col text-[16px] font-extrabold text-gray-700">
+                <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
+                    <td className="px-3 py-4  flex flex-col text-[16px]  text-gray-700">
                         {i['nombre de producto 1']} 
                         
-                        <div class="flex w-full justify-center text-gray-900">
-                            <span class="text-[16px]  text-gray-700 font-extrabold tracking-tight">{i.costo} Bs.</span>
-                            {/* <span class="text-[16px]  text-gray-700  font-extrabold">   Bs.</span> */}
+                        <div className="flex w-full justify-center text-gray-900">
+                            <span className="text-[16px]  text-gray-700  tracking-tight">{i.costo} Bs.</span>
+                            {/* <span className="text-[16px]  text-gray-700  font-extrabold">   Bs.</span> */}
                         </div>
                     </td>
-                    <td class="px-3 py-4 font-semibold text-gray-900">
-                        <div  class="lg:flex lg:w-full lg:justify-center">
+                    <td className="px-3 py-4  text-gray-900">
+                        <div  className="lg:flex lg:w-full lg:justify-center">
 
 
                  
@@ -66,43 +66,15 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                         } 
                               </div>
                     </td>
-                    <td class="px-3 py-4 font-semibold text-gray-900">
-                        <div class="flex items-baseline text-gray-900">
-                            <span class="text-[16px]  text-gray-700 font-extrabold tracking-tight">{ cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined ? cart[i.uuid].cantidad * i.costo : i.costo } Bs.</span>
-                            {/* <span class="text-[16px]  text-gray-700  font-extrabold">   Bs.</span> */}
+                    <td className="px-3 py-4 font-semibold text-gray-900">
+                        <div className="flex items-baseline text-gray-900">
+                            <span className="text-[16px]  text-gray-700  tracking-tight">{ cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined ? cart[i.uuid].cantidad * i.costo : i.costo } Bs.</span>
+                            {/* <span className="text-[16px]  text-gray-700  font-extrabold">   Bs.</span> */}
                         </div>
                     </td>
                 </tr>
 
             </tbody>
-           
-
-
-
-
-        // <div class="relative w-full max-w-[500px] py-4" onClick={(e) => seeMore(e, i)} style={{ display: 'grid', gridTemplateColumns: 'auto 80px' }}>
-        //     <div class=" flex  flex-col justify-between ">
-        //         <div class=" font-bold text-[16px]  text-gray-950">
-        //             {i['nombre de producto 1']}
-        //         </div>
-        //         <div class="flex items-baseline text-gray-900">
-        //             <span class="text-[12px]  text-gray-700  font-semibold">BS</span>
-        //             <span class="text-[18px]  text-gray-700 font-extrabold tracking-tight">{i.costo}</span>
-        //         </div>
-        //     </div>
-        //     <div>
-        //         <div className='flex justify-center items-start'>
-        //             {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0
-        //                 ? <div className='flex w-full'>
-        //                     <Button theme='MiniPrimary' click={(e) => addLessCart(e, i)}>-</Button>
-        //                     <Button theme='MiniSecondary' click={(e) => addPlussCart(e, i)}>+</Button>
-        //                 </div>
-        //                 : <Button theme='MiniPrimary' click={(e) => addCart(e, i)}>Comprar</Button>
-        //             }
-        //         </div>
-        //         {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0 && <span className='block text-[16px] text-center '>{cart[i.uuid].cantidad}</span>}
-        //     </div>
-        // </div>
     )
 }
 

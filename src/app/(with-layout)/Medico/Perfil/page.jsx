@@ -17,21 +17,21 @@ function Home() {
         router.push(ref)
     }
 
-    console.log(userDB)
+    console.log(user)
     useEffect(() => {
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
     }, [user]);
     return (
-        <div className='w-full flex justify-center'>
+        <div className='w-full flex justify-center p-5'>
             {userDB !== undefined && userDB !== null
-                ? <div className=" bg-white  w-full max-w-[800px] p-5 ">
+                ? <div className=" bg-white  w-full max-w-[800px] p-5 py-10 shadow-2xl ">
                     <br />
                     <div className="flex justify-center">
                         <img className='h-[100px] w-[100px] rounded-full' src={userDB[0].url} alt="" />
                     </div>
                     <br />
                     <h3 className='w-full text-[14px] text-center '>{userDB[0]['nombre'].toUpperCase()}</h3>
-                    <br />
+    
                     <h3 className='w-full text-[14px] text-center '>{userDB[0]['especialidad']}</h3>
                     <br />
                     <Subtitle>Contactos</Subtitle>
