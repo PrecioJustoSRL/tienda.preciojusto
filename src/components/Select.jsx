@@ -31,8 +31,8 @@ export default function Select({arr, name, click, defaultValue, uuid}) {
                 {arr.includes('Chuquisaca') && <div className='absolute w-full top-[-80px]'>
                             {success == 'Importand' && <Tolkipt>Esta información es importante,<br /> por favor revisa que sea correcta.</Tolkipt>}
                 </div>}
-                <div className={`p-3 ${state == 'No disponible' &&  'bg-red-400'} ${state == 'Inmediato' &&  'bg-green-400'} ${state == 'En 24 hrs' &&  'bg-yellow-300'} ${state == 'Pendiente' &&  'bg-gray-400'} ${state == 'Felicitaciones' &&  'bg-green-400'} ${state == 'Atendido' &&  'bg-yellow-300'}`}>
-                     {state} <span className={select ? 'absolute right-5 rotate-[270deg]' :'absolute right-5 rotate-90'}>{'>'}</span>
+                <div className={`p-3 font-semibold ${state == 'No disponible' &&  'bg-red-400'} ${state == 'Inmediato' &&  'bg-green-400'} ${state == 'En 24 hrs' &&  'bg-yellow-300'} ${state == 'Pendiente' &&  'bg-gray-400'} ${state == 'Felicitaciones' &&  'bg-green-400'} ${state == 'Atendido' &&  'bg-yellow-300'}`}>
+                     {state} <span className={select ? 'font-semibold absolute right-5 rotate-[270deg]' :'font-semibold absolute right-5 rotate-90'}>{'>'}</span>
                 </div>
            <ul className={select ? `py-3 absolute h-[150px] overflow-y-auto  left-0 top-12 bg-gray-50 outline outline-1 outline-gray-300 text-gray-900 text-[14px] rounded-b-xl focus:ring-blue-500 focus:outline-blue-500 w-full z-50`: 'hidden' } >
                 {
