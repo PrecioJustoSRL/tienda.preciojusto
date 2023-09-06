@@ -39,7 +39,7 @@ function Comprar({ theme, styled, click, children }) {
 
       const val = calculator()
 
-      return val !== 0 && requestQR() 
+      return val !== 0 && requestQR()
     } else {
       setUserSuccess('Complete')
     }
@@ -75,17 +75,17 @@ function Comprar({ theme, styled, click, children }) {
       setQrBCP(data.data.qrImage)
 
       const write = {
-        idBCP: data.data.id, 
-        expiration: data.data.expirationDate, 
-        amount: amount + (check ? 350 : 0), 
+        idBCP: data.data.id,
+        expiration: data.data.expirationDate,
+        amount: amount + (check ? 350 : 0),
         message: 'Inconcluso'
       }
       const arr = Object.values(cart).map((i) => {
         const data = { ...i }
         delete data['created_at']
-        delete data['id']           
+        delete data['id']
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
-     return data
+        return data
       })
       writeUserData('Pedido', { compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
 
@@ -100,14 +100,19 @@ function Comprar({ theme, styled, click, children }) {
       console.log(err)
     }
   }
-             
+
   function closeModal() {
     setModal('')
     setQrBCP(undefined)
   }
 
-  console.log(user)
-  window.onbeforeunload = function() {
+  // window.location.hash = "no-back-button"
+  // window.onhashchange = function () {
+  //   window.location.hash = "no-back-button"
+  //   window.location.hash = "Again-No-back-button"
+
+  // }
+  window.onbeforeunload = function () {
     return "¿Desea recargar la página web?";
   };
   useEffect(() => {
@@ -133,7 +138,7 @@ function Comprar({ theme, styled, click, children }) {
           <Label htmlFor="">Numero de celular de referencia</Label>
           <Input type="text" name="referencia del paciente" onChange={onChangeHandler} require />
         </div>
-        <div>            
+        <div>
           <div className="mb-2">
             <Label htmlFor="">Referencia de lugar</Label>
             <div className="flex items-center" onClick={() => handlerCheck(false)}>
@@ -193,7 +198,7 @@ function Comprar({ theme, styled, click, children }) {
 
 
     <div className='relative border-t-4 border-t-gray-400 bg-white overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >
-    <h3 className='text-center  border-[1px] border-gray-200  bg-white text-[16px] px-5 py-2  font-bold' >MIS COMPRAS</h3>
+      <h3 className='text-center  border-[1px] border-gray-200  bg-white text-[16px] px-5 py-2  font-bold' >MIS COMPRAS</h3>
 
       <table className="w-full shadow-2xl lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
 
@@ -238,27 +243,27 @@ function Comprar({ theme, styled, click, children }) {
 
 export default WithAuth(Comprar)
 
-   // Object.values(cart).map((i) => {
-    //   const data = { ...i }
-    //   delete data['created_at']
-    //   delete data['id']
-    //   writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
-    // })
-    // router.push('/Cliente/Comprar/Detalle')
+// Object.values(cart).map((i) => {
+//   const data = { ...i }
+//   delete data['created_at']
+//   delete data['id']
+//   writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
+// })
+// router.push('/Cliente/Comprar/Detalle')
 
 
-    // window.navigator.vibrate([1000])
+// window.navigator.vibrate([1000])
 
 
 
 
 
-    //     console.log('click')
-    //     fetch('http://localhost:3000/api')
-    //   .then(response => console.log(response))
-    //   .then(data => console.log(data));
+//     console.log('click')
+//     fetch('http://localhost:3000/api')
+//   .then(response => console.log(response))
+//   .then(data => console.log(data));
 
-      // writeUserData('Transacciones', { uuid: data.data.id, expiration: data.data.expirationDate, amount: amount + (check ? 350 : 0), message: 'Inconcluso' }, null, null, null, null, null, null)
+// writeUserData('Transacciones', { uuid: data.data.id, expiration: data.data.expirationDate, amount: amount + (check ? 350 : 0), message: 'Inconcluso' }, null, null, null, null, null, null)
 
 
 // import Page from '@/components/Page'

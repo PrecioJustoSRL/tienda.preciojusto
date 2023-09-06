@@ -90,21 +90,34 @@ function Home() {
         // setSearch(false)
     }
 
-    window.location.hash="no-back-button"
+    window.location.hash = "no-back-button"
     window.onhashchange = function () {
-      window.location.hash="no-back-button"
-      window.location.hash="Again-No-back-button"
+        if (modal === 'back'
+
+        ) {
+            return
+        } else {
+            // window.location.hash = "no-back-button"
+            // window.location.hash = "Again-No-back-button"
+            // setModal()
+        }
+
+
 
     }
-    window.onbeforeunload = function() {
+    window.onbeforeunload = function () {
         return "¿Desea recargar la página web?";
-      };
+    };
 
 
 
 
 
     useEffect(() => {
+
+
+        router.push('/Cliente')
+
         if (tienda === undefined) {
             user && user.rol !== 'Medico' ? setTienda('Comprar') : setTienda('Recetar')
         }
@@ -132,7 +145,13 @@ function Home() {
                 <Button theme="MiniSuccessRecetar" click={() => storeHandler('Recetar')}>Recetar</Button>
                 <Button theme="MiniPrimaryComprar" click={() => storeHandler('Comprar')}>Comprar</Button>
             </div>}
-
+            {modal === 'back' && <Modal funcion={() => ''} alert={true} close={true}>
+                Esta por perder perder sus datos, Confirme nuevamente atras, <br />para salir de la aplicación.
+                <br /><br />
+                <button type="button" onClick={() => ''} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
+                    Contactar
+                </button>
+            </Modal>}
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && webScann === false && <div>
                 <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[5px] px-[10px] lg:px-[20px] z-20' >
                     <span className=''>
