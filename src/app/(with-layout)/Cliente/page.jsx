@@ -89,34 +89,31 @@ function Home() {
             : setFilter(data)
         // setSearch(false)
     }
-// console.log(window.history.length)
-// console.log(window.location.href)
-// console.log(window.history.state)
-// console.log(window.location.hash)
+    // console.log(window.history.length)
+    // console.log(window.location.href)
+    // console.log(window.history.state)
+    // console.log(window.location.hash)
 
-                // router.push('/Cliente')
-                // window.location.hash = "no-back-button"
+    // router.push('/Cliente')
+    // window.location.hash = "no-back-button"
 
+    // setModal('back')
+    // if (modal === 'back'
 
+    // ) {
+    //     return
+    // } else {
+    //     // window.location.hash = "no-back-button"
+    //     // window.location.hash = "Again-No-back-button"
+    //     // setModal()
+    // }
 
-    window.onhashchange = function () {
-
-confirm('Estas seguro de salir')
-
-        // setModal('back')
-        // if (modal === 'back'
-
-        // ) {
-        //     return
-        // } else {
-        //     // window.location.hash = "no-back-button"
-        //     // window.location.hash = "Again-No-back-button"
-        //     // setModal()
-        // }
+    // window.onhashchange = function () {
+    //    const confirmacion = confirm('Estas seguro de salir, se perderan tus datos')
+    // }
 
 
 
-    }
     window.onbeforeunload = function () {
         return "¿Desea recargar la página web?";
     };
@@ -132,7 +129,7 @@ confirm('Estas seguro de salir')
         }
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
-       
+
 
     }, [user, filterQR]);
 
