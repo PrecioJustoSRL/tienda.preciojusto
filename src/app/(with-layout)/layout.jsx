@@ -80,11 +80,15 @@ function Home({ children }) {
     setNav(false)
     // setWhatsapp(!whatsapp)
   }
+
   useEffect(() => {
     readUserData('Producto', 'Precio-Justo-SRL-Data', setUserDistributorPDB, 'distribuidor')
     // user && user.bloqueado === true && setModal('Bloqueado')
     readUserAllData('Producto', productDB, setUserProduct)
     // readUserAllData('Receta', recetaDBP, setRecetaDBP)
+
+
+
   }, [user]);
 
 

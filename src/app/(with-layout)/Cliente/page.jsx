@@ -90,7 +90,12 @@ function Home() {
         // setSearch(false)
     }
 
+    // window.location.hash="no-back-button"
+    window.onhashchange = function () {
+      window.location.hash="no-back-button"
+      window.location.hash="Again-No-back-button"
 
+    }
     useEffect(() => {
         if (tienda === undefined) {
             user && user.rol !== 'Medico' ? setTienda('Comprar') : setTienda('Recetar')
