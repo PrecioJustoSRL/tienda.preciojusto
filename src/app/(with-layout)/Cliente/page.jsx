@@ -114,8 +114,13 @@ function Home() {
 
 
 
-    window.onbeforeunload = function () {
+    window.onbeforeunload = function (e) {
+        console.log(e)
         const confirms = confirm('Estas seguro de salir, se perderan tus datos')
+        if (confirms !== true) {
+router.push('/Cliente')
+return
+        } 
         return confirms
     };
 
