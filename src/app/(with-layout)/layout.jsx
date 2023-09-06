@@ -80,7 +80,9 @@ function Home({ children }) {
     setNav(false)
     // setWhatsapp(!whatsapp)
   }
-
+  //  window.onbeforeunload = function() {
+  //       return "¿Desea recargar la página web?";
+  //     };
   useEffect(() => {
     readUserData('Producto', 'Precio-Justo-SRL-Data', setUserDistributorPDB, 'distribuidor')
     // user && user.bloqueado === true && setModal('Bloqueado')

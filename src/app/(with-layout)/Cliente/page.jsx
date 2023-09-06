@@ -91,17 +91,33 @@ function Home() {
     }
 
     // window.location.hash="no-back-button"
-    window.onhashchange = function () {
-      window.location.hash="no-back-button"
-      window.location.hash="Again-No-back-button"
+    // window.onhashchange = function () {
+    //   window.location.hash="no-back-button"
+    //   window.location.hash="Again-No-back-button"
 
-    }
+    // }
+    window.onbeforeunload = function() {
+        return "¿Desea recargar la página web?";
+      };
+
+
+
+
+
     useEffect(() => {
         if (tienda === undefined) {
             user && user.rol !== 'Medico' ? setTienda('Comprar') : setTienda('Recetar')
         }
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
+
+
+
+
+
+
+
+
 
     }, [user, filterQR]);
 

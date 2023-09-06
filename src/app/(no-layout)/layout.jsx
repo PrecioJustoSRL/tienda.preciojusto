@@ -20,11 +20,11 @@ function Home({ children }) {
     //     }
     // }, [user, userDB])
     // console.log(user)
-    window.onhashchange = function () {
-        window.location.hash="no-back-button"
-        window.location.hash="Again-No-back-button"
+    // window.onhashchange = function () {
+    //     window.location.hash="no-back-button"
+    //     window.location.hash="Again-No-back-button"
   
-      }
+    //   }
     return (
         <main >
             {children}
