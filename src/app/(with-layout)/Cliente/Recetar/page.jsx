@@ -84,7 +84,9 @@ function Comprar({ theme, styled, click, children }) {
     setModal('')
     router.push('/Cliente')
   }
-
+  window.onbeforeunload = function() {
+    return "¿Desea recargar la página web?";
+  };
   useEffect(() => {
     document.getElementById('qr') && setQRurl(document.getElementById('qr').toDataURL())
   }, [qr, QRurl]);

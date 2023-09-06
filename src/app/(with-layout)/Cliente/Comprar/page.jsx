@@ -107,7 +107,9 @@ function Comprar({ theme, styled, click, children }) {
   }
 
   console.log(user)
-
+  window.onbeforeunload = function() {
+    return "¿Desea recargar la página web?";
+  };
   useEffect(() => {
     paySuccess !== null && paySuccess !== undefined && router.push('/Cliente/Comprar/Detalle')
   }, [paySuccess]);

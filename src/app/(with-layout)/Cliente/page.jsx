@@ -90,12 +90,12 @@ function Home() {
         // setSearch(false)
     }
 
-    // window.location.hash="no-back-button"
-    // window.onhashchange = function () {
-    //   window.location.hash="no-back-button"
-    //   window.location.hash="Again-No-back-button"
+    window.location.hash="no-back-button"
+    window.onhashchange = function () {
+      window.location.hash="no-back-button"
+      window.location.hash="Again-No-back-button"
 
-    // }
+    }
     window.onbeforeunload = function() {
         return "¿Desea recargar la página web?";
       };
