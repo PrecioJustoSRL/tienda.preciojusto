@@ -115,7 +115,8 @@ function Home() {
 
 
     window.onbeforeunload = function () {
-        return "¿Desea recargar la página web?";
+        const confirms = confirm('Estas seguro de salir, se perderan tus datos')
+        return confirms
     };
 
 
