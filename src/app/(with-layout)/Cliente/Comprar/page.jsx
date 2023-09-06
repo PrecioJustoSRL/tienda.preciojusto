@@ -131,7 +131,7 @@ function Comprar({ theme, styled, click, children }) {
           <Label htmlFor="">Numero de celular de referencia</Label>
           <Input type="text" name="referencia del paciente" onChange={onChangeHandler} require />
         </div>
-        <div>
+        <div>            
           <div className="mb-2">
             <Label htmlFor="">Referencia de lugar</Label>
             <div className="flex items-center" onClick={() => handlerCheck(false)}>
