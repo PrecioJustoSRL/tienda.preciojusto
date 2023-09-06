@@ -89,18 +89,30 @@ function Home() {
             : setFilter(data)
         // setSearch(false)
     }
+// console.log(window.history.length)
+// console.log(window.location.href)
+// console.log(window.history.state)
+// console.log(window.location.hash)
 
-    window.location.hash = "no-back-button"
+                // router.push('/Cliente')
+                // window.location.hash = "no-back-button"
+
+
+
     window.onhashchange = function () {
-        if (modal === 'back'
 
-        ) {
-            return
-        } else {
-            // window.location.hash = "no-back-button"
-            // window.location.hash = "Again-No-back-button"
-            // setModal()
-        }
+confirm('Estas seguro de salir')
+
+        // setModal('back')
+        // if (modal === 'back'
+
+        // ) {
+        //     return
+        // } else {
+        //     // window.location.hash = "no-back-button"
+        //     // window.location.hash = "Again-No-back-button"
+        //     // setModal()
+        // }
 
 
 
@@ -115,22 +127,12 @@ function Home() {
 
     useEffect(() => {
 
-
-        router.push('/Cliente')
-
         if (tienda === undefined) {
             user && user.rol !== 'Medico' ? setTienda('Comprar') : setTienda('Recetar')
         }
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
-
-
-
-
-
-
-
-
+       
 
     }, [user, filterQR]);
 
@@ -145,7 +147,7 @@ function Home() {
                 <Button theme="MiniSuccessRecetar" click={() => storeHandler('Recetar')}>Recetar</Button>
                 <Button theme="MiniPrimaryComprar" click={() => storeHandler('Comprar')}>Comprar</Button>
             </div>}
-            {modal === 'back' && <Modal funcion={() => ''} alert={true} close={true}>
+            {window.location.hash === null && <Modal funcion={() => ''} alert={true} close={true}>
                 Esta por perder perder sus datos, Confirme nuevamente atras, <br />para salir de la aplicación.
                 <br /><br />
                 <button type="button" onClick={() => ''} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
