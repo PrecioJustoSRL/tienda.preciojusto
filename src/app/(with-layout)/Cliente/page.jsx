@@ -112,9 +112,15 @@ function Home() {
     //    const confirmacion = confirm('Estas seguro de salir, se perderan tus datos')
     // }
 
-window.addEventListener('load', function (e) {
-    window.history.pushState({}, '')
-})
+    window.addEventListener('load', function() {
+        window.history.pushState({ noBackExitsApp: true }, '')
+      })
+      
+      window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.noBackExitsApp) {
+          window.history.pushState({ noBackExitsApp: true }, '')
+        }
+      })
 
     window.onbeforeunload =  function (e) {
         console.log(e)
