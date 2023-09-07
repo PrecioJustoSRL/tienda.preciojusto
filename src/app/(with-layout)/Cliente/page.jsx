@@ -112,9 +112,9 @@ function Home() {
     //    const confirmacion = confirm('Estas seguro de salir, se perderan tus datos')
     // }
 
-window.load = function (e) {
+window.addEventListener('load', function (e) {
     window.history.pushState({}, '')
-};
+})
 
     window.onbeforeunload =  function (e) {
         console.log(e)
