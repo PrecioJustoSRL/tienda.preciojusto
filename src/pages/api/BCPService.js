@@ -4,13 +4,13 @@ const { conexionApiBCP } = require('./BCPCore.js');
 class BCPServices {
     constructor() {
         this.certificatePFX =  path.join(process.cwd(), 'src/pages/api/CertificateSandBoxApi.pfx');
-        this.passwordPFX = 'Pa$$Bcp2021';
+        this.passwordPFX = 'FL5vlckU6.d0.agx';
         this.appUserId = 'PRECJUSTOUser20230809';
         this.businessCode = '0256';
         this.publicToken = 'C8EAA25E-50F5-45B2-9FBA-3EA791895DB7';
         this.usuario = 'PRECJUSTO_USER';
         this.passwordUsuario = 'ujpw4CmvFo(c.D19';
-        this.qrV2 = 'https://apis.bcp.com.bo/OpenAPI_Qr/WebApi_Qr/api/v4/Qr/';
+        this.qrV2 = 'https://apis.bcp.com.bo/OpenAPI_Qr/WebApi_Qr/api/v4/Qr';
 
 
         // this.certificatePFX =  path.join(process.cwd(), 'src/pages/api/CertificateSandBoxApi.pfx');
