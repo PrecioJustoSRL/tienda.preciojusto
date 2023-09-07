@@ -4,7 +4,7 @@ const { conexionApiBCP } = require('./BCPCore.js');
 class BCPServices {
     constructor() {
         this.certificatePFX =  path.join(process.cwd(), 'src/pages/api/CertificateSandBoxApi.pfx');
-        this.passwordPFX = 'FL5vIckU6.d0.agx';
+        this.passwordPFX = 'FL5vlckU6.d0,agx';
         this.appUserId = 'PRECJUSTOUser20230809';
         this.businessCode = '0256';
         this.publicToken = 'C8EAA25E-50F5-45B2-9FBA-3EA791895DB7';
