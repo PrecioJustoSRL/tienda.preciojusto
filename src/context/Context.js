@@ -1,6 +1,5 @@
 'use client'
 
-
 import React, { useState, useMemo, useRef, useContext } from 'react'
 
 const UserContext = React.createContext()
@@ -27,9 +26,7 @@ export function UserProvider({ children }) {
 	const [modal, setModal] = useState('')
 	const [msg, setMsg] = useState('')
 	const [tienda, setTienda] = useState(undefined)
-
 	const timer = useRef(null);
-
 
 	const videoRef = useRef();
 	const [play, setPlay] = useState(true)
@@ -50,8 +47,6 @@ export function UserProvider({ children }) {
 	const [qrBCP, setQrBCP] = useState(undefined)
 	const [paySuccess, setPaySuccess] = useState(undefined)
     const [filterDis, setFilterDis] = useState('')
-
-
 
 	const setUserProfile = (data) => {
 		setUser(data)
@@ -84,7 +79,6 @@ export function UserProvider({ children }) {
 			}, time ? time : 6000)
 		}
 	}
-
 	const setIntroVideo = (data) => {
 		setUserIntroVideo(data)
 		// if (introVideo === undefined) {

@@ -145,9 +145,9 @@ function Home() {
 
 
 
-    window.addEventListener('load', function() {
-       window.history.pushState({}, '')
-     })
+    // window.addEventListener('load', function() {
+    //    window.history.pushState({}, '')
+    //  })
 
     window.onbeforeunload = function () {
         return "¿Desea recargar la página web?";
@@ -238,7 +238,7 @@ function Home() {
             {filterQR.length > 0 && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-20'>
                 <Title>RECETA MÉDICA</Title>
 
-                <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => setFilterQR('')}>
+                <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => {setFilterQR(''); setFilter('')}}>
                     <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                     </svg>
@@ -320,7 +320,9 @@ function Home() {
                             <Tag theme={categoria == 'Otros' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Otros' ? '' : 'Otros')}>Otros</Tag>
                         </div>
                     </div>
+                    <div className='w-full'>
                     <Button theme="Primary" click={() => setFilterNav(false)}>Filtrar</Button>
+                    </div>
                 </div>}
 
                 <div className="relative bg-transparent lg:bg-transparent mt-6  rounded-t-[50px]  w-full flex flex-col items-center justify-center px-5 pt-8 pb-16 lg:pt-0">
@@ -328,21 +330,23 @@ function Home() {
                         productDB !== null && productDB !== undefined &&
                         productDB.sort(sortArray).map((i, index) => {
                             if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar'
-                                ? i.disponibilidad !== 'No disponible' && <CardM i={i} key={index} />
+                                ? i.disponibilidad !== 'No disponible' && i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) && i.distribuidor.includes(filterDis) && <CardM i={i} key={index} />
                                 : i.disponibilidad !== 'No disponible' && i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) && i.distribuidor.includes(filterDis) && <Card i={i} key={index} />
                         }
                         )}
 
-                    {filter.length > 0 && productDB !== null && productDB !== undefined &&
+                    {filter.length > 0 && productDB !== null && productDB !== undefined && (productDB === null || productDB === undefined) &&
                         productDB.sort(sortArray).map((i, index) => {
                             if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar' && i.distribuidor !== 'Precio-Justo-SRL-Data'
                                 ? (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
                                     (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&
+                                    i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) &&
                                 <CardM i={i} key={index} />
                                 : (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
                                     (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&
+                                    i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) &&
                                 <Card i={i} key={index} />
                             // console.log(recetaDBP && JSON.parse(recetaDBP[0].receta).find((el) => el.uuid === i.uuid))
                         }

@@ -1,6 +1,16 @@
 // import style from '../styles/Loader.module.css' 
+import { useEffect } from 'react'
+import { useUser } from '@/context/Context.js'
+import { onAuth } from '@/supabase/utils'
 
 export default function Loader() {
+
+    const { filterDis, setFilterDis, user, setUserProfile, userDB, cart, setUserCart, modal, setUserData, setModal, productDB, setUserProduct, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann, qrBCP, setQrBCP } = useUser()
+
+    useEffect(() => {
+        if (user === undefined) onAuth(setUserProfile)
+    })
+
     return (
         <div className="w-screen h-screen flex justify-center items-center bg-transparent">
             <div role="status">
