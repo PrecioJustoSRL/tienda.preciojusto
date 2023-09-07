@@ -113,9 +113,7 @@ function Home() {
     // }
 
 
-    window.addEventListener('load', function() {
-        window.history.pushState({}, '')
-      })
+
 
     // window.onbeforeunload =  function (e) {
     //     console.log(e)
@@ -127,6 +125,35 @@ function Home() {
     //     console.log(confirms)
     //     return confirms
     // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    window.addEventListener('load', function() {
+       window.history.pushState({}, '')
+     })
+
+    window.onbeforeunload = function () {
+        return "¿Desea recargar la página web?";
+      };
+
+    console.log(window.history)
 
 
 
