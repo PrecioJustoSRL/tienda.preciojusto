@@ -39,7 +39,7 @@ function Comprar({ theme, styled, click, children }) {
 
       const val = calculator()
 
-      return val !== 0 && requestQR()
+      return val >= 0 && requestQR()
     } else {
       setUserSuccess('Complete')
     }
@@ -63,6 +63,7 @@ function Comprar({ theme, styled, click, children }) {
     const amount = calculator()
     try {
       console.log('her')
+      console.log(amount)
       //**********************BCP*************************
       const res = await fetch(window.location.href.includes('https') ? 'https://preciojusto.pro/api' : 'http://localhost:3000/api', {
         method: 'POST',
@@ -242,62 +243,3 @@ function Comprar({ theme, styled, click, children }) {
 }
 
 export default WithAuth(Comprar)
-
-// Object.values(cart).map((i) => {
-//   const data = { ...i }
-//   delete data['created_at']
-//   delete data['id']
-//   writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid }, i.uuid, userDB, setUserData, setUserSuccess, 'existos', null)
-// })
-// router.push('/Cliente/Comprar/Detalle')
-
-
-// window.navigator.vibrate([1000])
-
-
-
-
-
-//     console.log('click')
-//     fetch('http://localhost:3000/api')
-//   .then(response => console.log(response))
-//   .then(data => console.log(data));
-
-// writeUserData('Transacciones', { uuid: data.data.id, expiration: data.data.expirationDate, amount: amount + (check ? 350 : 0), message: 'Inconcluso' }, null, null, null, null, null, null)
-
-
-// import Page from '@/components/Page'
-
-// const Home = () => {
-//   return (
-//   <>
-//     <a href="/api/pdf" download="generated_pdf.pdf" className="downloadBtn">Download PDF</a>
-//     <Page>
-//       <h1>Generated PDF</h1>
-//       <p>As you can see you can scroll without issues and select text.</p>
-//     </Page>
-//     <Page>
-//       <h1>Page 2</h1>
-//       <p>As you can see you can scroll without issues and select text.</p>
-//     </Page>
-//   </>
-//   )
-// }
-
-// export default Home
-{/* <li className='flex justify-between text-gray-700 text-[16px] '>
-          <span className='font-bold '>TOTAL: </span>
-          <span className='font-bold '>
-            {Object.values(cart).reduce((acc, i, index) => {
-              const sum = i['costo'] * i['cantidad']
-              return sum + acc
-            }, 0)}  Bs
-          </span>
-        </li> */}
-
-
-
-
-
-
-

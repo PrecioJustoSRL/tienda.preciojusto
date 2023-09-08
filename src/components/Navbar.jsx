@@ -7,22 +7,6 @@ import { signOut } from '@/supabase/utils'
 import Modal from '@/components/Modal'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default function BottomNavigation({ rol }) {
     const { user, userDB, modal, setModal, setUserProfile, businessData, setUserData, setUserProduct, setRecetaDB, setUserCart, setUserDistributorPDB, filter, setFilter, nav, setNav } = useUser()
 

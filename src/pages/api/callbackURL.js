@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
 
-        if (req.headers.authorization === 'Basic UFJFQ0pVU1RPX1VTRVI6NkFFNTJBNUUtM0E3MC00MTQwLTlERUUtRTkxNTU3NTBBNDFG') {
+        if (req.headers.authorization === 'Basic ' + Buffer.from('PRECJUSTO_USER' + ':' + 'ujpw4CmvFo(c.D19').toString('base64') ) {
 
             if (req.body && req.body.Description === 'PROCESADO') {
                 const resData = {
@@ -79,43 +79,3 @@ export default async function handler(req, res) {
 
 
 
-
-
-
-    // const options = {
-    //     method: method,
-    //     headers: {
-    //         'Correlation-Id': correlationId,
-    //         'Content-Type': 'application/json',
-    //         'Authorization':  'Basic ' + Buffer.from(usuarioEmpresaBCP + ':' + passwordEmpresaBCP).toString('base64'),
-    //         // 'Access-Control-allow-Origin': '*'
-    //     },
-    //     url: url,
-    //     httpsAgent: agent,
-    //     data: body,
-    // }
-
-    // const response = await axios(options);
-    // return response;
-
-
-    // if (req.method === 'POST') {
-
-
-    //     const options = {
-    //         method: method,
-    //         headers: {
-    //             'Correlation-Id': '123',
-    //             'Content-Type': 'application/json',
-    //             'Authorization':  'Basic UFJFQ0pVU1RPX1VTRVI6NkFFNTJBNUUtM0E3MC00MTQwLTlERUUtRTkxNTU3NTBBNDFG',
-    //         },
-    //         url: url,
-    //         // httpsAgent: agent,
-    //         data: body,
-    //     }
-
-    // res.setHeader('Content-Type', 'application/json')
-    // res.setHeader('Authorization', `Basic UFJFQ0pVU1RPX1VTRVI6NkFFNTJBNUUtM0E3MC00MTQwLTlERUUtRTkxNTU3NTBBNDFG`)
-
-
-    // }

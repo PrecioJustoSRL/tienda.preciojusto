@@ -15,7 +15,7 @@ export function WithAuth(Component) {
             if (user === undefined) onAuth(setUserProfile)
             if (user === null) router.push('/')
             if (user && user.role === 'authenticated') { router.push('/Register') }
-            if (user !== undefined && user !== null && user.rol && userDB === undefined) {
+            if (user !== undefined && user !== null && user.rol !== undefined && user.rol !== null && userDB === undefined) {
                 readUserData(user.rol, user.uuid, setUserData)
                 router.replace('/Cliente')
             }
@@ -23,7 +23,7 @@ export function WithAuth(Component) {
                 readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData)
             }
         }, [user, userDB, businessData])
-
+console.log(user)
         return (
             <>
                 {user === undefined && <Loader />}
