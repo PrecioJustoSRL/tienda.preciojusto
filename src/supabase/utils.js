@@ -47,7 +47,7 @@ const passwordResset = async (new_password) => {
 
 
 const passwordRedirect = async (email) => {
-   const data = await supabase.auth.resetPasswordForEmail(email, {
+    const data = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: 'https://tienda.preciojusto.pro/Resset',
     })
 }
@@ -80,7 +80,7 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
             ? (result.data.lenght > 1 ? updateContext(result.data[0]) : updateContext(result.data))
             : updateContext(null)
     }
-
+    console.log(result)
     return result.data
 }
 

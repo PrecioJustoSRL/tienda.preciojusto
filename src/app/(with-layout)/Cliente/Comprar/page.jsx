@@ -13,6 +13,8 @@ import Input from '@/components/Input'
 import { useRouter } from 'next/navigation';
 import dynamic from "next/dynamic";
 import Msg from "@/components/Msg"
+import { useMask } from '@react-input/mask';
+
 const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
   ssr: false,
 });
@@ -24,6 +26,8 @@ function Comprar({ theme, styled, click, children }) {
   const [showCart, setShowCart] = useState(false)
   const [check, setCheck] = useState(false)
   const [payQR, setPayQR] = useState(false)
+  const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
+  const inputRefWhatsApp2 = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
 
 
   const router = useRouter()
@@ -65,7 +69,7 @@ function Comprar({ theme, styled, click, children }) {
       console.log('her')
       console.log(amount)
       //**********************BCP*************************
-      const res = await fetch(window.location.href.includes('https') ? 'https://preciojusto.pro/api' : 'http://localhost:3000/api', {
+      const res = await fetch(window.location.href.includes('https') ? 'https://tienda.preciojusto.pro/api' : 'http://localhost:3000/api', {
         method: 'POST',
         body: JSON.stringify({ amount: amount + (check ? 350 : 0) }),
         headers: new Headers({
@@ -73,7 +77,8 @@ function Comprar({ theme, styled, click, children }) {
         })
       })
       const data = await res.json()
-      setQrBCP(data.data.qrImage)
+      setQrBCP(data.data)
+      // setQrBCP(data.data.qrImage)
 
       const write = {
         idBCP: data.data.id,
@@ -88,7 +93,12 @@ function Comprar({ theme, styled, click, children }) {
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
         return data
       })
-      writeUserData('Pedido', { compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
+     await writeUserData('Pedido', { compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
+
+     const interval = setTimeout(() => {verify()}, 10000)
+
+
+// return clearInterval(interval)
 
       // router.push('/Cliente/Comprar/Detalle')
       // setTimeout(() => { updateUserData('Pedido', { message: 'Correcto' }, data.data.id, 'idBCP') }, 6000)
@@ -116,6 +126,13 @@ function Comprar({ theme, styled, click, children }) {
   window.onbeforeunload = function () {
     return "¿Desea recargar la página web?";
   };
+
+  async function  verify () {
+  const res = await readUserData('Pedido', qrBCP.id, null, 'idBCP')
+  res[0].message === 'Correcto' && router.push('/Cliente/Comprar/Detalle')
+}
+
+
   useEffect(() => {
     paySuccess !== null && paySuccess !== undefined && router.push('/Cliente/Comprar/Detalle')
   }, [paySuccess]);
@@ -133,11 +150,15 @@ function Comprar({ theme, styled, click, children }) {
         </div>
         <div>
           <Label htmlFor="">Celular del paciente</Label>
-          <Input type="text" name="celular del paciente" onChange={onChangeHandler} require />
+          <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp2} require/>
+
+          {/* <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require/> */}
         </div>
         <div>
           <Label htmlFor="">Numero de celular de referencia</Label>
-          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} require />
+          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require/>
+
+      {/* <Input type="number" name="referencia del paciente" reference={inputRefWhatsApp} onChange={onChangeHandler} require /> */}
         </div>
         <div>
           <div className="mb-2">
@@ -184,7 +205,7 @@ function Comprar({ theme, styled, click, children }) {
         <br />
         {
           qrBCP !== undefined
-            ? <img src={`data:image/png;base64,${qrBCP}`} className=' w-[80vw] max-w-[300px]' alt="" />
+            ? <img src={`data:image/png;base64,${qrBCP.qrImage}`} className=' w-[80vw] max-w-[300px]' alt="" />
             : <div aria-label="Loading..." role="status" className="flex items-center justify-center space-x-2 py-10">
               <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
               <span className="text-[12px] text-gray-950">Generando QR...</span>
@@ -193,7 +214,12 @@ function Comprar({ theme, styled, click, children }) {
         <br />
         {qrBCP !== undefined && <a
           className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
-          href={`data:image/png;base64,${qrBCP}`} download>Guardar ImagenQR</a>}
+          href={`data:image/png;base64,${qrBCP.qrImage}`} download>Guardar ImagenQR</a>}
+        <br />
+        {qrBCP !== undefined && <span
+          className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
+          onClick={verify}
+          >Verificar estado de cancelación</span>}
       </div>
     </div>}
 

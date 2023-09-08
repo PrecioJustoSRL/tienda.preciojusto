@@ -33,7 +33,7 @@ export default function handler(req, res) {
     console.log(req.body.amount)
 
     const bcp = new BCPServices();
-    bcp.generatedQr(req.body.amount, "BOB", "GLOSA", collector, "1/00:00", "123")
+    bcp.generatedQr(req.body.amount, "BOB", "Productos PRECIO JUSTO", collector, "1/00:00", "123")
         .then(response => {
             console.log(response.data)
             return res.json(response.data)

@@ -77,7 +77,11 @@ export function UserProvider({ children }) {
 				setUserSuccess(null), 
 				clearTimeout(timer) 
 			}, time ? time : 6000)
+
+			return clearTimeout(timer) 
 		}
+		
+
 	}
 	const setIntroVideo = (data) => {
 		setUserIntroVideo(data)
@@ -92,6 +96,7 @@ export function UserProvider({ children }) {
 			}
 		}, 1000)
 
+		return clearInterval(interval)
 	}
 
 
