@@ -16,6 +16,7 @@ import Modal from '@/components/Modal'
 import VideoClient from '@/components/Vide'
 import { Turret_Road } from 'next/font/google'
 import Whatsapp from '@/components/Whatsapp'
+import { onAuth } from '@/supabase/utils'
 
 function Home({ children }) {
   const router = useRouter()
@@ -88,6 +89,7 @@ function Home({ children }) {
     // user && user.bloqueado === true && setModal('Bloqueado')
     readUserAllData('Producto', productDB, setUserProduct)
     // readUserAllData('Receta', recetaDBP, setRecetaDBP)
+    if (user === undefined) onAuth(setUserProfile)
 
 
 
