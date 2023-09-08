@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
 
-        if (req.headers.authorization === 'Basic ' + Buffer.from('PRECJUSTO_USER' + ':' + 'ujpw4CmvFo(c.D19').toString('base64') ) {
+        if (req.headers.authorization === 'Basic ' + Buffer.from('PRECJUSTO_USER' + ':' + 'C8EAA25E-50F5-45B2-9FBA-3EA791895DB7').toString('base64') ) {
 
             if (req.body && req.body.Description === 'PROCESADO') {
                 const resData = {
