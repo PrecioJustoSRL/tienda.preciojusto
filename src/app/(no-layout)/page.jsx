@@ -79,9 +79,9 @@ export default function Home() {
   console.log(user)
 
   useEffect(() => {
-    introVideo == undefined ? readIndexedDB() : ''
-    if (user === undefined) onAuth(setUserProfile)
-    if (user && user.role === 'authenticated') { router.push('/Register') }
+    if(user === undefined ) onAuth(setUserProfile)
+    if (user && user.role === 'authenticated') router.push('/Register') 
+    if (user !== undefined && user !== null && user.rol )router.replace('/Cliente')
     if (user !== undefined && user !== null && user.rol && userDB === undefined) {
       readUserData(user.rol, user.uuid, setUserData)
       router.replace('/Cliente')
@@ -89,8 +89,7 @@ export default function Home() {
     if (user !== undefined && user !== null && user.rol && businessData === undefined) {
       readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData)
     }
-
-
+    introVideo == undefined ? readIndexedDB() : ''
   }, [user, introVideo, userDB, businessData])
 
   return (
@@ -124,7 +123,7 @@ export default function Home() {
             <div className="flex items-start">
               <Link href='/Resetear' className="ml-auto text-white text-[14px] text-gray-100 underline">Olvidaste tu contraseña?</Link>
             </div>
-            <Button type="submit" theme="Transparent">Iniciar Sesión</Button>
+            <Button type="submit" theme="Primary">Iniciar Sesión</Button>
             <div className="text-[14px] text-center font-medium text-white">No tienes una cuenta? <Link href="/SignUp" className="text-gray-100 underline">Registrate</Link ></div>
           </form>
         </div>

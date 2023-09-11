@@ -40,8 +40,8 @@ export default function Button({ theme, click, children }) {
     videoRef.current.muted = false
   };
   return (
-    <div>
-      <div className='z-30 absolute top-0 p-5 h-[50px] w-full'>
+    <div className='w-full '>
+      <div className='z-30 absolute top-0 p-5 h-[50px] w-full '>
         {introVideo && <div className='flex'>
 
 
@@ -81,7 +81,7 @@ export default function Button({ theme, click, children }) {
         </span>
       </div>
       <div className={`video-player absolute w-screen lg:w-[300px] rounded-[20px]  flex items-center h-screen my-auto ${introVideo === true ? 'left-0 right-0 mx-auto' : 'left-[-200vw]'}`} >
-        <video ref={videoRef} className='rounded-[20px]' controls autoPlay muted>
+        <video ref={videoRef} className='rounded-[20px] w-full' controls autoPlay muted>
           <source src="/intro.mp4" type="video/mp4" />
         </video>
       </div>

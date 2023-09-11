@@ -3,18 +3,44 @@ import { supabase } from './config'
 //--------------------------Authentications----------------------------------
 
 const onAuth = (setUserProfile) => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
+
+    console.log('onAuth')
+    const data = supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log('onAuthStateChange')
         if (session) {
+            console.log(session.user.id)
+            console.log('session')
+            const { data } = await supabase
+                .from('Users')
+                .select()
+                .eq('uuid', session.user.id)
+            console.log(data)
+            data !== null && data !== undefined  && data.length
+                ? setUserProfile(data[0])
+                : setUserProfile(session.user)
+            return
+        } else {
+            return setUserProfile(undefined)
+        }
+    })
+    data.data.subscription.callback( async (event, session) => {
+        console.log('onAuthStateChange')
+        if (session) {
+            console.log('session')
             const { data } = await supabase
                 .from('Users')
                 .select()
                 .eq('uuid', session.user.id)
             // console.log(data)
-            data !== null && data.length
+            data !== null && data !== undefined  && data.length
                 ? setUserProfile(data[0])
                 : setUserProfile(session.user)
-        } else { setUserProfile(null) }
+            return
+        } else {
+            return setUserProfile(null)
+        }
     })
+
 }
 
 const signUpWithEmailAndPassword = async (email, password, setUserProfile) => {
@@ -32,6 +58,26 @@ const signInWithEmailAndPassword = async (email, password, setUserSuccess) => {
         email,
         password,
     })
+    console.log(result.data.user.id)
+
+
+
+    // if (result.data.user !== null && result.data.user.id) {
+    //     console.log(session.user.id)
+    //     console.log('session')
+    //     const { data } = supabase
+    //         .from('Users')
+    //         .select()
+    //         .eq('uuid', result.data.user.id)
+    //     console.log(data)
+    //     data !== null && data !== undefined  && data.length
+    //         ? setUserProfile(data[0])
+    //         : setUserProfile(session.user)
+    //     return
+    // } else {
+    //     return setUserProfile(null)
+    // }
+
     result.data.user == null && setUserSuccess('AccountNonExist')
 }
 
