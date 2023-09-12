@@ -85,6 +85,8 @@ function Home({ children }) {
 
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile)
+    readUserData('Producto', 'Precio-Justo-SRL-Data', setUserDistributorPDB, 'distribuidor')
+    readUserAllData('Producto', productDB, setUserProduct)
   }, [user]);
 
   console.log(user)

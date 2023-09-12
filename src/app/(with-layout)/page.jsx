@@ -163,8 +163,7 @@ function Home() {
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
 
-        readUserData('Producto', 'Precio-Justo-SRL-Data', setUserDistributorPDB, 'distribuidor')
-        readUserAllData('Producto', productDB, setUserProduct)
+  
     }, [user, filterQR]);
 
     console.log(filter)
