@@ -17,6 +17,7 @@ const onAuth = (setUserProfile, ) => {
                 .select()
                 .eq('uuid', session.user.id)
                 console.log(error)
+                
             if(error && error.code === 'PGRST301'){
                 console.log('error.code')
                 setUserProfile(null)
@@ -144,7 +145,7 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
             ? (result.data.lenght > 1 ? updateContext(result.data[0]) : updateContext(result.data))
             : updateContext(null)
     }
-    console.log(result)
+    // console.log(result)
     return result.data
 }
 
@@ -156,7 +157,7 @@ const readUserAllData = async (rute, context, updateContext) => {
     const result = await supabase
         .from(rute)
         .select()
-console.log(result)
+// console.log(result)
     return updateContext(result.data)
 
 }

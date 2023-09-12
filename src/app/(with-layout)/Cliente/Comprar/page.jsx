@@ -98,7 +98,7 @@ function Comprar({ theme, styled, click, children }) {
 
 
 
-      router.push(`/Cliente/Comprar/6465?idBCP=${data.data.id}`)
+      router.push(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
 
       // const interval = setTimeout(() => { verify() }, 10000)
     } catch (err) {

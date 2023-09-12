@@ -72,6 +72,16 @@ function Home() {
         return val
     }
 
+
+    function confeti (i) {
+        console.log(i)
+        i.message === 'Correcto' 
+        ? router.push(`/Cliente/Comprar/Detalle?idBCP=${i.idBCP}`)
+        : router.push(`/Cliente/Comprar/Qr?idBCP=${i.idBCP}`)
+    }
+
+
+
     console.log(state)
     useEffect(() => {
         readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
@@ -80,7 +90,7 @@ function Home() {
     return (
 
         <div className="relative overflow-x-auto shadow-2xl  ">
-            <table className=" min-w-[1200px] lg:w-full lg:min-w-[1000px] text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
+            <table className=" min-w-[1200px] lg:w-full bg-white lg:min-w-[1000px] text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
                 <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col-3" className="px-3 py-3 text-center">
@@ -135,8 +145,10 @@ function Home() {
                             <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
                                 {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)}
                             </td>
-                            <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
-                                {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
+                            <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.message == 'Correcto'?'bg-[#32CD32] text-gray-900':'bg-red-500 text-white'}`} onClick={e=>confeti(i)}>
+                                {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'} 
+                                </button>
                             </td>
                             <td className="px-3 py-4 h-full font-semibold  text-gray-900  text-center">
                                 {getDayMonthYear(i['created_at'])}

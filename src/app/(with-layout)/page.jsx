@@ -17,8 +17,10 @@ import QrcodeDecoder from 'qrcode-decoder';
 import { QRreaderUtils } from '@/utils/QRreader'
 import { useState } from 'react'
 import Title from '@/components/Title'
+import styles from '@/app/page.module.css'
+
 function Home() {
-    const { filterDis, setFilterDis, user, userDB, cart, setUserCart, modal, setUserData, setModal, productDB, setUserProduct, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann, qrBCP, setQrBCP } = useUser()
+    const { filterDis, setFilterDis, user, userDB, cart, setUserCart, modal, setUserData, setModal, productDB, setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann, qrBCP, setQrBCP } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
     const [categoria, setCategoria] = useState('')
     const router = useRouter()
@@ -146,12 +148,14 @@ function Home() {
 
     window.onbeforeunload = function () {
         return "¿Desea recargar la página web?";
-      };
-      window.history.forward()
+    };
+    window.history.forward()
 
     console.log(history.length)
 
-
+    function confeti() {
+        router.push(`/Cliente/Comprar/Detalle?idBCP=${6365157}`)
+    }
 
 
 
@@ -162,8 +166,9 @@ function Home() {
         }
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
+        readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
 
-  
+
     }, [user, filterQR]);
 
     console.log(filter)
@@ -234,7 +239,7 @@ function Home() {
             {filterQR.length > 0 && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-20'>
                 <Title>RECETA MÉDICA</Title>
 
-                <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => {setFilterQR(''); setFilter('')}}>
+                <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => { setFilterQR(''); setFilter('') }}>
                     <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                     </svg>
@@ -317,11 +322,28 @@ function Home() {
                         </div>
                     </div>
                     <div className='w-full'>
-                    <Button theme="Primary" click={() => setFilterNav(false)}>Filtrar</Button>
+                        <Button theme="Primary" click={() => setFilterNav(false)}>Filtrar</Button>
                     </div>
                 </div>}
 
+
+
+
+
+
+
                 <div className="relative bg-transparent lg:bg-transparent mt-6  rounded-t-[50px]  w-full flex flex-col items-center justify-center px-5 pt-8 pb-16 lg:pt-0">
+                    
+                        <div className={`relative w-full max-w-[600px] lg:w-[50%] text-black text-center p-5 text-[18px] font-bold rounded-full z-20 ${styles.scale}`} style={{ background: '#ffff99' }} onClick={confeti}>
+                            ¡Hola! tienes una comprapendiente.<br />¡Gracias por elegirnos! <br />
+                        </div>
+                    
+                    
+
+
+
+
+
                     {filter.length == 0 && filterQR.length == 0 &&
                         productDB !== null && productDB !== undefined &&
                         productDB.sort(sortArray).map((i, index) => {
@@ -337,12 +359,12 @@ function Home() {
                                 ? (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
                                     (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&
-                                    i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) &&
+                                i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) &&
                                 <CardM i={i} key={index} />
                                 : (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
                                     (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&
-                                    i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) &&
+                                i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) &&
                                 <Card i={i} key={index} />
                             // console.log(recetaDBP && JSON.parse(recetaDBP[0].receta).find((el) => el.uuid === i.uuid))
                         }
