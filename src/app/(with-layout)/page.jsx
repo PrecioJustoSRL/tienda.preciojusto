@@ -149,7 +149,7 @@ function Home() {
     window.onbeforeunload = function () {
         return "¿Desea recargar la página web?";
     };
-    window.history.forward()
+    // window.history.forward()
 
     console.log(history.length)
 

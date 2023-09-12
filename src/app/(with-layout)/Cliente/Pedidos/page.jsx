@@ -20,41 +20,8 @@ function Home() {
     const router = useRouter()
 
     const [state, setState] = useState({})
-    const [postImage, setPostImage] = useState({})
-    const [urlPostImage, setUrlPostImage] = useState({})
-
-    function seeMore() {
-        router.push('/Producto')
-    }
-    const onClickHandlerCategory = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['estado']: value } })
-    }
-
-    const onClickHandlerCity = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['ciudad']: value } })
-    }
-
-    function manageInputIMG(e, uuid) {
-        const file = e.target.files[0]
-        setPostImage({ ...postImage, [uuid]: file })
-        setUrlPostImage({ ...urlPostImage, [uuid]: URL.createObjectURL(file) })
-        setState({ ...state, [uuid]: { ...state[uuid], uuid } })
-    }
-
-    const onClickHandlerAvailability = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['disponibilidad']: value } })
-    }
-
-    function onChangeHandler(e, i) {
-        setState({ ...state, [i.uuid]: { ...state[i.uuid], uuid: i.uuid, [e.target.name]: e.target.value } })
-    }
-
-    function save(i) {
-        updateUserData('Pedido', state[i.uuid], i.uuid)
-        const obj = { ...state }
-        delete obj[i.uuid]
-        setState(obj)
-    }
+  
+   
 
     function delet(i) {
         deleteUserData('Pedido', i.uuid)
