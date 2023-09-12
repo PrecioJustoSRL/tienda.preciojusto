@@ -94,9 +94,9 @@ function Home({ children }) {
     // <div className="pt-[65px] pb-[65px] min-h-screen bg-gray-white"  style={{ backgroundImage: `url(bg.png)`, backgroundAttachment: 'fixed', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom' }}>
 
     <>
-      {user === undefined && <LoaderWithLogo />}
+      {/* {user === undefined && <LoaderWithLogo />} */}
 
-      {user && user !== undefined && <div className="h-screen bg-gray-white">
+     <div className="h-screen bg-gray-white">
 
 
         {user && user.bloqueado === true && <Modal funcion={soporte} alert={true} close={true}>
@@ -196,7 +196,7 @@ function Home({ children }) {
         </div>} */}
         </main>
         {/* <Whatsapp /> */}
-      </div>}
+      </div>
     </>
   )
 }
