@@ -337,7 +337,7 @@ function Home() {
 
 
 
-                    {<div className={`w-full max-w-[600px] lg:w-[50%] bg-[#1C355E] text-white text-center p-5 text-[18px] font-bold rounded-full z-20 ${styles.scale}`}>
+                    {<div className={`w-full max-w-[600px] lg:w-[50%] bg-[#1C355E] text-white text-center p-5 text-[18px] font-bold rounded-full z-20 ${styles.scale}`} onClick={confeti}>
                         Felicidades por su compra.<br /> presione AQUI para ver los <br />detalles
                         <span className='ml-1.5 inline-block bg-[#32CD32] rounded-full'>
                             <svg width="15" height="15" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
