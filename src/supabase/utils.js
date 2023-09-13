@@ -12,12 +12,28 @@ const onAuth = (setUserProfile, ) => {
             console.log('session')
             // session.user.id && router && router.push('/Cliente')
             // setSession(session.user)
+
+            console.log(session.expires_at)
+            console.log(new Date(session.expires_at))
+            console.log(new Date().getTime())
+           const access_token = session.access_token
+            const refresh_token = session.refresh_token
+            // const await =supabase.auth.setSession({
+            //     access_token,
+            //     refresh_token,
+            // })
+
+            // const { dat, err } = await supabase.auth.refreshSession({refresh_token})
+            // const { sessi, user } = dat
+
+            // console.log(sessi)
+
             const { data, error } = await supabase
                 .from('Users')
                 .select()
                 .eq('uuid', session.user.id)
                 console.log(error)
-                
+
             if(error && error.code === 'PGRST301'){
                 console.log('error.code')
                 setUserProfile(null)
@@ -157,7 +173,7 @@ const readUserAllData = async (rute, context, updateContext) => {
     const result = await supabase
         .from(rute)
         .select()
-// console.log(result)
+console.log(result)
     return updateContext(result.data)
 
 }

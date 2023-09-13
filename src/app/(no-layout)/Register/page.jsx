@@ -53,7 +53,7 @@ function Home() {
         // if (user == null || user == undefined || user.role !== 'authenticated') router.push('/SignUp')
         // if (user && user.rol) readUserData('Users', user.uuid, setUserData)
         user === undefined && onAuth(setUserProfile)
-        if (user && user.rol) router.push('/Cliente')
+        if (user && user.rol) router.push('/')
         // getUserData(setUserProfile)
         // if (user !== undefined && user !== null) router.replace('/Cliente')
     }, [user, productDB]);
