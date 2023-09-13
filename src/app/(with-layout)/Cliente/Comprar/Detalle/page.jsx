@@ -42,7 +42,7 @@ function Comprar({ theme, styled, click, children }) {
     router.push('/Cliente/Pedidos')
   }
   function redirect () {
-    // router.push('/Cliente')
+    router.push('/')
   }
 async function getDetaill () {
   const res = await readUserData('Pedido', idBCP, null, 'idBCP')

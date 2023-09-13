@@ -176,6 +176,8 @@ export default function BottomNavigation({ rol }) {
                 <Header />
                 <Profile />
                 <Store />
+                <Order />
+
                 <li className="px-5">
                     <Link href="/Medico/Recetas" onClick={() => setNav(false)} className="flex items-center p-2 rounded-lg    hover:bg-[#00000030] ">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
