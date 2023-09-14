@@ -1,5 +1,5 @@
 'use client'
-import { writeUserData, readUserData, onAuth, signOut } from '@/supabase/utils'
+import { writeUserData, readUserData, onAuth, signOut, getUserData, readUserAllData} from '@/supabase/utils'
 import { useUser } from '@/context/Context'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 function Home() {
 
-    const { user, introVideo, userDB, setUserProfile, setUserSuccess, success, setUserData } = useUser()
+    const { user, introVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, productDB, setUserProduct } = useUser()
     const router = useRouter()
 
     const [rol, setRol] = useState('Cliente')
@@ -46,7 +46,7 @@ function Home() {
     router.push('/Login')
 }
 
-    console.log(user)
+    console.log(productDB)
     useEffect(() => {
         // console.log(user)
         // if (user && user.rol) router.push('/Cliente')
@@ -54,8 +54,9 @@ function Home() {
         // if (user && user.rol) readUserData('Users', user.uuid, setUserData)
         user === undefined && onAuth(setUserProfile)
         if (user && user.rol) router.push('/Cliente')
+        // getUserData(setUserProfile)
         // if (user !== undefined && user !== null) router.replace('/Cliente')
-    }, [user]);
+    }, [user, productDB]);
 
 
     return (

@@ -14,7 +14,7 @@ import Particles from '@/components/Particles'
 
 
 export default function Home() {
-  const { user, introVideo, setSound, setBusinessData, businessData, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, } = useUser()
+  const { user, introVideo, setSound, setBusinessData, businessData, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setSession } = useUser()
   const [isDisable, setIsDisable] = useState(false)
   const router = useRouter()
 const [reload, setReload] = useState(true)
@@ -80,7 +80,7 @@ const [reload, setReload] = useState(true)
 
   useEffect(() => {
     
-    if(user === undefined ) onAuth(setUserProfile, router)
+    if(user === undefined ) onAuth(setUserProfile)
     if (user && user.role === 'authenticated') router.push('/Register') 
     if (user !== undefined && user !== null && user.rol )router.replace('/')
     introVideo == undefined ? readIndexedDB() : ''

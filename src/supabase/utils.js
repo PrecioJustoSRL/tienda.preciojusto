@@ -2,28 +2,33 @@ import { supabase } from './config'
 
 //--------------------------Authentications----------------------------------
 
-const onAuth = (setUserProfile, router) => {
+const onAuth = (setUserProfile, ) => {
 
     console.log('onAuth')
     const data = supabase.auth.onAuthStateChange(async (event, session) => {
         console.log('onAuthStateChange')
         if (session) {
-            console.log(session.user.id)
+            console.log(session)
             console.log('session')
             // session.user.id && router && router.push('/Cliente')
+            // setSession(session.user)
             const { data, error } = await supabase
                 .from('Users')
                 .select()
                 .eq('uuid', session.user.id)
-            console.log(data)
-            console.log(error)
+                console.log(error)
+            if(error && error.code === 'PGRST301'){
+                console.log('error.code')
+                setUserProfile(null)
+                return
+            }
             data !== null && data !== undefined  && data.length
                 ? setUserProfile(data[0])
                 : setUserProfile(session.user)
                 return
-        } 
-             setUserProfile(null)
-        
+        }
+        setUserProfile(null)
+
     })
     // data.data.subscription.callback( async (event, session) => {
     //     console.log('onAuthStateChange')
@@ -113,6 +118,21 @@ const writeUserData = async (rute, object, uuid, context, updateContext, setUser
 }
 // ('Users', session.user.id, {}, setUserProfile, null, { uuid: session.user.id, rol: undefined })
 
+const getUserData = async (setUserProfile) => {
+    const { data, error } = await supabase
+        .from('Users')
+        .select()
+        .eq('uuid', "420a5562-ad2e-41df-a566-3f74cb90a65e")
+    console.log(data)
+    console.log(error)
+    data !== null && data !== undefined && data.length
+        ? setUserProfile(data[0])
+        : setUserProfile(session.user)
+    return
+}
+
+
+
 const readUserData = async (rute, uuid, updateContext, eq,) => {
     const result = await supabase
         .from(rute)
@@ -136,7 +156,7 @@ const readUserAllData = async (rute, context, updateContext) => {
     const result = await supabase
         .from(rute)
         .select()
-
+console.log(result)
     return updateContext(result.data)
 
 }
@@ -168,5 +188,5 @@ const deleteUserData = async (rute, uuid, eq) => {
 
 
 
-export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData }
+export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData, getUserData }
 

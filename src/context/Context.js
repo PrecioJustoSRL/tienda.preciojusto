@@ -5,7 +5,7 @@ import React, { useState, useMemo, useRef, useContext } from 'react'
 const UserContext = React.createContext()
 
 export function UserProvider({ children }) {
-
+	const [session, setSession] = useState(undefined)
 	const [user, setUser] = useState(undefined)
 	const [userDB, setUserDB] = useState(undefined)
 	const [distributorPDB, setDistributorPDB] = useState(undefined)
@@ -150,6 +150,7 @@ export function UserProvider({ children }) {
 			businessData, 
 			webScann, 
 			qrBCP,paySuccess, filterDis, check, 
+			session, setSession,
 			setCheck,
 			 setFilterDis,
 			setPaySuccess, setQrBCP,
@@ -197,7 +198,7 @@ export function UserProvider({ children }) {
 		businessData,
 		webScann,
 		qrBCP,
-		paySuccess, filterDis, check])
+		paySuccess, filterDis, check, session])
 
 	return (
 		<UserContext.Provider value={value} >
