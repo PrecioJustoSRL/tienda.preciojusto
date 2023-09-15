@@ -3,7 +3,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import style from '../Cliente/Cliente.module.css'
 import Input from '../../../components/Input'
 import Select from '../../../components/Select'
 import Button from '../../../components/Button'
