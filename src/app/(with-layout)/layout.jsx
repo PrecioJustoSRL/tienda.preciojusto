@@ -94,13 +94,13 @@ function Home({ children }) {
   return (
     // <div className="pt-[65px] pb-[65px] min-h-screen bg-gray-white"  style={{ backgroundImage: `url(bg.png)`, backgroundAttachment: 'fixed', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom' }}>
 
-    <>
+    <div>
       {/* {user === undefined && <LoaderWithLogo />} */}
 
-     <div className="h-screen bg-gray-white">
+   <div className="h-screen bg-gray-white">
 
 
-        {user && user.bloqueado === true && <Modal funcion={soporte} alert={true} close={true}>
+       {user && user.bloqueado === true && <Modal funcion={soporte} alert={true} close={true}>
           Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
           <br /><br />
           <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
@@ -128,8 +128,7 @@ function Home({ children }) {
         {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
         {webScann && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setWebScann(false)}></div>}
 
-        <main className={`relative min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
-          {/* <img src="/bg.png" className='fixed bottom-[60px] lg:bottom-0 right-[20px] w-[60vw] lg:w-[40vw]' alt="" /> */}
+           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
           <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm flex items-center justify-between bg-[#2A52BE]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
             {pathname !== '/' && <div className='flex  hidden lg:block'>
               <div className='flex '>
@@ -166,7 +165,7 @@ function Home({ children }) {
             {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/Cliente' && <Cart />}
           </nav>
 
-          {search
+      {search
             && filter.length > 0
             && distributorPDB !== null
             && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-50 bg-white'>
@@ -185,20 +184,17 @@ function Home({ children }) {
                 </div>)}
             </div>}
 
-          <div className="lg:px-[50px] pt-[85px] pb-[65px] md:pt-[85px] md:pb-5 h-screen overflow-y-auto">
+         <div className="lg:px-[50px] pt-[85px] pb-[65px] md:pt-[85px] md:pb-5 h-screen w-full overflow-y-auto">
             <VideoClient />
             {children}
-          </div>
+         </div>
           {user && user !== undefined && <div className="fixed bottom-0  z-40 w-full h-[65px] bg-[#2A52BE] rounded-t-[40px] border-t-[1px] border-gray-50 border- lg:hidden">
             <BottomNavigation rol={user.rol} />
           </div>}
-          {/* {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-gray-50 border-t-8 border-white rounded-t-[40px] lg:hidden">
-          <BottomNavigation rol={user.rol} />
-        </div>} */}
-        </main>
-        {/* <Whatsapp /> */}
-      </div>
-    </>
+      
+   </main>
+           </div>
+    </div>
   )
 }
 

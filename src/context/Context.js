@@ -46,7 +46,7 @@ export function UserProvider({ children }) {
 	const [businessData, setBusinessData] = useState(undefined)
 	const [qrBCP, setQrBCP] = useState(undefined)
 	const [paySuccess, setPaySuccess] = useState(undefined)
-    const [filterDis, setFilterDis] = useState('')
+	const [filterDis, setFilterDis] = useState('')
 	const [check, setCheck] = useState(false)
 
 	const setUserProfile = (data) => {
@@ -70,20 +70,21 @@ export function UserProvider({ children }) {
 	const setUserItem = (data) => {
 		setItem(data)
 	}
-	const setUserSuccess = (data, time) => {
+	const setUserSuccess =  (data, time) => {
 		if (success === null) {
 			setSuccess(data)
-			const timer = setTimeout(() => { 			
+			const timer = setTimeout(() => {
 				console.log(success)
-				setUserSuccess(null), 
-				clearTimeout(timer) 
+				setUserSuccess(null)
 			}, time ? time : 6000)
 
-			return clearTimeout(timer) 
-		}
-		
+			return () => {
+				clearTimeout(timer)
 
+			};
+		}
 	}
+
 	const setIntroVideo = (data) => {
 		setUserIntroVideo(data)
 		// if (introVideo === undefined) {
@@ -147,14 +148,14 @@ export function UserProvider({ children }) {
 			sound2,
 			whatsapp,
 			whatsappMSG,
-			businessData, 
-			webScann, 
-			qrBCP,paySuccess, filterDis, check, 
+			businessData,
+			webScann,
+			qrBCP, paySuccess, filterDis, check,
 			session, setSession,
 			setCheck,
-			 setFilterDis,
+			setFilterDis,
 			setPaySuccess, setQrBCP,
-			setWebScann, 
+			setWebScann,
 			setBusinessData,
 			setWhatsappMSG,
 			setWhatsapp,

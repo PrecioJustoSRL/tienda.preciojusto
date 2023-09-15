@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es" className='scroll-smooth' style={{scrollBehavior:'smooth'}}>
       <head>
         <link rel="icon" href="/logo-circle.png" />
         <link rel='manifest' href='/manifest.json' />
