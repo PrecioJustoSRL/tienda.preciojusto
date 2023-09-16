@@ -36,8 +36,7 @@ function Comprar({ theme, styled, click, children }) {
 
 
     function closeModal() {
-        setModal('')
-        setQrBCP(undefined)
+        router.back()
     }
 
 
@@ -47,7 +46,7 @@ function Comprar({ theme, styled, click, children }) {
     };
 
     async function verify() {
-
+        setModal('verify')
         console.log(idBCP)
         const res = await readUserData('Pedido', idBCP, null, 'idBCP')
         console.log(res)
@@ -59,12 +58,13 @@ function Comprar({ theme, styled, click, children }) {
         // console.log('change recieved')
         // })
         // .subscribe()
+        setModal('')
     }
 
 
     useEffect(() => {
 
-        idBCP && verify ()
+        idBCP && verify()
     }, [idBCP]);
 
     return (<div className='w-full min-h-screen relative px-5 pb-[50px] bg-gray-100'>
@@ -84,21 +84,26 @@ function Comprar({ theme, styled, click, children }) {
                 <br />
                 {
                     dataQR !== undefined
-                        ? <img src={`data:image/png;base64,${dataQR.qrImage}`} className=' w-[80vw] max-w-[300px]' alt="" />
-                        : <div aria-label="Loading..." role="status" className="flex items-center justify-center space-x-2 py-10">
+                        ? (modal === 'verify'
+                            ? <div aria-label="Loading..." role="status" className=" h-[80vw] max-h-[300px] w-[80vw] max-w-[300px] flex items-center justify-center space-x-2 py-10">
+                                <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
+                                <span className="text-[12px] text-gray-950">Verificando...</span>
+                            </div>
+                            : <img src={`data:image/png;base64,${dataQR.qrImage}`} className=' h-[80vw] max-h-[300px] w-[80vw] max-w-[300px]' alt="" />)
+                        : <div aria-label="Loading..." role="status" className=" h-[80vw] max-h-[300px] w-[80vw] max-w-[300px] flex items-center justify-center space-x-2 py-10">
                             <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
                             <span className="text-[12px] text-gray-950">Generando QR...</span>
                         </div>
                 }
                 <br />
-                { dataQR !== undefined  && <a
+                {dataQR !== undefined && <a
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
                     href={`data:image/png;base64,${dataQR.qrBase64}`} download>Guardar ImagenQR</a>}
                 <br />
-                { dataQR !== undefined && <span
+                {dataQR !== undefined && <button
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
                     onClick={verify}
-                >Verificar estado de cancelación</span>}
+                >Verificar estado de cancelación</button>}
             </div>
         </div>
 

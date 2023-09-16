@@ -15,7 +15,7 @@ import { getDayMonthYear } from '@/utils/DateFormat'
 
 
 function Home() {
-    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, } = useUser()
+    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, cart} = useUser()
     const router = useRouter()
     const [state, setState] = useState({})
     const refFirst = useRef(null);
@@ -40,7 +40,7 @@ function Home() {
 
 
     function confeti(i) {
-        console.log(i)
+        console.log('ped')
         i.message === 'Correcto'
             ? router.push(`/Cliente/Comprar/Detalle?idBCP=${i.idBCP}`)
             : router.push(`/Cliente/Comprar/Qr?idBCP=${i.idBCP}`)
@@ -71,7 +71,14 @@ function Home() {
     //       behavior: 'smooth',
     //     });
     //   };
-    console.log(state)
+    console.log(cart)
+
+    // window.onbeforeunload = function () {
+    //     // return "¿Desea recargar la página web?";
+    //     alert('Estas seguro de finalizar la  Compra')
+    //   };
+
+
     useEffect(() => {
         readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
     }, [])
@@ -80,14 +87,17 @@ function Home() {
 
 
         <div className='relative '>
-            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20' onClick={prev}>{'<'}</button>
-            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20' onClick={next}>{'>'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:hidden' onClick={prev}>{'<'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:hidden' onClick={next}>{'>'}</button>
             <div className="relative overflow-x-scroll shadow-2xl scroll-smoot" ref={refFirst}>
                 <table className=" min-w-[1200px] lg:w-full bg-white lg:min-w-[1000px] text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
                     <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center">
                                 #
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Debito
                             </th>
                             <th scope="col-3" className="px-3 py-3 text-center">
                                 Paciente
@@ -105,9 +115,7 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-center">
                                 Costo
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
-                                Debito
-                            </th>
+                          
                             <th scope="col" className="px-3 py-3 text-center">
                                 Fecha
                             </th>
@@ -121,6 +129,11 @@ function Home() {
                             return <tr className="text-[12px] border-b hover:bg-gray-50" key={index}>
                                 <td className="px-3 py-4  flex font-semibold  text-gray-900  text-center">
                                     <span className='h-full flex py-2'>{index + 1}</span>
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
+                                        {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
+                                    </button>
                                 </td>
                                 <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
                                     {i['nombre del paciente']}
@@ -138,11 +151,7 @@ function Home() {
                                 <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
                                     {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)}
                                 </td>
-                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
-                                    <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
-                                        {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
-                                    </button>
-                                </td>
+                               
                                 <td className="px-3 py-4 h-full font-semibold  text-gray-900  text-center">
                                     {getDayMonthYear(i['created_at'])}
                                 </td>

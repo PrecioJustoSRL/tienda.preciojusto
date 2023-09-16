@@ -184,7 +184,7 @@ export default function BottomNavigation({ rol }) {
                     <Order />
                     <span className="inline-block  text-[12px] text-white   ">Pedidos</span>
                 </Button>
-                <Button click={() => redirectHandler(`/Cliente`, 'Cliente')} name={'Cliente'}>
+                <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                     <Store />
                     <span className="text-[12px] text-white   ">Tienda</span>
                 </Button>
@@ -209,7 +209,7 @@ export default function BottomNavigation({ rol }) {
                     </svg>
                     <span className="text-[12px] text-white   ">Recetas</span>
                 </Button>
-                <Button click={() => redirectHandler(`/Cliente`)} name={'Cliente'}>
+                <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
                     <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                     </svg>
@@ -230,7 +230,7 @@ export default function BottomNavigation({ rol }) {
         case 'Clinica':
             return userDB && userDB.access && userDB.access == 'verificador'
                 ? <div className={`grid h-full max-w-lg grid-cols-4 mx-auto font-medium `}>
-                    <Button click={() => redirectHandler(`/Cliente`)} name={'Cliente'}>
+                    <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
                         <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
@@ -267,7 +267,7 @@ export default function BottomNavigation({ rol }) {
                         </svg>
                         <span className="text-[12px] text-white   ">Pedidos</span>
                     </Button>
-                    <Button click={() => redirectHandler(`/Cliente`)} name={'Cliente'}>
+                    <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
                         <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
@@ -286,7 +286,7 @@ export default function BottomNavigation({ rol }) {
                 </div>
         case 'Distribuidor':
             return <div className={`grid h-full max-w-lg ${rol === 'Distribuidor' ? 'grid-cols-5' : 'grid-cols-4'} mx-auto font-medium z-50`}>
-                <Button click={() => redirectHandler(`/Cliente`)} name={'Cliente'}>
+                <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
                     <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                     </svg>
@@ -323,7 +323,7 @@ export default function BottomNavigation({ rol }) {
             </div>
         case 'Administrador':
             return <div className={`grid h-full max-w-lg   grid-cols-3 mx-auto font-medium z-50`}>
-                <Button click={() => redirectHandler(`/Cliente`)} name={'Cliente'}>
+                <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
                     <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                     </svg>

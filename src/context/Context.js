@@ -12,6 +12,7 @@ export function UserProvider({ children }) {
 	const [productDB, setProduct] = useState(undefined)
 	const [item, setItem] = useState(undefined)
 	const [cart, setCart] = useState({})
+	const [cartDB, setCartDB] = useState({})
 	const [success, setSuccess] = useState(null)
 	const [pedidos, setPedidos] = useState([])
 	const [qr, setQr] = useState('');
@@ -151,7 +152,9 @@ export function UserProvider({ children }) {
 			businessData,
 			webScann,
 			qrBCP, paySuccess, filterDis, check,
-			session, setSession,
+			session, 
+			cartDB, setCartDB, 
+			setSession,
 			setCheck,
 			setFilterDis,
 			setPaySuccess, setQrBCP,
@@ -190,7 +193,7 @@ export function UserProvider({ children }) {
 			setUserSuccess,
 			setUserItem
 		})
-	}, [user, userDB, distributorPDB, productDB, pedidos, item, cart, success, qr, QRurl, recetaDB, filter, filterQR, recetaDBP, nav, temporal, userUuid, modal, msg, tienda, introVideo, play, sound, state, videoClientRef,
+	}, [user, userDB, distributorPDB, productDB, pedidos, item, cart,cartDB, success, qr, QRurl, recetaDB, filter, filterQR, recetaDBP, nav, temporal, userUuid, modal, msg, tienda, introVideo, play, sound, state, videoClientRef,
 		soundClient,
 		introClientVideo,
 		search,
