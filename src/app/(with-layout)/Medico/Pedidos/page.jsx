@@ -8,20 +8,19 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 
 import { WithAuth } from '@/HOCs/WithAuth'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import { getDayMonthYear } from '@/utils/DateFormat'
 
 
 function Home() {
-    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, } = useUser()
-
+    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, cart} = useUser()
     const router = useRouter()
-
     const [state, setState] = useState({})
-  
-   
+    const refFirst = useRef(null);
+
+
 
     function delet(i) {
         deleteUserData('Pedido', i.uuid)
@@ -40,16 +39,46 @@ function Home() {
     }
 
 
-    function confeti (i) {
-        console.log(i)
-        i.message === 'Correcto' 
-        ? router.push(`/Cliente/Comprar/Detalle?idBCP=${i.idBCP}`)
-        : router.push(`/Cliente/Comprar/Qr?idBCP=${i.idBCP}`)
+    function confeti(i) {
+        console.log('ped')
+        i.message === 'Correcto'
+            ? router.push(`/Cliente/Comprar/Detalle?idBCP=${i.idBCP}`)
+            : router.push(`/Cliente/Comprar/Qr?idBCP=${i.idBCP}`)
     }
 
+    const prev = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            refFirst.current.scrollLeft = scrollLeft - itemWidth;
+        });
+    };
+
+    const next = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width  - 50
+            console.log(itemWidth)
+            refFirst.current.scrollLeft = scrollLeft + itemWidth;
+        });
+    };
+
+    // const scrollToTop = () => {
+    //     window.scrollTo({
+    //       top: 0,
+    //       behavior: 'smooth',
+    //     });
+    //   };
+    console.log(cart)
+
+    // window.onbeforeunload = function () {
+    //     // return "¿Desea recargar la página web?";
+    //     alert('Estas seguro de finalizar la  Compra')
+    //   };
 
 
-    console.log(state)
     useEffect(() => {
         readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
     }, [])

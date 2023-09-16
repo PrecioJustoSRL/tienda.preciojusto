@@ -145,7 +145,7 @@ function Comprar({ theme, styled, click, children }) {
                   {cartDB.check ? 'Provincía (+ 351 BS)' : ''}
                 </td>
                 <td className="px-3 py-4 text-[16px] text-gray-900">
-                  {cartDB.cart !== undefined && cartDB.amount} BOB
+                  {cartDB.cart !== undefined && cartDB.amount} Bs
                 </td>
               </tr>
             }) : ''}
@@ -156,7 +156,7 @@ function Comprar({ theme, styled, click, children }) {
         <br />
         {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 && <span className='text-[16px] mt-[30px]'>*En uno momento ellos se comunicaran contigo</span>}
 
-        <div className='flex flex-col h-[130px] justify-between items-center lg:flex-row lg:justify-around lg:gap-[10px] py-5 justify-center'>
+        <div className='flex flex-col h-[130px] justify-between items-center lg:flex-row lg:justify-around lg:gap-[10px] p-5 justify-center'>
           <Button theme='Primary' click={seguimiento}>Seguimiento de compra</Button>
           <Button theme="Primary" click={redirect}>Volver a la pagina Principal</Button>
         </div>
