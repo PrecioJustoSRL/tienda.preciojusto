@@ -36,7 +36,7 @@ const PDFView = ({ dbUrl, style }) => {
 
     const [dataUrl, setDataUrl] = useState('');
 
-    const { userDB, user, recetaDB, cart } = useUser()
+    const { user, recetaDB, cart } = useUser()
     const [isCliente, setisCliente] = useState(false);
 
     function download(url) {

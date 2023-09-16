@@ -162,7 +162,7 @@ function Home({ children }) {
               <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" placeholder="Buscar producto..." />
             </div>}
 
-            {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/Cliente' && <Cart />}
+            {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/' && <Cart />}
           </nav>
 
       {search
