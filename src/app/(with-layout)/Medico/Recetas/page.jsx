@@ -12,7 +12,12 @@ import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
+import dynamic from "next/dynamic";
+import QRCode from "qrcode.react";
 
+const InvoicePDF = dynamic(() => import("@/components/recetaPDF"), {
+    ssr: false,
+  });
 
 function Home() {
     const { user, userDB, modal, setModal, msg, setMsg, recetaDBP, setRecetaDBP, setUserItem, item, setUserData, setUserSuccess, } = useUser()
@@ -75,11 +80,14 @@ function Home() {
         requestAnimationFrame(() => {
             const scrollLeft = refFirst.current.scrollLeft;
             console.log(scrollLeft)
-            const itemWidth = screen.width  - 50
+            const itemWidth = screen.width - 50
             console.log(itemWidth)
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
+
+    console.log(recetaDBP)
+
     useEffect(() => {
         readUserData('Receta', user.uuid, setRecetaDBP, 'medico')
     }, [])
@@ -97,7 +105,7 @@ function Home() {
                     <input type="text" className='border-b text-[16px] border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeFilter} placeholder='Filtrar por nombre de paciente' />
                 </div>
                 <br />
-                <table className="w-full min-w-[700px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
+                <table className="w-full min-w-[1800px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
                     <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" className="px-3 py-3 text-[16px]">
@@ -115,6 +123,12 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-[16px]">
                                 Receta
                             </th>
+                            <th scope="col" className="px-24 py-3 text-[16px]">
+                                QR
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-[16px]">
+                                PDF
+                            </th>
                             <th scope="col" className="px-6 py-3 text-[16px] text-center">
                                 Eliminar
                             </th>
@@ -126,11 +140,8 @@ function Home() {
                                 <td className="px-3 py-4 align-top  text-gray-900  text-[16px]">
                                     {index + 1}
                                 </td>
-                                {/* <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
-                                <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full bg-red-500 text-white`} onClick={e => confeti(i)}>
-                                    Download PDF
-                                </button>
-                            </td> */}
+                             
+
                                 <td className="px-3 py-4 align-top  text-gray-900  text-[16px]">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='paciente' defaultValue={i['paciente']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea> */}
                                     {i['paciente']}
@@ -147,6 +158,24 @@ function Home() {
                                     {JSON.parse(i.receta).map((i, index) =>
                                         <li>{i['nombre de producto 1']}{'  (*'}{i['cantidad']}{')'}</li>
                                     )}
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    <div className='w-[150px] h-[150px]'>
+                                         <QRCode
+                                            id='qr'
+                                            size={256}
+                                            style={{ height: "auto", maxWidth: "100%", width: "100%", border: '10px', backgroundColor: 'white' }}
+                                            value={i.qr}
+                                            level={'H'}
+                                            includeMargin={true}
+                                            renderAs={'canvas'}
+                                            viewBox={`0 0 256 256`}
+                                            imageSettings={{ src: '/logo-circle.png', height: 100, width: 100, escavate: false }}
+                                        />
+                                    </div>
+                                </td>
+                                <td className="w-[250px] px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    <InvoicePDF userDB={user} cartDB={JSON.parse(i.receta)} dbUrl={i.qr} recetaPDB={i} />
                                 </td>
                                 <td className="px-3 align-top py-4">
                                     {state[i.qr]

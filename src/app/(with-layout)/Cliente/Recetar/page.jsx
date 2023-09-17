@@ -125,7 +125,7 @@ function Comprar({ theme, styled, click, children }) {
             id='qr'
             size={256}
             style={{ height: "auto", maxWidth: "100%", width: "100%", border: '10px', backgroundColor: 'white' }}
-            value={qr}
+            value={i.qr}
             level={'H'}
             includeMargin={true}
             renderAs={'canvas'}
