@@ -9,6 +9,7 @@ export function UserProvider({ children }) {
 	const [user, setUser] = useState(undefined)
 	const [userDB, setUserDB] = useState(undefined)
 	const [distributorPDB, setDistributorPDB] = useState(undefined)
+	const [precioJustoPDB, setPrecioJustoPDB] = useState(undefined)
 	const [productDB, setProduct] = useState(undefined)
 	const [item, setItem] = useState(undefined)
 	const [cart, setCart] = useState({})
@@ -153,7 +154,9 @@ export function UserProvider({ children }) {
 			webScann,
 			qrBCP, paySuccess, filterDis, check,
 			session, 
-			cartDB, setCartDB, 
+			cartDB,
+			precioJustoPDB, setPrecioJustoPDB,
+			 setCartDB, 
 			setSession,
 			setCheck,
 			setFilterDis,
@@ -202,7 +205,7 @@ export function UserProvider({ children }) {
 		businessData,
 		webScann,
 		qrBCP,
-		paySuccess, filterDis, check, session])
+		paySuccess, filterDis, check, session, precioJustoPDB])
 
 	return (
 		<UserContext.Provider value={value} >

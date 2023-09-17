@@ -21,7 +21,7 @@ import { onAuth } from '@/supabase/utils'
 
 function Home({ children }) {
   const router = useRouter()
-  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, distributorPDB, setUserDistributorPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, } = useUser()
+  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, } = useUser()
   const pathname = usePathname()
 
   const redirectHandler = (ref) => {
@@ -49,9 +49,10 @@ function Home({ children }) {
     setUserCart({})
     setUserProduct(undefined),
       setRecetaDB(undefined),
-      setUserDistributorPDB(undefined)
+      setPrecioJustoPDB(undefined)
     setUserData(undefined)
     setModal('')
+    setTienda(undefined)
     return router.push('/Login')
   }
 
@@ -85,7 +86,7 @@ function Home({ children }) {
 
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile)
-    readUserData('Producto', 'Precio-Justo-SRL-Data', setUserDistributorPDB, 'distribuidor')
+    // readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor')
     readUserAllData('Producto', productDB, setUserProduct)
 
   }, [user]);
@@ -167,13 +168,13 @@ function Home({ children }) {
 
       {search
             && filter.length > 0
-            && distributorPDB !== null
-            && distributorPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-50 bg-white'>
+            && precioJustoPDB !== null
+            && precioJustoPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-50 bg-white'>
               {search
                 && filter.length > 0
-                && distributorPDB !== null
-                && distributorPDB !== undefined
-                && distributorPDB.filter((obj, index) => index === distributorPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).filter((i, index) => {
+                && precioJustoPDB !== null
+                && precioJustoPDB !== undefined
+                && precioJustoPDB.filter((obj, index) => index === precioJustoPDB.findIndex(o => obj['nombre de producto 1'] === o['nombre de producto 1'])).sort(sortArray).filter((i, index) => {
                   if (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase())) { return i }
                   if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) { return i }
                   if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) { return i }
