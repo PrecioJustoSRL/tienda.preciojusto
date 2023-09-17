@@ -9,7 +9,7 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 
 import { WithAuth } from '@/HOCs/WithAuth'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 
@@ -23,6 +23,7 @@ function Home() {
     const [postImage, setPostImage] = useState({})
     const [urlPostImage, setUrlPostImage] = useState({})
     const [filter, setFilter] = useState('')
+    const refFirst = useRef(null);
 
     function onChangeFilter(e) {
         setFilter(e.target.value.toLowerCase())
@@ -61,7 +62,24 @@ function Home() {
         if (x['paciente'].toLowerCase() > y['paciente'].toLowerCase()) { return 1 }
         return 0
     }
+    const prev = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            refFirst.current.scrollLeft = scrollLeft - itemWidth;
+        });
+    };
 
+    const next = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width  - 50
+            console.log(itemWidth)
+            refFirst.current.scrollLeft = scrollLeft + itemWidth;
+        });
+    };
     useEffect(() => {
         readUserData('Receta', user.uuid, setRecetaDBP, 'medico')
     }, [])
