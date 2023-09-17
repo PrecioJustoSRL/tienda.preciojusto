@@ -72,7 +72,7 @@ export default function Home() {
           <div className="flex items-start">
           <Link href="/Resetear" className="ml-auto text-[14px] text-gray-100 underline">Olvidaste tu contraseña?</Link>
           </div>
-          <Button type="submit" theme="Primary ">Continuar</Button>
+          <Button type="submit" theme="Primary">Continuar</Button>
           <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 underline">Inicia Sessión</Link >
           </div>
         </form>
