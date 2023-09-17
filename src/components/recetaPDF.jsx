@@ -109,9 +109,10 @@ const PDFView = ({ dbUrl, style }) => {
 
                             </View>
                             <View style={{ width: '50%', }}>
-                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                                    <Image src="/logo-main.png" style={{ height: '130px', width: '100px' }}></Image>
-                                </View>
+                            <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'center' }}>
+                                        <Image src="/logo-circle.png" style={{ height: '130px', width: '130px' }}></Image>
+                                        <Text style={{ fontSize: '16px', paddingTop: '16px' }}>PRECIO JUSTO</Text>
+                                    </View>
                                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 
                                     {dataUrl ? <Image src={dataUrl} style={{ width: '200px', height: '200px', marginTop: '50px' }} />

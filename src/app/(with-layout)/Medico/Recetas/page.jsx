@@ -15,7 +15,7 @@ import { uploadStorage } from '@/supabase/storage'
 import dynamic from "next/dynamic";
 import QRCode from "qrcode.react";
 
-const InvoicePDF = dynamic(() => import("@/components/recetaPDF"), {
+const InvoicePDF = dynamic(() => import("@/components/recetaPDFdoc"), {
     ssr: false,
   });
 

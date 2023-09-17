@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from 'react'
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Button from '../components/Button'
 import { useRouter } from 'next/navigation';
+import QRCode from "qrcode.react";
 
 
 Font.register({ family: "Inter", src: "/assets/font.otf" })
@@ -34,10 +35,10 @@ const styles = StyleSheet.create({
 const PDFView = ({ dbUrl, userDB, cartDB, recetaPDB }) => {
     const router = useRouter()
 
-    const [dataUrl, setDataUrl] = useState('');
-    const [user, setUser] = useState('');
-    const [cart, setCart] = useState('');
-    const [recetaDB, setRecetaDB] = useState('');
+    const [dataUrl, setDataUrl] = useState(null);
+    const [user, setUser] = useState(null);
+    const [cart, setCart] = useState(null);
+    const [recetaDB, setRecetaDB] = useState(null);
 
 
     // const { user, recetaDB, cart } = useUser()
@@ -66,16 +67,32 @@ const PDFView = ({ dbUrl, userDB, cartDB, recetaPDB }) => {
 
 
     useEffect(() => {
-        setDataUrl(dbUrl)
+        // setDataUrl(dbUrl)
         setUser(userDB)
         setCart(cartDB)
-        setRecetaDB(recetaDB)
+        setRecetaDB(recetaPDB)
         setisCliente(true)
+        document.getElementById('qr') && setDataUrl(document.getElementById('qr').toDataURL())
+
     });
 
     return (
         <div className="w-full height-[30px]">
-            {isCliente && <PDFDownloadLink document={
+ <div className="hidden">
+            <QRCode
+                id='qr'
+                size={256}
+                style={{ height: "auto", maxWidth: "100%", width: "100%", border: '10px', backgroundColor: 'white' }}
+                value={dbUrl}
+                level={'H'}
+                includeMargin={true}
+                renderAs={'canvas'}
+                viewBox={`0 0 256 256`}
+                imageSettings={{ src: '/logo-circle.png', height: 100, width: 100, escavate: false }}
+            />
+</div>
+
+            {isCliente && dataUrl && user && cart && recetaDB && <PDFDownloadLink document={
                 <Document>
                     <Page size='A4' style={styles.body} >
                         <View>
@@ -116,9 +133,11 @@ const PDFView = ({ dbUrl, userDB, cartDB, recetaPDB }) => {
 
                             </View>
                             <View style={{ width: '50%', }}>
-                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                                    <Image src="/logo-main.png" style={{ height: '130px', width: '100px' }}></Image>
+                                <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'center' }}>
+                                    <Image src="/logo-circle.png" style={{ height: '130px', width: '130px' }}></Image>
+                                    <Text style={{ fontSize: '16px', paddingTop: '16px' }}>PRECIO JUSTO</Text>
                                 </View>
+
                                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 
                                     {dataUrl ? <Image src={dataUrl} style={{ width: '200px', height: '200px', marginTop: '50px' }} />
