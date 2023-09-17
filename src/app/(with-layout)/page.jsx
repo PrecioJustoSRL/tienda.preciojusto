@@ -357,9 +357,9 @@ function Home() {
                         }
                         )}
 
-                    {filter.length > 0 && productDB !== null && productDB !== undefined && (productDB === null || productDB === undefined) &&
+                    {filter.length > 0 && productDB !== null && productDB !== undefined &&
                         productDB.sort(sortArray).map((i, index) => {
-                            if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar' && i.distribuidor !== 'Precio-Justo-SRL-Data'
+                            if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar'
                                 ? (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                     (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) ||
                                     (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase()))) && i.disponibilidad !== 'No disponible' &&

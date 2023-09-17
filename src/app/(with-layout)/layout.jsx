@@ -86,7 +86,7 @@ function Home({ children }) {
 
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile)
-    // readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor')
+    readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor')
     readUserAllData('Producto', productDB, setUserProduct)
 
   }, [user]);
@@ -160,7 +160,7 @@ function Home({ children }) {
                 <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                 <span className="sr-only">Search icon</span>
               </div>
-              <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" placeholder="Buscar producto..." />
+              <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar producto..." />
             </div>}
 
             {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/' && <Cart />}

@@ -7,7 +7,7 @@ import { useUser } from '@/context/Context.js'
 import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import Input from '@/components/Input'
@@ -15,22 +15,29 @@ import { generateUUID } from '@/utils/UIDgenerator'
 import LoaderBlack from '@/components/LoaderBlack'
 import { disponibilidad as dispo } from '@/constants'
 import Modal from '@/components/Modal'
+import { getDayMonthYear } from '@/utils/DateFormat'
+
 
 function Home() {
-    const { user, userDB, pedidos, setUserPedidos, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, modal, setModal, success, item,  } = useUser()
+    const { user, userDB, pedidos, setUserPedidos, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, modal, setModal, success, item, } = useUser()
 
     const router = useRouter()
     const [state, setState] = useState({})
     const [postImage, setPostImage] = useState({})
     const [urlPostImage, setUrlPostImage] = useState({})
-    const [disponibilidad, setDisponibilidad] = useState('')
-    const [categoria, setCategoria] = useState('')
+    const [debito, setDebito] = useState('')
+    const [envio, setEnvio] = useState('')
     const [sistema, setSistema] = useState('')
     const [id, setId] = useState('')
+    const [filter, setFilter] = useState('')
+    const refFirst = useRef(null);
+
+
+
     function seeMore() {
         router.push('/Producto')
     }
- 
+
 
 
     console.log(distributorPDB)
@@ -63,7 +70,7 @@ function Home() {
         const data = await readUserData('Producto', queryUuid, null, 'distribuidor')
 
         if (data.length === 0) {
-        setModal('No Data')
+            setModal('No Data')
             return
         }
 
@@ -82,7 +89,7 @@ function Home() {
         readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
     }
     async function deletConfirm() {
-        await updateUserData('Producto', {...state[item.uuid], archivado: false}, item.uuid)
+        await updateUserData('Producto', { ...state[item.uuid], archivado: false }, item.uuid)
         // postImage[item.uuid] && await uploadStorage('Producto', postImage[item.uuid], item.uuid, updateUserData, true)
         const obj = { ...state }
         delete obj[item.uuid]
@@ -104,37 +111,25 @@ function Home() {
         if (x['nombre de producto 1'].toLowerCase() > y['nombre de producto 1'].toLowerCase()) { return 1 }
         return 0
     }
-    console.log(distributorPDB)
+    console.log(state)
     function seeMore() {
         router.push('/Producto')
     }
-    const onClickHandlerCategory = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['estado']: value } })
+    const onClickHandlerCategory = (name, value, idBCP) => {
+        setState({ ...state, [idBCP]: { ...state[idBCP], idBCP, ['estado']: value } })
     }
 
-    const onClickHandlerCity = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['ciudad']: value } })
+
+
+    function onChangeHandler(e) {
+        setFilter(e.target.value.toLowerCase())
     }
 
-    function manageInputIMG(e, uuid) {
-        const file = e.target.files[0]
-        setPostImage({ ...postImage, [uuid]: file })
-        setUrlPostImage({ ...urlPostImage, [uuid]: URL.createObjectURL(file) })
-        setState({ ...state, [uuid]: { ...state[uuid], uuid } })
-    }
 
-    const onClickHandlerAvailability = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['disponibilidad']: value } })
-    }
-
-    function onChangeHandler(e, i) {
-        setState({ ...state, [i.uuid]: { ...state[i.uuid], uuid: i.uuid, [e.target.name]: e.target.value } })
-    }
-
-    function save(i) {
-        updateUserData('Pedido', state[i.uuid], i.uuid)
+    function save(idBCP) {
+        updateUserData('Pedido', state[idBCP], idBCP, 'idBCP')
         const obj = { ...state }
-        delete obj[i.uuid]
+        delete obj[idBCP]
         setState(obj)
     }
 
@@ -145,139 +140,153 @@ function Home() {
         // delete obj[i.uuid]
         // setState(obj)
     }
-    console.log(state)
+
+
+    const prev = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            refFirst.current.scrollLeft = scrollLeft - itemWidth;
+        });
+    };
+
+    const next = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width  - 50
+            console.log(itemWidth)
+            refFirst.current.scrollLeft = scrollLeft + itemWidth;
+        });
+    };
+    
     useEffect(() => {
-        readUserData('Pedido', user.uuid, setUserPedidos,  'distribuidor')
+        readUserData('Pedido', user.uuid, setUserPedidos, 'distribuidor')
     }, [])
 
     return (
-        <div className='h-full'> 
-        <div className="relative overflow-x-auto h-full  overflow-y-auto shadow-2xl p-5 bg-white min-h-[80vh]">
-       
-            <div className='min-w-[1900px] flex justify-start items-center my-5 '>
-                <h3 className="flex pr-12 text-[14px]" htmlFor="">Disponibilidad</h3>
-                <div className="grid grid-cols-3 gap-4 w-[500px] ">
-                    <Tag theme={disponibilidad == 'En 24 hrs' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'En 24 hrs' ? '' : 'En 24 hrs ')}>En 24 hrs</Tag>
-                    <Tag theme={disponibilidad == 'Inmediatamente' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'Inmediatamente' ? '' : 'Inmediatamente')}>Inmediatamente</Tag>
-                    <Tag theme={disponibilidad == 'No disponible' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'No disponible' ? '' : 'No disponible')}>No disponible</Tag>
+        <div className='relative '>
+        <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:hidden' onClick={prev}>{'<'}</button>
+        <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:hidden' onClick={next}>{'>'}</button>
+            <div className="relative overflow-x-auto h-full  overflow-y-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
+                <h3 className='font-medium text-[16px]'>Pedidos</h3>
+
+
+                <div className='flex justify-center w-full'>
+                    <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre o correo' />
                 </div>
-            </div>
-            <div className='min-w-[1900px] flex justify-start items-center my-5  '>      
-                <h3 className="flex pr-12 text-[14px]">Categorias</h3>
-                <div className="grid grid-cols-3 gap-4 w-[500px] " >
-                    <Tag theme={categoria == 'Titanio' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Titanio' ? '' : 'Titanio')}>Titanio</Tag>
-                    <Tag theme={categoria == 'Acero' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Acero' ? '' : 'Acero')}>Acero</Tag>
-                    <Tag theme={categoria == 'Otros' ? 'Primary' : 'Secondary'} click={() => setCategoria(categoria == 'Otros' ? '' : 'Otros')}>Otros</Tag>
+                <div className='min-w-[1900px] flex justify-start items-center my-5 '>
+                    <h3 className="flex pr-12 text-[14px]" htmlFor="">Debitos</h3>
+                    <div className="grid grid-cols-3 gap-4 w-[500px] ">
+                        <Tag theme={debito == 'Correcto' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Correcto' ? '' : 'Correcto')}>Sin deuda</Tag>
+                        <Tag theme={debito == 'Inconcluso' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Inconcluso' ? '' : 'Inconcluso')}>Sin cancelar</Tag>
+                    </div>
                 </div>
-            </div>
-            <div className='min-w-[1900px] flex justify-start items-center my-5 '>
-                <h3 className="flex pr-12 text-[14px]" htmlFor="">Sistema</h3>
-                <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 100px) 100px 100px 100px 200px 200px 100px' }}>
-                    <Tag theme={sistema == '1.5' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '1.5' ? '' : '1.5')}>1.5</Tag>
-                    <Tag theme={sistema == '2.0' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '2.0' ? '' : '2.0')}>2.0</Tag>
-                    <Tag theme={sistema == '2.4' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '2.4' ? '' : '2.4')}>2.4</Tag>
-                    <Tag theme={sistema == '2.5' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '2.5' ? '' : '2.5')}>2.5</Tag>
-                    <Tag theme={sistema == '2.7' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '2.7' ? '' : '2.7')}>2.7</Tag>
-                    <Tag theme={sistema == '3.5' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '3.5' ? '' : '3.5')}>3.5</Tag>
-                    <Tag theme={sistema == '4.5' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '4.5' ? '' : '4.5')}>4.5</Tag>
-                    <Tag theme={sistema == 'Clavos' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Clavos' ? '' : 'Clavos')}>Clavos</Tag>
-                    <Tag theme={sistema == 'Protesis' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Protesis' ? '' : 'Protesis')}>Protesis</Tag>
-                    <Tag theme={sistema == 'Costillas' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Costillas' ? '' : 'Costillas')}>Costillas</Tag>
-                    <Tag theme={sistema == 'Columna y neurocirugía' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Columna y neurocirugía' ? '' : 'Columna y neurocirugía')}>Columna y neurocirugía</Tag>
-                    <Tag theme={sistema == 'Fijadores externos' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Fijadores externos' ? '' : 'Fijadores externos')}>Fijadores externos</Tag>
-                    <Tag theme={sistema == 'Otros' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Otros' ? '' : 'Otros')}>Otros</Tag>
+                <div className='min-w-[1900px] flex justify-start items-center my-5  '>
+                    <h3 className="flex pr-12 text-[14px]">Estado de envios</h3>
+                    <div className="grid grid-cols-3 gap-4 w-[500px] " >
+                        <Tag theme={envio == 'Pendiente' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Pendiente' ? '' : 'Pendiente')}>Pendiente</Tag>
+                        <Tag theme={envio == 'Atendido' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Atendido' ? '' : 'Atendido')}>Atendido</Tag>
+                        <Tag theme={envio == 'Felicitaciones' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Felicitaciones' ? '' : 'Felicitaciones')}>Felicitaciones</Tag>
+                    </div>
                 </div>
-            </div>
-            <table className=" min-w-full lg:w-full lg:min-w-[1900px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
-                <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col-3" className="px-3 py-3">
-                            #
-                        </th>
-                        <th scope="col-3" className="px-3 py-3">
-                            Paciente
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Producto
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Cantidad
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Envio
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Estado
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Fecha
-                        </th>
-                        <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                            Costo
-                        </td>
-                        <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                            Debito
-                        </td>
-                        <th scope="col-3" className="px-3 py-3">
-                            Celular
-                        </th>
-                        <th scope="col-3" className="px-3 py-3">
-                            Correo
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Eliminar
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
-                        return <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                            <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
-                                <span className='h-full flex py-2'>{index + 1}</span>
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['nombre del paciente']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                            {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['cantidad']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['envio'] == true ? 'Yes' : 'Non'}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                <Select arr={['Nuevo', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.uuid} click={onClickHandlerCategory} />
-                                {/* {i['costo']} */}
-                            </td>
-                            <td className="px-3 py-4 h-full font-semibold text-gray-900 dark:text-white">
-                                {getDayMonthYear(i['created_at'])}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['amount']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['celular del paciente']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['correo'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
-                            </td>
-                            <td className="px-3 py-4">
-                                {state[i.uuid]
-                                    ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
-                                    : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
-                                }
-                            </td>
+
+                <table className=" min-w-full lg:w-full min-w-[2100px] bg-red-500 text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
+                    <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col-3" className="px-3 py-3 text-center">
+                                #
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Debito
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Estado
+                            </th>
+                            <th scope="col-3" className="px-3 py-3 ">
+                                Paciente
+                            </th>
+                            <th scope="col" className="px-3 py-3 ">
+                                Producto
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Ciudad/Provincia
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Costo
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Celular Paciente
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Celular Referencia
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Correo
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Fecha
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Eliminar
+                            </th>
                         </tr>
-                    })
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
+                            return i['nombre del paciente'].toLowerCase().includes(filter.toLowerCase()) && i.estado.includes(envio) && i.message.includes(debito) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                                <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
+                                    <span className='h-full flex py-2'>{index + 1}</span>
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
+                                        {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
+                                    </button>
+                                </td>
+                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                    <Select arr={['Pendiente', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.idBCP} click={onClickHandlerCategory} />
+                                    {/* {i['costo']} */}
+                                </td>
+                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {i['nombre del paciente']}
+                                </td>
+                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
+                                </td>
+
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
+                                    {i['check'] == true ? 'Provincia' : 'Ciudad'}
+                                </td>
+
+                                <td className="px-3 py-4 font-semibold text-center text-gray-900 dark:text-white">
+                                    {i['amount']} Bs
+                                </td>
+
+                                <td className="px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
+                                    {i['celular del paciente']}
+                                </td>
+                                <td className="px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
+                                    {i['referencia del paciente']}
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-center text-gray-900 dark:text-white">
+                                    {i['correo']}
+                                </td>
+                                <td className="px-3 py-4 h-full font-semibold  text-gray-900  text-center">
+                                    {getDayMonthYear(i['created_at'])}
+                                </td>
+                                <td className="px-3 py-4">
+                                    {state[i.idBCP]
+                                        ? <Button theme={"Primary"} click={() => save(i.idBCP)}>Guardar</Button>
+                                        : <Button theme={"Danger"} click={() => delet(i.idBCP)}>Eliminar</Button>
+                                    }
+                                </td>
+                            </tr>
+                        })
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
@@ -286,6 +295,13 @@ function Home() {
 
 
 export default WithAuth(Home)
+
+
+
+
+
+
+
 
 
 
