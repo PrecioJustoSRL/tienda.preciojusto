@@ -123,7 +123,7 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-[16px]">
                                 Receta
                             </th>
-                            <th scope="col" className="px-24 py-3 text-[16px]">
+                            <th scope="col" className="px-16 py-3 text-[16px]">
                                 QR
                             </th>
                             <th scope="col" className="px-3 py-3 text-[16px]">
@@ -174,10 +174,10 @@ function Home() {
                                         />
                                     </div>
                                 </td>
-                                <td className="w-[250px] px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                <td className="px-3 align-top py-4  ">
                                     <InvoicePDF userDB={user} cartDB={JSON.parse(i.receta)} dbUrl={i.qr} recetaPDB={i} />
                                 </td>
-                                <td className="px-3 align-top py-4">
+                                <td className="px-3 align-top py-4 ">
                                     {state[i.qr]
                                         ? <Button theme={"Primary"} click={(e) => save(e, i)}>Guardar</Button>
                                         : <Button theme={"Danger"} click={() => delet(i, 'Delete')}>Eliminar</Button>
