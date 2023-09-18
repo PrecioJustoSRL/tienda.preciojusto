@@ -94,7 +94,7 @@ function Home() {
         <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
         <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-                <table className=" min-w-[1200px] lg:w-full bg-white lg:min-w-[1000px] text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
+                <table className=" min-w-[900px] lg:w-full bg-white text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
                     <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center">
@@ -103,18 +103,19 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-center">
                                 Debito
                             </th>
-                            <th scope="col-3" className="px-3 py-3 text-center">
-                                Paciente
-                            </th>
-                            <th scope="col" className="px-3 py-3 text-center">
-                                Producto
-                            </th>
-                            <th scope="col" className="px-3 py-3 text-center">
-                                Ciudad/Provincia
-                            </th>
                             <th scope="col" className="px-3 py-3 text-center">
                                 Estado
                             </th>
+                            <th scope="col-3" className="px-3 py-3 ">
+                                Paciente
+                            </th>
+                            <th scope="col" className="px-3 py-3 ">
+                                Producto
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Ciudad / Provincia
+                            </th>
+                          
 
                             <th scope="col" className="px-3 py-3 text-center">
                                 Costo
@@ -139,21 +140,21 @@ function Home() {
                                         {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
                                     </button>
                                 </td>
-                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
+                                <td className={`px-3 py-4 font-semibold text-gray-900   flex justify-center w-full`}>
+                                    {/* <Select arr={['Nuevo', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.uuid} click={onClickHandlerCategory} /> */}
+                                    <span className={`px-3 py-4 font-semibold text-gray-900   rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`}>{i['estado']}</span>
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900">
                                     {i['nombre del paciente']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
+                                <td className="px-3 py-4 font-semibold  text-gray-900">
                                     {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
                                 </td>
                                 <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
                                     {i['check'] == true ? 'Provincia' : 'Ciudad'}
                                 </td>
-                                <td className={`px-3 py-4 font-semibold text-gray-900   flex justify-center w-full`}>
-                                    {/* <Select arr={['Nuevo', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.uuid} click={onClickHandlerCategory} /> */}
-                                    <span className={`px-3 py-4 font-semibold text-gray-900   rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`}>{i['estado']}</span>
-                                </td>
                                 <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
-                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)}
+                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
                                 </td>
                                
                                 <td className="px-3 py-4 h-full font-semibold  text-gray-900  text-center">

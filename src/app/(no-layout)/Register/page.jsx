@@ -99,7 +99,7 @@ function Home() {
                     </div>                            
                     <Button type="submit" theme="Primary">Continuar</Button>
                     <br />
-                    <div className="text-[14px] text-center font-medium text-white dark:text-gray-300">Ya tienes una cuenta? <span onClick={redirectLogin} className="text-gray-100 underline">Inicia Sessión</span >
+                    <div className="text-[14px] text-center font-medium text-white dark:text-gray-300">Ya tienes una cuenta? <span onClick={redirectLogin} className="text-gray-100 font-bold underline">Inicia Sessión</span >
                     </div>
                 </form>
             </div>

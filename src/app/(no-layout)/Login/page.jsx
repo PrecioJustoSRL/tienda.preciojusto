@@ -119,7 +119,7 @@ const [reload, setReload] = useState(true)
               <Link href='/Resetear' className="ml-auto text-white text-[14px] text-gray-100 underline">Olvidaste tu contraseña?</Link>
             </div>
             <Button type="submit" theme="Primary">Iniciar Sesión</Button>
-            <div className="text-[14px] text-center font-medium text-white">No tienes una cuenta? <Link href="/SignUp" className="text-gray-100 underline">Registrate</Link ></div>
+            <div className="text-[14px] text-center font-medium text-white">No tienes una cuenta? <Link href="/SignUp" className="text-gray-100 font-bold  underline">Registrate</Link ></div>
           </form>
         </div>
         {success == 'AccountNonExist' && <Msg>Cuenta inexistente</Msg>}
@@ -131,33 +131,3 @@ const [reload, setReload] = useState(true)
       : <LoaderWithLogo></LoaderWithLogo>
   )
 }
-
-
-  // function createIndexedDB() {
-  //   setIntroVideo(true)
-  //   const indexedDB = window.indexedDB
-  //   if (indexedDB) {
-  //     let swoouDB
-  //     const request = indexedDB.open('preciojusto', 1)
-  //     request.onsuccess = (e) => {
-  //       swoouDB = e.target.result
-  //       addData()
-  //     }
-  //     request.onupgradeneeded = (e) => {
-  //       swoouDB = e.target.result
-  //       const objectStoreUserDB = swoouDB.createObjectStore('preciojusto', {
-  //         keyPath: 'uid'
-  //       })
-  //     }
-  //     request.onMsg = (err) => {
-  //       console.log(err)
-  //     }
-  //     const addData = () => {
-  //       const transaction = swoouDB.transaction(['preciojusto'], 'readwrite')
-  //       const objectStore = transaction.objectStore('preciojusto')
-  //       const request = objectStore.add({ uid: 'video-mp4', play: true })
-  //     }
-  //   }
-  // }
-
-

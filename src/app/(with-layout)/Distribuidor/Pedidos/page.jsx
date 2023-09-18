@@ -175,14 +175,14 @@ function Home() {
                 <div className='flex justify-center w-full'>
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre o correo' />
                 </div>
-                <div className='min-w-[1900px] flex justify-start items-center my-5 '>
+                <div className=' flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Debitos</h3>
-                    <div className="grid grid-cols-3 gap-4 w-[500px] ">
+                    <div className="grid grid-cols-2 gap-4 w-[500px] ">
                         <Tag theme={debito == 'Correcto' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Correcto' ? '' : 'Correcto')}>Sin deuda</Tag>
                         <Tag theme={debito == 'Inconcluso' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Inconcluso' ? '' : 'Inconcluso')}>Sin cancelar</Tag>
                     </div>
                 </div>
-                <div className='min-w-[1900px] flex justify-start items-center my-5  '>
+                <div className=' flex justify-start items-center w-[500px] my-5  '>
                     <h3 className="flex pr-12 text-[14px]">Estado de envios</h3>
                     <div className="grid grid-cols-3 gap-4 w-[500px] " >
                         <Tag theme={envio == 'Pendiente' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Pendiente' ? '' : 'Pendiente')}>Pendiente</Tag>
@@ -191,7 +191,7 @@ function Home() {
                     </div>
                 </div>
 
-                <table className=" min-w-full lg:w-full min-w-[2100px] bg-red-500 text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
+                <table className=" w-full min-w-[1500px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
                     <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center">
@@ -210,7 +210,7 @@ function Home() {
                                 Producto
                             </th>
                             <th scope="col" className="px-3 py-3 text-center">
-                                Ciudad/Provincia
+                                Ciudad / Provincia
                             </th>
                             <th scope="col" className="px-3 py-3 text-center">
                                 Costo
@@ -238,12 +238,12 @@ function Home() {
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
-                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
-                                    <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
+                                <td className="w-[150px] px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    <button className={`px-3 py-4 font-semibold  w-full text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
                                         {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
                                     </button>
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="w-[150px] px-3 py-4 font-semibold text-gray-900 dark:text-white">
                                     <Select arr={['Pendiente', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.idBCP} click={onClickHandlerCategory} />
                                     {/* {i['costo']} */}
                                 </td>
@@ -262,10 +262,10 @@ function Home() {
                                     {i['amount']} Bs
                                 </td>
 
-                                <td className="px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
+                                <td className="w-[150px] px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
                                     {i['celular del paciente']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
+                                <td className="w-[150px] px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
                                     {i['referencia del paciente']}
                                 </td>
                                 <td className="px-3 py-4 font-semibold  text-center text-gray-900 dark:text-white">

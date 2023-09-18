@@ -85,6 +85,13 @@ function Home() {
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
+    const handlerDownload = (index) => {
+       const src = document.getElementById(index).toDataURL()
+       const a = document.createElement('a')
+        a.download = true
+        a.href = src
+        a.click()
+    };
 
     console.log(recetaDBP)
 
@@ -105,7 +112,7 @@ function Home() {
                     <input type="text" className='border-b text-[16px] border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeFilter} placeholder='Filtrar por nombre de paciente' />
                 </div>
                 <br />
-                <table className="w-full min-w-[1800px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
+                <table className="w-full min-w-[1100px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
                     <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" className="px-3 py-3 text-[16px]">
@@ -123,13 +130,13 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-[16px]">
                                 Receta
                             </th>
-                            <th scope="col" className="px-16 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 text-[16px] text-center">
                                 QR
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 text-[16px] text-center">
                                 PDF
                             </th>
-                            <th scope="col" className="px-6 py-3 text-[16px] text-center">
+                            <th scope="col" className="px-3 py-3 text-[16px] text-center">
                                 Eliminar
                             </th>
                         </tr>
@@ -137,20 +144,20 @@ function Home() {
                     <tbody>
                         {recetaDBP && recetaDBP !== undefined && recetaDBP.sort(sortArray).map((i, index) => {
                             return i.paciente.toLowerCase().includes(filter) && <tr className="bg-white text-[12px] border-b  hover:bg-gray-50 " key={index}>
-                                <td className="px-3 py-4 align-top  text-gray-900  text-[16px]">
+                                <td className="w-[20px] px-3 py-4 align-top  text-gray-900  text-[16px]">
                                     {index + 1}
                                 </td>
                              
 
-                                <td className="px-3 py-4 align-top  text-gray-900  text-[16px]">
+                                <td className="max-w-[200px] px-3 py-4 align-top  text-gray-900  text-[16px]">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='paciente' defaultValue={i['paciente']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea> */}
                                     {i['paciente']}
                                 </td>
-                                <td className="px-3 py-4 align-top text-gray-900  text-[16px]">
+                                <td className="max-w-[200px] px-3 py-4 align-top text-gray-900  text-[16px]">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='diagnostico' defaultValue={i['diagnostico']} className="block p-0  w-full h-full text-gray-900  text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['diagnostico']} */}
                                 </td>
-                                <td className="px-3 py-4 align-top text-gray-900  text-[16px]">
+                                <td className="max-w-[200px] px-3 py-4 align-top text-gray-900  text-[16px]">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='hospital' defaultValue={i['hospital']} className="block p-0  w-full h-full text-gray-900  text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['hospital']} */}
                                 </td>
@@ -159,10 +166,9 @@ function Home() {
                                         <li>{i['nombre de producto 1']}{'  (*'}{i['cantidad']}{')'}</li>
                                     )}
                                 </td>
-                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
-                                    <div className='w-[150px] h-[150px]'>
-                                         <QRCode
-                                            id='qr'
+                                <td className="relative px-[0] py-4 font-semibold w-[150px] h-[150px] text-gray-900  text-center cursor-pointer ">
+                                    <QRCode
+                                            id={`qr${index}`}
                                             size={256}
                                             style={{ height: "auto", maxWidth: "100%", width: "100%", border: '10px', backgroundColor: 'white' }}
                                             value={i.qr}
@@ -172,12 +178,13 @@ function Home() {
                                             viewBox={`0 0 256 256`}
                                             imageSettings={{ src: '/logo-circle.png', height: 100, width: 100, escavate: false }}
                                         />
-                                    </div>
+                                       <span className='absolute left-0 right-0 bg-white mx-auto bottom-[5px]'>Descargar</span> 
+                                   
                                 </td>
-                                <td className="px-3 align-top py-4  ">
+                                <td className="w-[200px] align-center px-3 py-4  ">
                                     <InvoicePDF userDB={user} cartDB={JSON.parse(i.receta)} dbUrl={i.qr} recetaPDB={i} />
                                 </td>
-                                <td className="px-3 align-top py-4 ">
+                                <td className="w-[200px] align-center  px-3 py-4 ">
                                     {state[i.qr]
                                         ? <Button theme={"Primary"} click={(e) => save(e, i)}>Guardar</Button>
                                         : <Button theme={"Danger"} click={() => delet(i, 'Delete')}>Eliminar</Button>

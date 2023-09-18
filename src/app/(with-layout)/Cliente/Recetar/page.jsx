@@ -48,6 +48,8 @@ function Comprar({ theme, styled, click, children }) {
     const dataURL = recetaDB.paciente.replaceAll(' ', '') + user.uuid
     handlerQRUrl(dataURL)
 
+    // const qrURL = document.getElementById('qr') && document.getElementById('qr').toDataURL()
+
     const arr = Object.values(cart).map((i) => {
       const data = { ...i }
       delete data['created_at']
@@ -125,7 +127,7 @@ function Comprar({ theme, styled, click, children }) {
             id='qr'
             size={256}
             style={{ height: "auto", maxWidth: "100%", width: "100%", border: '10px', backgroundColor: 'white' }}
-            value={i.qr}
+            value={qr}
             level={'H'}
             includeMargin={true}
             renderAs={'canvas'}
