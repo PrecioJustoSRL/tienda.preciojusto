@@ -77,13 +77,13 @@ export default function Home() {
                             <Input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
                         </div>
                         <div>
-                            <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-white">Escribe: RECUPERAR-CONTRASEÑA</label>
-                            <Input type="text" name="text" id="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="RECUPERAR-CONTRASEÑA" required />
+                            <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-white">Escribe: RECUPERAR</label>
+                            <Input type="text" name="text" id="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="RECUPERAR" required />
                         </div>
                         <br />
                         <br />
-                        <Button type="submit" theme="Transparent">Recuperar</Button>
-                        <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 underline">Inicia Sesión</Link ></div>
+                        <Button type="submit" theme="Primary">Recuperar</Button>
+                        <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 fond-bold underline">Inicia Sesión</Link ></div>
                     </form>
                 </div>
                 {success == 'AccountNonExist' && <Msg>Cuenta inexistente</Msg>}
