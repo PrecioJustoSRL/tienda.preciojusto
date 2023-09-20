@@ -13,7 +13,7 @@ const departamentos = [
 
 const disponibilidad = [
     'En 24 hrs', 
-    'Inmediato', 
+    'Inmediata', 
     'No disponible',
 ]
 

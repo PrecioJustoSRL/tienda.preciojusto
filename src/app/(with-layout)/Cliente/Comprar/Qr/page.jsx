@@ -24,7 +24,7 @@ const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
 
 function Comprar({ theme, styled, click, children }) {
 
-    const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP, paySuccess, setPaySuccess } = useUser()
+    const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, setUserCart, success, state, setState, modal, setModal, qrBCP, setQrBCP, paySuccess, setPaySuccess } = useUser()
     const [dataQR, setDataQR] = useState(undefined)
     const router = useRouter()
 
@@ -36,7 +36,14 @@ function Comprar({ theme, styled, click, children }) {
 
 
     function closeModal() {
-        router.back()
+
+        console.log(window.location.href.includes('Comprar/'))
+        window.location.href.includes('Comprar/')
+            ? router.replace('/')
+            : router.back()
+        setUserCart({})
+        setState({})
+        // router.back()
     }
 
 
@@ -60,7 +67,7 @@ function Comprar({ theme, styled, click, children }) {
         // .subscribe()
         setModal('')
     }
-
+    console.log(user)
 
     useEffect(() => {
 
@@ -73,14 +80,16 @@ function Comprar({ theme, styled, click, children }) {
 
         <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
             <div className='relative p-10 bg-white'>
-                <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={closeModal}>
+                <button type="button" className="absolute top-3 right-2.5 text-gray-600 bg-gray-200 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white p-3" onClick={closeModal}>
+                    <span className='text-[12px] text-gray-600  pr-5'>Finalizar </span>
                     <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                     </svg>
                     <span className="sr-only">Close modal</span>
                 </button>
                 <br />
-                Paga por QR y adquiere tus productos
+
+                {userDB && userDB[0].access == 'Solicitadora' ? 'Comparte el Qr con tu verficador para acelerar la compra' : 'Paga por QR y adquiere tus productos'}
                 <br />
                 {
                     dataQR !== undefined
@@ -89,7 +98,7 @@ function Comprar({ theme, styled, click, children }) {
                                 <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
                                 <span className="text-[12px] text-gray-950">Verificando...</span>
                             </div>
-                            : <img src={`data:image/png;base64,${dataQR.qrImage}`} className=' h-[80vw] max-h-[300px] w-[80vw] max-w-[300px]' alt="" />)
+                            : <img src={`data:image/png;base64,${dataQR.qrImage}`} className='relative left-0 right-0 mx-auto h-[80vw] max-h-[300px] w-[80vw] max-w-[300px]' alt="" />)
                         : <div aria-label="Loading..." role="status" className=" h-[80vw] max-h-[300px] w-[80vw] max-w-[300px] flex items-center justify-center space-x-2 py-10">
                             <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
                             <span className="text-[12px] text-gray-950">Generando QR...</span>

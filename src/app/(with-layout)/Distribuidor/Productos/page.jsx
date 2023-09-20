@@ -179,7 +179,7 @@ console.log(distributorPDB)
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Disponibilidad</h3>
                     <div className="grid grid-cols-3 gap-4 w-[500px] ">
                         <Tag theme={disponibilidad == 'En un día' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'En un día' ? '' : 'En un día')}>En un día</Tag>
-                        <Tag theme={disponibilidad == 'Inmediatamente' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'Inmediatamente' ? '' : 'Inmediatamente')}>Inmediatamente</Tag>
+                        <Tag theme={disponibilidad == 'Inmediatamenta' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'Inmediatamenta' ? '' : 'Inmediatamenta')}>Inmediatamenta</Tag>
                         <Tag theme={disponibilidad == 'No disponible' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'No disponible' ? '' : 'No disponible')}>No disponible</Tag>
                     </div>
                 </div>

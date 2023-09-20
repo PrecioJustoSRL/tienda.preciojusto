@@ -13,6 +13,7 @@ import Input from '@/components/Input'
 import { useRouter } from 'next/navigation';
 import dynamic from "next/dynamic";
 import Msg from "@/components/Msg"
+import Modal from "@/components/Modal"
 import { useMask } from '@react-input/mask';
 
 const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
@@ -22,9 +23,9 @@ const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
 function Comprar({ theme, styled, click, children }) {
 
   const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP, paySuccess, setPaySuccess, check, setCheck } = useUser()
-  const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
-  const inputRefWhatsApp2 = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
-
+  const inputRefWhatsApp = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
+  const inputRefWhatsApp2 = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
+  const [pay, setPay] = useState(false)
 
   const router = useRouter()
 
@@ -34,15 +35,15 @@ function Comprar({ theme, styled, click, children }) {
 
   function handlerPay(e) {
     e.preventDefault()
-    const val = calculator()
-// router.push(`/Cliente/Comprar/6465?val=${val}&amount=${amount + (check ? 350 : 0)}`)
+    e.stopPropagation()
     if (state['nombre del paciente'] && state['celular del paciente'] && state['referencia del paciente']) {
-      setModal('SuccessFull')
-
-      const val = calculator()
-
-      val >= 0 && requestQR()
-      // return router.push()
+      if (pay === true) {
+        setModal('SuccessFull')
+        const val = calculator()
+        val >= 0 && requestQR()
+      } else {
+        setPay(true)
+      }
     } else {
       setUserSuccess('Complete')
     }
@@ -93,12 +94,12 @@ function Comprar({ theme, styled, click, children }) {
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
         return data
       })
-      await writeUserData('Pedido', { distribuidor: arr[0].distribuidor ,compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
+      await writeUserData('Pedido', { distribuidor: arr[0].distribuidor, compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
 
 
 
 
-      router.push(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
+      router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
 
       // const interval = setTimeout(() => { verify() }, 10000)
     } catch (err) {
@@ -127,9 +128,18 @@ function Comprar({ theme, styled, click, children }) {
   }, [paySuccess]);
 
   console.log(userDB)
-  return (<div className='w-full min-h-screen relative px-5 pb-[50px] bg-gray-100'>
-    {success == 'Complete' && <Msg>Complete el formulario</Msg>}
+  return (<div className='w-full min-h-screen relative px-5 pb-[50px] bg-gray-100' onClick={() => setPay(false)}>
     <InvoicePDF />
+
+    {pay && <Modal
+      funcion={handlerPay}
+      successText={user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora' ? 'Confirmar Solicitud' : 'Confirmar compra'}
+      cancelText="Revisar" 
+      primary="bg-amber-400 hover:bg-amber-400  text-black font-bold">
+      Revisar una vez mas mis productos
+    </Modal>}
+
+    {success == 'Complete' && <Msg>Complete el formulario</Msg>}
     <form >
       <Title>DATOS DEL PACIENTE</Title>
       <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -139,13 +149,13 @@ function Comprar({ theme, styled, click, children }) {
         </div>
         <div>
           <Label htmlFor="">Celular del paciente</Label>
-          <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp2} require />
+          <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp2} category='phone' require />
 
           {/* <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require/> */}
         </div>
         <div>
           <Label htmlFor="">Numero de celular de referencia</Label>
-          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require />
+          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} category='phone'  require />
 
           {/* <Input type="number" name="referencia del paciente" reference={inputRefWhatsApp} onChange={onChangeHandler} require /> */}
         </div>
@@ -172,45 +182,14 @@ function Comprar({ theme, styled, click, children }) {
 
       </div>
       {user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora'
-        ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
-          <Button theme="SuccessBuy" click={handlerPay}> Solicitar</Button>
+        ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0  left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5 z-50">
+          <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Solicitud' : 'Solicitar'}</Button>
         </div>
-        : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
-          <Button theme="SuccessBuy" click={handlerPay}> Pagar por QR</Button>
+        : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0 left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5 z-50">
+          <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Compra' : 'Pagar por QR'}</Button>
         </div>
       }
     </form>
-
-    {/* {modal === 'SuccessFull' && <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
-      <div className='relative p-10 bg-white'>
-        <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={closeModal}>
-          <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-          </svg>
-          <span className="sr-only">Close modal</span>
-        </button>
-        <br />
-        Paga por QR y adquiere tus productos
-        <br />
-        {
-          qrBCP !== undefined
-            ? <img src={`data:image/png;base64,${qrBCP.qrImage}`} className=' w-[80vw] max-w-[300px]' alt="" />
-            : <div aria-label="Loading..." role="status" className="flex items-center justify-center space-x-2 py-10">
-              <svg className="h-5 w-5 animate-spin stroke-gray-950" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
-              <span className="text-[12px] text-gray-950">Generando QR...</span>
-            </div>
-        }
-        <br />
-        {qrBCP !== undefined && <a
-          className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
-          href={`data:image/png;base64,${qrBCP.qrImage}`} download>Guardar ImagenQR</a>}
-        <br />
-        {qrBCP !== undefined && <span
-          className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
-          onClick={verify}
-        >Verificar estado de cancelación</span>}
-      </div>
-    </div>} */}
 
 
     <div className='relative border-t-4 border-t-gray-400 bg-white overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >

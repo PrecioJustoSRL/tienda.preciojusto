@@ -1,3 +1,6 @@
+
+
+
 'use client'
 
 import Button from '@/components/Button'
@@ -8,175 +11,189 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 
 import { WithAuth } from '@/HOCs/WithAuth'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import { getDayMonthYear } from '@/utils/DateFormat'
 
 
 function Home() {
-    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, } = useUser()
-
+    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, cart } = useUser()
     const router = useRouter()
-
     const [state, setState] = useState({})
-    const [postImage, setPostImage] = useState({})
-    const [urlPostImage, setUrlPostImage] = useState({})
-
-    function seeMore() {
-        router.push('/Producto')
-    }
-    const onClickHandlerCategory = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['estado']: value } })
-    }
+    const refFirst = useRef(null);
 
 
 
-    async function save(i) {
-        setUserItem(i)
-        setModal('Guardar')
-        console.log(item)
-    }
-
-    function saveConfirm() {
-        updateUserData('Pedido', state[item.uuid], item.uuid)
-        const obj = { ...state }
-        delete obj[item.uuid]
-        setState(obj)
-        setModal('')
-
-    }
     function delet(i) {
-        setUserItem(i)
-        setModal('Delete')
-        console.log(item)
-    }
-
-    function deletConfirm() {
-        deleteUserData('Pedido', item.uuid)
-        setModal('')
-
+        deleteUserData('Pedido', i.uuid)
         // postImage[i.uuid] && uploadStorage('Producto', postImage[i.uuid], i.uuid, updateUserData, true)
         // const obj = { ...state }
         // delete obj[i.uuid]
         // setState(obj)
     }
+
+    function calculator(data) {
+        const val = Object.values(data).reduce((acc, i, index) => {
+            const sum = i['costo'] * i['cantidad']
+            return sum + acc
+        }, 0)
+        return val
+    }
+
+
+    function confeti(i) {
+        console.log('ped')
+        i.message === 'Correcto'
+            ? router.push(`/Cliente/Comprar/Detalle?idBCP=${i.idBCP}`)
+            : router.push(`/Cliente/Comprar/Qr?idBCP=${i.idBCP}`)
+    }
+
+    const prev = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            refFirst.current.scrollLeft = scrollLeft - itemWidth;
+        });
+    };
+
+    const next = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            console.log(itemWidth)
+            refFirst.current.scrollLeft = scrollLeft + itemWidth;
+        });
+    };
+
+    // const scrollToTop = () => {
+    //     window.scrollTo({
+    //       top: 0,
+    //       behavior: 'smooth',
+    //     });
+    //   };
+    console.log(userDB)
+
+    // window.onbeforeunload = function () {
+    //     // return "¿Desea recargar la página web?";
+    //     alert('Estas seguro de finalizar la  Compra')
+    //   };
+
+    const onClickHandlerCategory = (name, value, idBCP) => {
+        setState({ ...state, [idBCP]: { ...state[idBCP], idBCP, ['estado']: value } })
+    }
+
+
     console.log(state)
+
+
     useEffect(() => {
         userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
             ? readUserData('Pedido', userDB[0]['ID Verificador'], setUserPedidos, 'cliente')
             : readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
-    }, [])
+    }, [userDB])
 
     return (
+        <div className='h-full'>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
+            <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
+                <table className=" min-w-[1400px] lg:w-full bg-white text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
+                    <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col-3" className="px-3 py-3 text-center">
+                                #
+                            </th>
+                            <th scope="col-3" className="px-3 py-3 ">
+                                Autorizacion
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Debito
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Estado / Envio
+                            </th>
+                            <th scope="col" className="px-3 py-3 ">
+                                Paciente
+                            </th>
+                            <th scope="col" className="px-3 py-3 ">
+                                Producto
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Ciudad / Provincia
+                            </th>
 
-        <div className="relative overflow-x-auto shadow-md">
-            {modal === 'Guardar' && <Modal funcion={saveConfirm}>Estas seguro de autorizar la compra de:  {item['nombre de producto 1']}</Modal>}
-            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el siguiente item:  {item['nombre de producto 1']}</Modal>}
 
-            <table className=" min-w-[1200px] lg:w-full lg:min-w-[1000px] text-[12px] text-left text-gray-500">
-                <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col-3" className="px-3 py-3">
-                            #
-                        </th>
-                        <th scope="col-3" className="px-3 py-3">
-                            Paciente
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Producto
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Cantidad
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Envio
-                        </th>
-                        <th scope="col" className="px-8 py-3">
-                            Estado
-                        </th>
-                        <th scope="col" className="px-3 py-3">
-                            Fecha
-                        </th>
-                        {userDB && userDB[0].access == 'Verificadora' && <th scope="col" className="px-3 py-3">
-                            Pagar pot QR
-                        </th>}
-                        <th scope="col" className="px-3 py-3">
-                            Eliminar
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
-                        return <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                            <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
-                                <span className='h-full flex py-2'>{index + 1}</span>
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['nombre del paciente']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['nombre de producto 1']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['cantidad']}
-                            </td>
-                            <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i['check'] == true ? 'Provincia' : 'Ciudad'}
-                            </td>
-                            {userDB && userDB[0].access == 'Verificadora' && <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                <Select arr={['-----', 'Autorizado', 'No autorizado']} name='estado' defaultValue={i.estado} uuid={i.uuid} click={onClickHandlerCategory} />
-                                {/* {i['costo']} */}
-                            </td>}
-                            {userDB && userDB[0].access == 'Solicitadora' && <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                {i.estado}                            </td>}
-                            <td className="px-3 py-4 h-full font-semibold text-gray-900 dark:text-white">
-                                {getDayMonthYear(i['created_at'])}
-                            </td>
-                            {userDB && userDB[0].access == 'Verificadora' && <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
-                                <Button theme={"Success"} click={() => save(i)}>Pagar pot QR</Button>
-                            </td>}
-                            <td className="px-3 py-4">
-                                {state[i.uuid]
-                                    ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
-                                    : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
-                                }
-                            </td>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Costo
+                            </th>
+
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Fecha
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center">
+                                Editar
+                            </th>
                         </tr>
-                    })
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody className='w-full'>
+                        {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
+                            return <tr className="text-[12px] border-b hover:bg-gray-50" key={index}>
+                                <td className="px-3 py-4  flex font-semibold  text-gray-900  text-center">
+                                    <span className='h-full flex py-2'>{index + 1}</span>
+                                </td>
+                                <td className="px-3 py-4 w-[200px] font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    {userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
+                                        ? <Select arr={['Pendiente', 'Rechazado', 'Autorizado']} name='estado' defaultValue={i.autorizacion} uuid={i.uuid} click={onClickHandlerCategory} />
+                                        : <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`} onClick={e => confeti(i)}>
+                                            {i['autorizacion']}
+                                        </button>}
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                    <button className={`px-3 py-4 font-semibold  w-[100px] text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
+                                        {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
+                                    </button>
+                                </td>
+                                <td className={`px-3 py-4 font-semibold text-gray-900   flex justify-center w-full`}>
+                                    {/* <Select arr={['Nuevo', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.uuid} click={onClickHandlerCategory} /> */}
+                                    <span className={`px-3 py-4 font-semibold text-gray-900   rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`}>{i['estado']}</span>
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900">
+                                    {i['nombre del paciente']}
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900">
+                                    {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
+                                    {i['check'] == true ? 'Provincia' : 'Ciudad'}
+                                </td>
+                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
+                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
+                                </td>
 
+                                <td className="px-3 py-4 h-full w-[150px] font-semibold  text-gray-900  text-center">
+                                    {getDayMonthYear(i['created_at'])}
+                                </td>
+                                <td className="px-3 py-4">
+
+                                    {state[i.uuid]
+                                        ? <Button theme={"Primary"} click={() => save(i.uuid)}>Guardar</Button>
+                                        : <Button theme={"Danger"} click={() => delet(i.uuid)}>Eliminar</Button>
+                                    }
+                                </td>
+                            </tr>
+                        })
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     )
 }
-
-
-
 
 export default WithAuth(Home)
 
 
-
-
-
-
-    // const onClickHandlerCity = (name, value, uuid) => {
-    //     setState({ ...state, [uuid]: { ...state[uuid], uuid, ['ciudad']: value } })
-    // }
-
-    // function manageInputIMG(e, uuid) {
-    //     const file = e.target.files[0]
-    //     setPostImage({ ...postImage, [uuid]: file })
-    //     setUrlPostImage({ ...urlPostImage, [uuid]: URL.createObjectURL(file) })
-    //     setState({ ...state, [uuid]: { ...state[uuid], uuid } })
-    // }
-
-    // const onClickHandlerAvailability = (name, value, uuid) => {
-    //     setState({ ...state, [uuid]: { ...state[uuid], uuid, ['disponibilidad']: value } })
-    // }
-
-    // function onChangeHandler(e, i) {
-    //     setState({ ...state, [i.uuid]: { ...state[i.uuid], uuid: i.uuid, [e.target.name]: e.target.value } })
-    // }

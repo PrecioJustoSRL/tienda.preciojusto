@@ -380,10 +380,10 @@ function Home() {
                 {tienda === 'Recetar'
                     ? <Button theme="SuccessReceta" click={HandlerRecetar}>Completar Receta</Button>
                     : (user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora'
-                        ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+                        ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5  lg:px-0 left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
                             <Button theme="SuccessBuy" click={HandlerCheckOut}> Solicitar</Button>
                         </div>
-                        : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+                        : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0  left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
                             <Button theme="SuccessBuy" click={HandlerCheckOut}> Pagar por QR</Button>
                         </div>)
                 }

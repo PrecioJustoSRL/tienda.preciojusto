@@ -72,19 +72,25 @@ export function UserProvider({ children }) {
 	const setUserItem = (data) => {
 		setItem(data)
 	}
-	const setUserSuccess =  (data, time) => {
-		if (success === null) {
-			setSuccess(data)
-			const timer = setTimeout(() => {
+	const setUserSuccess = (data, time) => {
+		console.log(data)
+		success === null ? setSuccess(data) : ''
+
+		if (data !== null) {
+			let timer = setTimeout(() => {
 				console.log(success)
 				setUserSuccess(null)
 			}, time ? time : 6000)
-
-			return () => {
-				clearTimeout(timer)
-
-			};
 		}
+
+
+
+
+		return () => {
+			clearTimeout(timer)
+		};
+
+
 	}
 
 	const setIntroVideo = (data) => {
@@ -153,10 +159,10 @@ export function UserProvider({ children }) {
 			businessData,
 			webScann,
 			qrBCP, paySuccess, filterDis, check,
-			session, 
+			session,
 			cartDB,
 			precioJustoPDB, setPrecioJustoPDB,
-			 setCartDB, 
+			setCartDB,
 			setSession,
 			setCheck,
 			setFilterDis,
@@ -196,7 +202,7 @@ export function UserProvider({ children }) {
 			setUserSuccess,
 			setUserItem
 		})
-	}, [user, userDB, distributorPDB, productDB, pedidos, item, cart,cartDB, success, qr, QRurl, recetaDB, filter, filterQR, recetaDBP, nav, temporal, userUuid, modal, msg, tienda, introVideo, play, sound, state, videoClientRef,
+	}, [user, userDB, distributorPDB, productDB, pedidos, success, item, cart, cartDB, qr, QRurl, recetaDB, filter, filterQR, recetaDBP, nav, temporal, userUuid, modal, msg, tienda, introVideo, play, sound, state, videoClientRef,
 		soundClient,
 		introClientVideo,
 		search,
