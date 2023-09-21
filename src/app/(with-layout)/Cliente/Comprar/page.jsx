@@ -190,7 +190,7 @@ function Comprar({ theme, styled, click, children }) {
 
 
     <div className='relative border-t-4 border-t-gray-400 bg-white overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >
-      <h3 className='text-center  border-[1px] border-gray-200  bg-white text-[16px] px-5 py-2  font-bold' >MIS COMPRAS</h3>
+      <h3 className='text-center  border-[1px] border-gray-200  bg-gray-100 text-[16px] px-5 py-2  font-bold' >MIS COMPRAS</h3>
 
       <table className="w-full shadow-2xl lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
 
@@ -199,10 +199,10 @@ function Comprar({ theme, styled, click, children }) {
             <th scope="col-3" className="px-2 py-3 font-bold border-r">
               Producto
             </th>
-            <th scope="col" className="px-0 py-3  w-[200px] text-center font-bold border-r">
+            <th scope="col" className="px-0 py-3  w-[100px] text-center font-bold border-r">
               Cantidad
             </th>
-            <th scope="col" className="px-2 py-3 w-[200px] text-center font-bold">
+            <th scope="col" className="px-2 py-3 w-[100px] text-center font-bold">
               Costo total
             </th>
           </tr>
@@ -212,11 +212,11 @@ function Comprar({ theme, styled, click, children }) {
 
         {Object.values(cart).length > 0 && <tbody>
           <tr className="bg-white text-[12px] border-b">
-            <td className="px-2 py-4  flex text-[16px] text-gray-700  text-gray-900">
+            <td className="px-2 py-4 text-[16px] text-gray-900 border-r">
               TOTAL:
             </td>
-            <td>{check && '+350 Bs *Para provincia'}</td>
-            <td className="px-2 py-4   text-[16px] text-gray-700">
+            <td className="px-2 py-4 text-[16px] text-gray-900 border-r">{check && '+350 Bs *Para provincia'}</td>
+            <td className="px-2 py-4 text-[16px] text-gray-900 text-center">
               {Object.values(cart).reduce((acc, i, index) => {
                 const sum = i['costo'] * i['cantidad']
                 return sum + acc

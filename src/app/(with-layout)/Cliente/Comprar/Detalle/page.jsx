@@ -101,8 +101,8 @@ function Comprar({ theme, styled, click, children }) {
         <h3 className='text-center text-[16px] pb-3'>DETALLES DE LA COMPRA</h3>
         <br />
         <div>
-          <p className='text-[16px]'>Empresa distribuidora: {cartDB.empresa}</p>
-          <p className='text-[16px]'>Contacto: {cartDB.whatsapp}</p>
+          <p className='text-[16px] pl-5'>Empresa distribuidora: {cartDB.empresa}</p>
+          <p className='text-[16px] pl-5'>Celular: {cartDB.whatsapp}</p>
         </div>
         <br />
         <table className="w-full lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[16px] text-left text-gray-500">
@@ -111,10 +111,10 @@ function Comprar({ theme, styled, click, children }) {
               <th scope="col-3" className="px-2 py-3 font-bold border-r">
                 Productos
               </th>
-              <th scope="col" className="px-0 py-3  w-[200px] text-center font-bold border-r">
+              <th scope="col" className="px-0 py-3  w-[100px] text-center font-bold border-r">
                 Cantidad
               </th>
-              <th scope="col" className="px-2 py-3 w-[200px] text-center font-bold ">
+              <th scope="col" className="px-2 py-3 w-[100px] text-center font-bold ">
                 Costo total
               </th>
             </tr>
@@ -139,10 +139,10 @@ function Comprar({ theme, styled, click, children }) {
               : ''}
             {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 ?
               <tr className="bg-white text-[16px] border-b hover:bg-gray-50 " >
-                <td className="px-3 py-4  flex flex-col text-gray-900 border-r">
+                <td className="px-3 py-4 text-gray-900 border-r">
                   TOTAL
                 </td>
-                <td className="px-3 py-4 text-center text-gray-900 border-r">
+                <td className="px-3 py-4 text-gray-900 border-r">
                   {cartDB.check ? 'Provincía (+ 351 BS)' : ''}
                 </td>
                 <td className="px-3 py-4 text-center text-gray-900 border-r">
