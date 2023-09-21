@@ -92,8 +92,8 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-                <table className=" min-w-[1100px] border-[1px] bg-white text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
-                    <thead className="w-full text-[12px] text-gray-900 uppercase border-b bg-gray-100">
+                <table className="w-full min-w-[1100px] border-[1px] bg-white text-[14px] text-left text-gray-500 border-t-4 border-t-gray-400">
+                    <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
                                 #
@@ -111,15 +111,15 @@ function Home() {
                                 Producto
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
-                                Ciudad / Provincia
+                                Ciudad / <br /> Provincia
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Costo
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Empresa
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Contacto
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold">
@@ -132,17 +132,17 @@ function Home() {
                     </thead>
                     <tbody className='w-full'>
                         {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
-                            return <tr className="text-[12px] border-b hover:bg-gray-50" key={index}>
+                            return <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
                                 <td className="px-3 py-4  text-gray-900  text-center font-bold  border-r">
                                     {index + 1}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
-                                    <button className={`px-3 py-4   w-[100px] text-center rounded-full cursor-pointer ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
+                                    <button className={`w-[130px] px-3 py-4 text-center rounded-full cursor-pointer ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
                                         {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
                                     </button>
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 text-center  border-r">
-                                    <span className={`px-3 py-4  text-gray-900 rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`}>{i['estado']}</span>
+                                    <span className={`inline-block w-[130px] px-3 py-4 text-gray-900 rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`}>{i['estado']}</span>
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['nombre del paciente']}
