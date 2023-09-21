@@ -191,43 +191,43 @@ function Home() {
                     </div>
                 </div>
 
-                <table className=" w-full min-w-[1500px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
-                    <thead className="w-full text-[12px]  text-gray-700 uppercase bg-gray-50">
+                <table className="w-full min-w-[1500px] border-[1px] border-t-4 border-t-gray-400">
+                    <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
-                            <th scope="col-3" className="px-3 py-3 text-center">
+                            <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
                                 #
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Debito
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Estado
                             </th>
-                            <th scope="col-3" className="px-3 py-3 ">
+                            <th scope="col-3" className="px-3 py-3 font-bold border-r">
                                 Paciente
                             </th>
-                            <th scope="col" className="px-3 py-3 ">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Producto
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Ciudad / Provincia
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Costo
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Celular Paciente
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Celular Referencia
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Correo
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Fecha
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold">
                                 Eliminar
                             </th>
                         </tr>
@@ -238,43 +238,43 @@ function Home() {
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
-                                <td className="w-[150px] px-3 py-4 font-semibold  text-gray-900  text-center cursor-pointer ">
+                                <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     <button className={`px-3 py-4 font-semibold  w-full text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
                                         {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
                                     </button>
                                 </td>
-                                <td className="w-[150px] px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <Select arr={['Pendiente', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.idBCP} click={onClickHandlerCategory} />
                                     {/* {i['costo']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['nombre del paciente']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
                                 </td>
 
-                                <td className="px-3 py-4 font-semibold  text-gray-900  text-center">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['check'] == true ? 'Provincia' : 'Ciudad'}
                                 </td>
 
-                                <td className="px-3 py-4 font-semibold text-center text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['amount']} Bs
                                 </td>
 
-                                <td className="w-[150px] px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
                                     {i['celular del paciente']}
                                 </td>
-                                <td className="w-[150px] px-3 py-4 font-semibold text-center  text-gray-900 dark:text-white">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
                                     {i['referencia del paciente']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold  text-center text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['correo']}
                                 </td>
-                                <td className="px-3 py-4 h-full font-semibold  text-gray-900  text-center">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {getDayMonthYear(i['created_at'])}
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="px-3 py-4 text-gray-900">
                                     {state[i.idBCP]
                                         ? <Button theme={"Primary"} click={() => save(i.idBCP)}>Guardar</Button>
                                         : <Button theme={"Danger"} click={() => delet(i.idBCP)}>Eliminar</Button>

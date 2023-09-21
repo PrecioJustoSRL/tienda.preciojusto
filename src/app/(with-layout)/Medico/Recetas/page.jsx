@@ -88,7 +88,7 @@ function Home() {
     const handlerDownload = (index) => {
        const src = document.getElementById(index).toDataURL()
        const a = document.createElement('a')
-        a.download = true
+        a.download = 'Receta QR'
         a.href = src
         a.click()
     };
@@ -106,67 +106,65 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
                 {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de ELIMINAR al siguiente usuario {msg}</Modal>}
-                <h3 className='font-medium text-[16px]'>Recetas</h3>
+                <h3 className='font-medium text-[14px]'>Recetas</h3>
                 <br />
                 <div className='flex justify-center w-full'>
-                    <input type="text" className='border-b text-[16px] border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeFilter} placeholder='Filtrar por nombre de paciente' />
+                    <input type="text" className='border-b text-[14px] border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeFilter} placeholder='Filtrar por nombre de paciente' />
                 </div>
                 <br />
-                <table className="w-full min-w-[1100px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
-                    <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
+                <table className="w-full min-w-[1200px] border-[1px] border-t-4 border-t-gray-400">
+                <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
-                            <th scope="col" className="px-3 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 #
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Paciente
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Diagnostico
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Hospital
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px]">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Receta
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px] text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 QR
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px] text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 PDF
                             </th>
-                            <th scope="col" className="px-3 py-3 text-[16px] text-center">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Eliminar
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {recetaDBP && recetaDBP !== undefined && recetaDBP.sort(sortArray).map((i, index) => {
-                            return i.paciente.toLowerCase().includes(filter) && <tr className="bg-white text-[12px] border-b  hover:bg-gray-50 " key={index}>
-                                <td className="w-[20px] px-3 py-4 align-top  text-gray-900  text-[16px]">
+                            return i.paciente.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b  hover:bg-gray-50 " key={index}>
+                                <td className="px-3 py-4  text-gray-900  text-center font-bold align-top border-r">
                                     {index + 1}
                                 </td>
-                             
-
-                                <td className="max-w-[200px] px-3 py-4 align-top  text-gray-900  text-[16px]">
+                                <td className="px-3 py-4 text-gray-900 text-center align-top border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='paciente' defaultValue={i['paciente']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea> */}
                                     {i['paciente']}
                                 </td>
-                                <td className="max-w-[200px] px-3 py-4 align-top text-gray-900  text-[16px]">
-                                    <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='diagnostico' defaultValue={i['diagnostico']} className="block p-0  w-full h-full text-gray-900  text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
+                                <td className="w-[200px] px-3 py-4 text-gray-900 text-center align-top border-r">
+                                    <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='diagnostico' defaultValue={i['diagnostico']} className="block p-0  w-full h-full text-gray-900  text-[14px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['diagnostico']} */}
                                 </td>
-                                <td className="max-w-[200px] px-3 py-4 align-top text-gray-900  text-[16px]">
-                                    <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='hospital' defaultValue={i['hospital']} className="block p-0  w-full h-full text-gray-900  text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
+                                <td className="w-[200px] px-3 py-4 text-gray-900 text-center align-top border-r">
+                                    <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='hospital' defaultValue={i['hospital']} className="block p-0  w-full h-full text-gray-900  text-[14px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['hospital']} */}
                                 </td>
-                                <td className="px-3 py-4 align-top text-gray-900   text-[16px]">
+                                <td className="min-w-[200px] px-3 py-4 text-gray-900 align-top border-r">
                                     {JSON.parse(i.receta).map((i, index) =>
                                         <li>{i['nombre de producto 1']}{'  (*'}{i['cantidad']}{')'}</li>
                                     )}
                                 </td>
-                                <td className="relative px-[0] py-4 font-semibold w-[150px] h-[150px] text-gray-900  text-center cursor-pointer ">
+                                <td className="relative px-[0] py-4 font-semibold w-[150px] h-[150px] text-gray-900  text-center cursor-pointer border-r " onClick={()=>handlerDownload(`qr${index}`)}>
                                     <QRCode
                                             id={`qr${index}`}
                                             size={256}
@@ -181,10 +179,10 @@ function Home() {
                                        <span className='absolute left-0 right-0 bg-white mx-auto bottom-[5px]'>Descargar</span> 
                                    
                                 </td>
-                                <td className="w-[200px] align-center px-3 py-4  ">
+                                <td className="w-[200px] px-3 py-4 text-gray-900 text-center border-r">
                                     <InvoicePDF userDB={user} cartDB={JSON.parse(i.receta)} dbUrl={i.qr} recetaPDB={i} />
                                 </td>
-                                <td className="w-[200px] align-center  px-3 py-4 ">
+                                <td className="w-[200px] px-3 py-4 text-gray-900 text-center">
                                     {state[i.qr]
                                         ? <Button theme={"Primary"} click={(e) => save(e, i)}>Guardar</Button>
                                         : <Button theme={"Danger"} click={() => delet(i, 'Delete')}>Eliminar</Button>

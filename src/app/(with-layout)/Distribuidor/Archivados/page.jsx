@@ -204,46 +204,46 @@ function Home() {
                         <Tag theme={sistema == 'Otros' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Otros' ? '' : 'Otros')}>Otros</Tag>
                     </div>
                 </div>
-                <table className="w-[1900px]  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
-                    <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 ">
+                <table className="w-full min-w-[1900px] border-[1px] border-t-4 border-t-gray-400">
+                <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 #
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Nombre 1
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Nombre 2
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Nombre 3
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Descripción basica
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Descripción tecnica
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Usos frecuentes
                             </th>
-                            <th scope="col" className="px-8 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Sistema
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Costo
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 categoría
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Disponibilidad
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Imagen
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold">
                                 Edit
                             </th>
                         </tr>
@@ -251,28 +251,28 @@ function Home() {
                     <tbody>
                         {distributorPDB && distributorPDB !== undefined && distributorPDB.sort(sortArray).map((i, index) => {
                             return i.archivado === true && i.disponibilidad.includes(disponibilidad) && i.categoria.includes(categoria) && i.sistema.includes(sistema) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                                <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 text-center font-bold border-r">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
-                                <td className="w-[200px] px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea> */}
                                     <span className='block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 rounded-lg '>
                                         {i['nombre de producto 1']}
                                     </span>
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 2' defaultValue={i['nombre de producto 2']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['nombre de producto 2']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 3' defaultValue={i['nombre de producto 3']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['nombre de producto 3']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='descripcion basica' defaultValue={i['descripcion basica']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['descripcion basica']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='descripcion tecnica' defaultValue={i['descripcion tecnica']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['descripcion tecnica']} */}
                                 </td>
@@ -280,27 +280,27 @@ function Home() {
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='uso frecuente' defaultValue={i['uso frecuente']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['uso frecuente']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <Select arr={['1.5', ' 2.0', ' 2.4', '2.5', '2.7', '3.5', '4.5', 'Clavos', 'Protesis', 'Costillas', 'Columna y neurocirugia', 'Fijadores externos', 'Otros']} name='sistema' defaultValue={i.sistema} uuid={i.uuid} click={onClickHandlerSystem} />
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['costo']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <Select arr={['Titanio', 'Acero Inox', 'Otros']} name='categoria' defaultValue={i.categoria} uuid={i.uuid} click={onClickHandlerCategory} />
                                     {/* {i['costo']} */}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <Select arr={dispo} name='disponibilidad' defaultValue={i.disponibilidad} uuid={i.uuid} click={onClickHandlerAvailability} />
                                 </td>
-                                <td className="w-32 p-4">
+                                <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
                                     <label htmlFor={`img${index}`}>
                                         <img src={urlPostImage[i.uuid] ? urlPostImage[i.uuid] : i.url} alt="Apple Watch" />
                                         <input id={`img${index}`} type="file" onChange={(e) => manageInputIMG(e, i.uuid)} className='hidden' />
                                     </label>
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="w-[150px] px-3 py-4 text-gray-900">
                                     {state[i.uuid]
                                         ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
                                         : <Button theme={"Danger"} click={() => delet(i)}>Desarchivar</Button>
