@@ -21,13 +21,13 @@ import styles from '@/app/page.module.css'
 import { getDayMonthYear } from '@/utils/DateFormat'
 
 function Home() {
-    const { filterDis, setFilterDis, 
-        user, userDB, cart, setUserCart, 
-        modal, setUserData, 
+    const { filterDis, setFilterDis,
+        user, userDB, cart, setUserCart,
+        modal, setUserData,
         setModal, productDB,
-         setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
-         qrBCP, setQrBCP,
-         ultimoPedido, setUltimoPedido } = useUser()
+        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
+        qrBCP, setQrBCP,
+        ultimoPedido, setUltimoPedido } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
     const [categoria, setCategoria] = useState('')
     const router = useRouter()
@@ -163,10 +163,10 @@ function Home() {
     function confeti() {
         router.push(`/Cliente/Comprar/Detalle?idBCP=${ultimoPedido.idBCP}`)
     }
-// year = Date().getFullYear()
-// year = Date().getFullYear()
-// year = Date().getFullYear()
-// console.log(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0))
+    // year = Date().getFullYear()
+    // year = Date().getFullYear()
+    // year = Date().getFullYear()
+    // console.log(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0))
     useEffect(() => {
 
         if (tienda === undefined) {
@@ -175,11 +175,11 @@ function Home() {
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
         const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0)
-        getSpecificData('Pedido', 'cliente', user.uuid, setUltimoPedido, 'fecha', getDayMonthYear() )
+        getSpecificData('Pedido', 'cliente', user.uuid, setUltimoPedido, 'fecha', getDayMonthYear())
 
     }, [user, filterQR]);
 
-    console.log(ultimoPedido)
+    console.log(cart)
     return (
 
         <main className="">
@@ -198,14 +198,9 @@ function Home() {
                 </button>
             </Modal>}
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && webScann === false && <div>
-                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[5px] px-[10px] lg:px-[20px] z-20' >
-                    <span className=''>
-                        <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clipRule="evenodd" d="M0.0699999 3.258C-6.70552e-08 3.626 0 4.068 0 4.95V12C0 15.771 -1.19209e-07 17.657 1.172 18.828C2.343 20 4.229 20 8 20H12C15.771 20 17.657 20 18.828 18.828C20 17.657 20 15.771 20 12V9.798C20 7.166 20 5.849 19.23 4.994C19.1594 4.91508 19.0846 4.83997 19.006 4.769C18.151 4 16.834 4 14.202 4H13.828C12.675 4 12.098 4 11.56 3.847C11.2648 3.7626 10.9802 3.64449 10.712 3.495C10.224 3.224 9.816 2.815 9 2L8.45 1.45C8.176 1.176 8.04 1.04 7.896 0.92C7.27667 0.40664 6.51694 0.0919439 5.716 0.017C5.53 -4.09782e-08 5.336 0 4.95 0C4.067 0 3.626 -6.70552e-08 3.258 0.0699999C2.46784 0.219224 1.741 0.603137 1.17231 1.17165C0.603613 1.74017 0.219472 2.46789 0.0699999 3.258ZM14.282 1C14.648 1 14.832 1 14.985 1.02C16.003 1.16 16.813 1.963 16.999 3C16.8467 2.96552 16.6929 2.93849 16.538 2.919C15.898 2.835 15.09 2.835 14.088 2.835H13.754C12.812 2.835 12.454 2.83 12.129 2.734C11.9398 2.67789 11.7579 2.59969 11.587 2.501C11.291 2.331 11.035 2.073 10.369 1.383L10 1H14.284H14.282ZM11 7.25C10.8011 7.25 10.6103 7.32902 10.4697 7.46967C10.329 7.61032 10.25 7.80109 10.25 8C10.25 8.19891 10.329 8.38968 10.4697 8.53033C10.6103 8.67098 10.8011 8.75 11 8.75H16C16.1989 8.75 16.3897 8.67098 16.5303 8.53033C16.671 8.38968 16.75 8.19891 16.75 8C16.75 7.80109 16.671 7.61032 16.5303 7.46967C16.3897 7.32902 16.1989 7.25 16 7.25H11Z" fill="black" />
-                        </svg>
-                    </span>
-                    <span className=' left-0 top-0 bottom-0 my-auto text-center text-[16px] font-bold'>{user.rol == 'Cliente' ? 'Ya tengo una RECETA QR...' : 'Ver recetas QR...'}</span>
-                    <span className=''>
+                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] border-[5px] border-[#32CD32] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[0px] px-[10px] lg:px-[20px] z-20' >
+
+                    <span className='py-[5px]'>
                         <svg width="32" height="32" viewBox="0 0 323 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M138.71 0.669922H12.4399C9.25734 0.669922 6.20509 1.93419 3.95465 4.18463C1.70421 6.43507 0.439941 9.48732 0.439941 12.6699V138.93C0.439941 142.112 1.70421 145.165 3.95465 147.415C6.20509 149.666 9.25734 150.93 12.4399 150.93H138.71C141.893 150.93 144.945 149.666 147.195 147.415C149.446 145.165 150.71 142.112 150.71 138.93V12.6699C150.71 9.48732 149.446 6.43507 147.195 4.18463C144.945 1.93419 141.893 0.669922 138.71 0.669922ZM129.24 43.5999V129.47H21.9099V22.1299H129.24V43.5999Z" fill="black" />
                             <path d="M95.7799 43.6001H55.3799C52.1973 43.6001 49.145 44.8644 46.8946 47.1148C44.6442 49.3652 43.3799 52.4175 43.3799 55.6001V96.0001C43.3799 99.1827 44.6442 102.235 46.8946 104.485C49.145 106.736 52.1973 108 55.3799 108H95.7799C98.9625 108 102.015 106.736 104.265 104.485C106.516 102.235 107.78 99.1827 107.78 96.0001V55.6001C107.78 52.4175 106.516 49.3652 104.265 47.1148C102.015 44.8644 98.9625 43.6001 95.7799 43.6001Z" fill="black" />
@@ -223,7 +218,8 @@ function Home() {
                             <path d="M138.71 172.4H12.4399C9.25734 172.4 6.20509 173.664 3.95465 175.915C1.70421 178.165 0.439941 181.217 0.439941 184.4V310.67C0.439941 313.852 1.70421 316.905 3.95465 319.155C6.20509 321.406 9.25734 322.67 12.4399 322.67H138.71C141.893 322.67 144.945 321.406 147.195 319.155C149.446 316.905 150.71 313.852 150.71 310.67V184.4C150.71 181.217 149.446 178.165 147.195 175.915C144.945 173.664 141.893 172.4 138.71 172.4ZM129.24 215.33V301.2H21.9099V193.87H129.24V215.33Z" fill="black" />
                         </svg>
                     </span>
-                    <span onClick={handlerWebScann} className='h-full text-right z-50 lg:hidden'>
+                    <span className=' left-0 top-0 bottom-0 my-auto text-center text-[16px] font-bold'>{user.rol == 'Cliente' ? 'Ya tengo una RECETA QR...' : 'Ver recetas QR...'}</span>
+                    <span onClick={handlerWebScann} className='h-full inline-block text-right border-l-[3px] border-gray-100 py-[5px] pl-5 z-50'>
                         <svg className='h-[55px]' viewBox="0 0 20 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18 3H15.414L12.707 0.293001C12.6143 0.199958 12.5041 0.126171 12.3828 0.0758854C12.2614 0.0256001 12.1313 -0.000189449 12 1.04767e-06H8C7.86866 -0.000189449 7.73857 0.0256001 7.61724 0.0758854C7.4959 0.126171 7.38571 0.199958 7.293 0.293001L4.586 3H2C0.897 3 0 3.897 0 5V16C0 17.103 0.897 18 2 18H18C19.103 18 20 17.103 20 16V5C20 3.897 19.103 3 18 3ZM10 15C7.29 15 5 12.71 5 10C5 7.29 7.29 5 10 5C12.71 5 15 7.29 15 10C15 12.71 12.71 15 10 15Z" fill="black" />
                         </svg>

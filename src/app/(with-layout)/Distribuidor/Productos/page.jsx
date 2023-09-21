@@ -48,15 +48,16 @@ function Home() {
         await data.map(async i => {
             const obj = { ...i }
             delete obj.id
-             await writeUserData('Producto', { ...obj, uuid: generateUUID(), distribuidor: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente', 'Perfil')
+            await writeUserData('Producto', { ...obj, uuid: generateUUID(), empresa: userDB[0].nombre, whatsapp: userDB[0].whatsapp, distribuidor: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente', 'Perfil')
         })
         setUserDistributorPDB(undefined)
         await readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
         return setUserSuccess('')
     }
-
+    console.log(userDB)
     const importacionHandler = async (e) => {
-        console.log(userDB)
+
+
         if (userDB === undefined) {
             setModal('Verifica')
             return
@@ -66,10 +67,10 @@ function Home() {
 
         const data = await readUserData('Producto', queryUuid, null, 'distribuidor')
 
-        if (data.length === 0) {
-            setModal('No Data')
-            return
-        }
+        // if (data.length === 0) {
+        //     setModal('No Data')
+        //     return
+        // }
 
         if (distributorPDB !== null && distributorPDB !== undefined) {
             setModal(e)
@@ -121,9 +122,7 @@ function Home() {
         setModal('Delete')
         console.log(item)
     }
-    function redirect() {
-        router.push('/Distribuidor/Agregar')
-    }
+
     function sortArray(x, y) {
         if (x['nombre de producto 1'].toLowerCase() < y['nombre de producto 1'].toLowerCase()) { return -1 }
         if (x['nombre de producto 1'].toLowerCase() > y['nombre de producto 1'].toLowerCase()) { return 1 }
@@ -142,7 +141,7 @@ function Home() {
         requestAnimationFrame(() => {
             const scrollLeft = refFirst.current.scrollLeft;
             console.log(scrollLeft)
-            const itemWidth = screen.width  - 50
+            const itemWidth = screen.width - 50
             console.log(itemWidth)
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
@@ -150,11 +149,11 @@ function Home() {
     useEffect(() => {
         readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
     }, [])
-console.log(distributorPDB)
+    console.log(distributorPDB)
     return (
         <div className='h-full'>
-        <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
-        <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
                 {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de archivar el siguiente item:  {item['nombre de producto 1']}</Modal>}
 

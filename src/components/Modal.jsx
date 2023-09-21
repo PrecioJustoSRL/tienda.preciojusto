@@ -23,7 +23,7 @@ export default function Modal ({children, funcion, alert, successText, cancelTex
                         </svg>
                         <h3 className="mb-2 text-lg font-normal text-gray-500 dark:text-gray-400">{children}   <br /> {msg}   </h3>
                        {!alert && <> <button type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-[14px] font-medium px-5 py-4 hover:text-gray-900 focus:z-10 mr-2" onClick={()=>setModal('')}>{cancelText ? cancelText : 'Cancelar'}</button>
-                        <button type="button" className={`text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-300 font-bold rounded-lg text-[14px] inline-flex items-center px-5 py-4 text-center ${primary}`} onClick={funcion}>
+                        <button type="button" className={`focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-300 font-bold rounded-lg text-[14px] inline-flex items-center px-5 py-4 text-center ${primary? primary : 'bg-red-600 hover:bg-red-800 text-white '}`} onClick={funcion}>
                            {successText ? successText : 'Si, confirmar.'}
                         </button></>
                         }

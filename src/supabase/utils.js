@@ -154,7 +154,9 @@ const getSpecificData = async (rute, eq, uuid, updateContext, eq2, uuid2) => {
         .from(rute)
         .select()
         .eq(eq, uuid)
+        .eq('message', 'Correcto')
         .eq(eq2, uuid2)
+        
         // .gt(gt, value)
 console.log(data)
        let value = data.length > 0 

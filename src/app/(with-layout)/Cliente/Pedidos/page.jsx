@@ -92,7 +92,7 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-                <table className=" min-w-[900px] lg:w-full border-[1px] bg-white text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
+                <table className=" min-w-[1100px] border-[1px] bg-white text-[12px] text-left text-gray-500 border-t-4 border-t-gray-400">
                     <thead className="w-full text-[12px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
@@ -115,6 +115,12 @@ function Home() {
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Costo
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Empresa
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Contacto
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold">
                                 Fecha
@@ -150,7 +156,12 @@ function Home() {
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
                                 </td>
-
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {i['empresa']}
+                                </td>
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {i['whatsapp']}
+                                </td>
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     {i.fecha}
                                 </td>

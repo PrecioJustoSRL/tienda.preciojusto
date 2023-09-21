@@ -97,63 +97,62 @@ function Comprar({ theme, styled, click, children }) {
       {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 &&
         <h3 className='font-medium text-center text-[16px] p-5'>FELICIDADES SU COMPRA SE REALIZO CON EXITO !!!</h3>
       }
-
       <div className='relative items-center justify-between w-full lg:min-w-[800px] max-w-[1000px] bg-transparent   transition-all 	z-0' >
         <h3 className='text-center text-[16px] pb-3'>DETALLES DE LA COMPRA</h3>
-
         <br />
-        <table className="w-full lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
-          <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
+        <div>
+          <p className='text-[16px]'>Empresa distribuidora: {cartDB.empresa}</p>
+          <p className='text-[16px]'>Contacto: {cartDB.whatsapp}</p>
+        </div>
+        <br />
+        <table className="w-full lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[16px] text-left text-gray-500">
+          <thead className="w-full text-[16px] text-gray-900 uppercase border-b bg-gray-100">
             <tr>
-              <th scope="col-3" className="px-2 py-3 text-[16px] font-bold border-r">
-                Producto
+              <th scope="col-3" className="px-2 py-3 font-bold border-r">
+                Productos
               </th>
-              <th scope="col" className="px-0 py-3  w-[200px] text-[16px] text-center font-bold border-r">
+              <th scope="col" className="px-0 py-3  w-[200px] text-center font-bold border-r">
                 Cantidad
               </th>
-              <th scope="col" className="px-2 py-3 w-[200px] text-[16px] text-center font-bold ">
+              <th scope="col" className="px-2 py-3 w-[200px] text-center font-bold ">
                 Costo total
               </th>
             </tr>
           </thead>
           <tbody>
-
             {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0
               ? Object.values(cartDB.cart).map((i, index) => {
-                return <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
-                  <td className=" px-3 py-4  flex flex-col text-[16px]  text-gray-900 border-r">
+                return <tr className="bg-white text-[16px] border-b hover:bg-gray-50 " >
+                  <td className=" px-3 py-4  flex flex-col  text-gray-900 border-r">
                     {i['nombre de producto 1']}
                     <br />
                     Precio unidad: {i.costo} Bs.
                   </td>
-                  <td className="px-3 py-4 text-center text-[16px] text-gray-900 border-r">
+                  <td className="px-3 py-4 text-center text-gray-900 border-r">
                     {i.cantidad}
                   </td>
-                  <td className="px-3 py-4 text-center text-[16px] text-gray-900">
-                     {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined ? cart[i.uuid].cantidad * i.costo : i.costo} Bs.
+                  <td className="px-3 py-4 text-center text-gray-900">
+                    {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined ? cart[i.uuid].cantidad * i.costo : i.costo} Bs.
                   </td>
                 </tr>
               })
               : ''}
-
             {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 ?
-              <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
-                <td className="px-3 py-4  flex flex-col text-[16px] text-gray-900 border-r">
+              <tr className="bg-white text-[16px] border-b hover:bg-gray-50 " >
+                <td className="px-3 py-4  flex flex-col text-gray-900 border-r">
                   TOTAL
                 </td>
                 <td className="px-3 py-4 text-center text-gray-900 border-r">
                   {cartDB.check ? 'Provincía (+ 351 BS)' : ''}
                 </td>
-                <td className="px-3 py-4 text-[16px] text-center text-gray-900 border-r">
+                <td className="px-3 py-4 text-center text-gray-900 border-r">
                   {cartDB.cart !== undefined && cartDB.amount} Bs
                 </td>
               </tr>
               : ''}
-
-
-
           </tbody>
         </table>
+
         <br />
         <br />
         <br />
@@ -172,47 +171,3 @@ function Comprar({ theme, styled, click, children }) {
 }
 
 export default WithAuth(Comprar)
-
-{/* <div className='relative items-center justify-between w-full max-w-[500px] bg-transparent   transition-all 	z-0' >
-<ul className="flex flex-col bg-gray-100 p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  p-5 ">
-  <h3 className='text-center text-[16px] pb-3'>DETALLES DE LA COMPRA</h3>
-  <li>{cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 ? Object.values(cartDB.cart).map((i, index) => {
-    return <div className="relative w-full max-w-[500px] py-4" onClick={(e) => seeMore(e, i)} style={{ display: 'grid', gridTemplateColumns: 'auto 80px' }}>
-      <div className=" flex  flex-col justify-between ">
-        <div className=" font-bold text-[12px]  text-gray-950">
-          Nombre de producto: {i['nombre de producto 1']}
-        </div>
-        <div className=" font-bold text-[12px]  text-gray-950">
-          Cantidad: {i['cantidad']}u
-        </div>
-        <div className=" font-bold text-[12px]  text-gray-950">
-          Costo Total: {i['costo'] * i['cantidad']}bs
-        </div>
-        <div className=" font-bold text-[12px]  text-gray-950">
-          Empresa: {i['empresa']}
-        </div>
-        <div className=" font-bold text-[12px]  text-gray-950">
-          Telefono: {i['telefono']}
-        </div>
-        <div className=" font-bold text-[12px]  text-gray-950">
-          Celular: {i['whatsapp']}
-        </div>
-      </div>
-    </div>
-  }) : <span className='block text-[16px] text-center'>No tienes productos <br /> selecciona alguno <br /> </span>}</li>
-  <li className='flex justify-between text-gray-700 text-[16px] '>
-    <span className='font-bold '>TOTAL: </span>
-    <span className='font-bold '>
-      {cartDB.cart !== undefined && Object.values(cartDB.cart).reduce((acc, i, index) => {
-        const sum = i['costo'] * i['cantidad']
-        return sum + acc
-      }, 0)} BOB
-    </span>
-  </li>
-  {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 && <span className='text-[12px] pt-[12px]'>En uno momento ellos se comunicaran contigo</span>}
-</ul>
-<br />
-
-<Button theme='Primary' click={seguimiento}>Seguimiento de compra</Button>
-<Button theme="Primary" click={redirect}>Volver a la pagina Principal</Button>
-</div> */}
