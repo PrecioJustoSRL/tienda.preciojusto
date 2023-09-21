@@ -36,7 +36,7 @@ function Comprar({ theme, styled, click, children }) {
   function handlerPay(e) {
     e.preventDefault()
     e.stopPropagation()
-    if (state['nombre del paciente'] && state['celular del paciente'] && state['celular del paciente'].length === 8 && state['referencia del paciente'].length === 8 && state['referencia del paciente']) {
+    if (state['nombre del paciente'] && state['celular del paciente'] && state['celular del paciente'].length === 10 && state['referencia del paciente'].length === 10 && state['referencia del paciente']) {
       if (pay === true) {
         setModal('SuccessFull')
         const val = calculator()

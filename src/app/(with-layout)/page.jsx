@@ -198,7 +198,7 @@ function Home() {
                 </button>
             </Modal>}
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && webScann === false && <div>
-                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full py-[0px] z-20' >
+                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full px-[5px] z-20' >
 
                     <span className='py-[10px] px-[20px]'>
                         <svg width="32" height="32" viewBox="0 0 323 323" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -314,7 +314,7 @@ function Home() {
                         <Subtitle styled='' htmlFor="">Disponibilidad</Subtitle>
                         <div className="grid grid-cols-2 gap-4 justify-between">
                             <Tag theme={disponibilidad == 'En 24 hrs' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'En 24 hrs' ? '' : 'En 24 hrs')}>En 24 hrs</Tag>
-                            <Tag theme={disponibilidad == 'Inmediato' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'Inmediato' ? '' : 'Inmediato')}>Inmediatamente</Tag>
+                            <Tag theme={disponibilidad == 'Inmediata' ? 'Primary' : 'Secondary'} click={() => setDisponibilidad(disponibilidad == 'Inmediata' ? '' : 'Inmediata')}>Inmediata</Tag>
                         </div>
                     </div>
                     <div className='lg:w-[250px] pb-[10px]'>
