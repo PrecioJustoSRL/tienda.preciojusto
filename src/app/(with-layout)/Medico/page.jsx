@@ -27,8 +27,8 @@ function Home() {
     const inputRefCard = useMask({ mask: '____ ____ ____ ____', replacement: { _: /\d/ } });
     const inputRefDate = useMask({ mask: '__/__', replacement: { _: /\d/ } });
     const inputRefCVC = useMask({ mask: '___', replacement: { _: /\d/ } });
-    const inputRefPhone = useMask({ mask: '+ 591 _ ___ ___', replacement: { _: /\d/ } });
-    const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
+    const inputRefPhone = useMask({ mask: '_ ___ ___', replacement: { _: /\d/ } });
+    const inputRefWhatsApp = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
 
     function manageInputIMG(e) {
         const file = e.target.files[0]
@@ -89,12 +89,8 @@ function Home() {
                         <Select arr={['Traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' defaultValue={userDB && userDB[0]['especialidad']} click={onClickHandler} />
                     </div>
                     <div>
-                        <Label htmlFor="">Teléfono</Label>
-                        <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} defValue={userDB && userDB[0]['telefono']} />
-                    </div>
-                    <div>
                         <Label htmlFor="">Whatsapp</Label>
-                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB[0]['whatsapp']} require />
+                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB[0]['whatsapp']} category='phone'  require  />
                     </div>
                 </div>
                 <br />

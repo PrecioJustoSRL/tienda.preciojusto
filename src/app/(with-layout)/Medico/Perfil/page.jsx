@@ -37,7 +37,6 @@ function Home() {
                     <Subtitle>Contactos</Subtitle>
                     <div className=''>
                         <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB[0]['whatsapp']}</Paragraph>
-                        <Paragraph> <img className="inline pr-5" src="/telefono.svg" alt="" />{userDB[0]['telefono']}</Paragraph>
                         <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB[0]['ciudad']}</Paragraph>
                     </div>
                     <br />

@@ -36,8 +36,8 @@ function Home() {
     const inputRefCard = useMask({ mask: '____ ____ ____ ____', replacement: { _: /\d/ } });
     const inputRefDate = useMask({ mask: '__/__', replacement: { _: /\d/ } });
     const inputRefCVC = useMask({ mask: '___', replacement: { _: /\d/ } });
-    const inputRefPhone = useMask({ mask: '+ 591 _ ___ ___', replacement: { _: /\d/ } });
-    const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
+    const inputRefPhone = useMask({ mask: '_ ___ ___', replacement: { _: /\d/ } });
+    const inputRefWhatsApp = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
 
 
     function manageInputIMG(e) {
@@ -112,14 +112,9 @@ function Home() {
                         <Label htmlFor="">Nombre de la clínica</Label>
                         <Input type="text" name="nombre" onChange={onChangeHandler} />
                     </div>
-
-                    <div>
-                        <Label htmlFor="">Teléfono</Label>
-                        <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} />
-                    </div>
                     <div>
                         <Label htmlFor="">Whatsapp</Label>
-                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} />
+                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} category='phone'  require />
                     </div>
                 </div>
                 <div className='flex w-full justify-around'>

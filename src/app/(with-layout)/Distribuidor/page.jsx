@@ -82,46 +82,9 @@ function Home() {
                         <Label htmlFor="">Ciudad</Label>
                         <Select arr={['La Paz', 'Cochabamba', 'Santa Cruz']} name='ciudad' click={onClickHandler} />
                     </div>
-
-                    {/* <div>
-                        <Label htmlFor="">Direccion</Label>
-                        <Input type="text" name="direccion" onChange={onChangeHandler} />
-                    </div> */}
-                    {/* <div>
-                        <Label htmlFor="">Dias de atención</Label>
-                        <div className="flex justify-between">
-                            <Checkbox name="L" change={onChangeHandlerCheck} />
-                            <Label htmlFor="L">L</Label>
-                            <Checkbox name="M" change={onChangeHandlerCheck} />
-                            <Label htmlFor="M">M</Label>
-                            <Checkbox name="Mi" change={onChangeHandlerCheck} />
-                            <Label htmlFor="M">M</Label>
-                            <Checkbox name="J" change={onChangeHandlerCheck} />
-                            <Label htmlFor="J">J</Label>
-                            <Checkbox name="V" change={onChangeHandlerCheck} />
-                            <Label htmlFor="V">V</Label>
-                            <Checkbox name="S" change={onChangeHandlerCheck} />
-                            <Label htmlFor="S">S</Label>
-                            <Checkbox name="D" change={onChangeHandlerCheck} />
-                            <Label htmlFor="D">D</Label>
-                        </div>
-                    </div> */}
-                    {/* <div>
-                        <Label htmlFor="">Horarios de Atención</Label>
-                        <div className='w-full flex justify-between'>
-                            <Input type="time" name={'horarios de apertura'} onChange={onChangeHandler} />
-                            <span className='w-6/12 flex justify-center items-center'>a</span>
-                            <Input type="time" name={'horarios de cierre'} onChange={onChangeHandler} />
-                        </div>
-                    </div> */}
-                    
-                    <div>
-                        <Label htmlFor="">Teléfono</Label>
-                        <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} />
-                    </div>
                     <div>
                         <Label htmlFor="">Whatsapp</Label>
-                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} />
+                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} category='phone'  require />
                     </div>
                 </div>
                 <div className='flex w-full justify-around'>

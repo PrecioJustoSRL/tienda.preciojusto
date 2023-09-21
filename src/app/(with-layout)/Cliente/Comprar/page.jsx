@@ -36,7 +36,7 @@ function Comprar({ theme, styled, click, children }) {
   function handlerPay(e) {
     e.preventDefault()
     e.stopPropagation()
-    if (state['nombre del paciente'] && state['celular del paciente'] && state['referencia del paciente']) {
+    if (state['nombre del paciente'] && state['celular del paciente'] && state['celular del paciente'].length === 8 && state['referencia del paciente'].length === 8 && state['referencia del paciente']) {
       if (pay === true) {
         setModal('SuccessFull')
         const val = calculator()
@@ -194,15 +194,15 @@ function Comprar({ theme, styled, click, children }) {
 
       <table className="w-full shadow-2xl lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
 
-        {Object.values(cart).length > 0 && <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
+        {Object.values(cart).length > 0 && <thead className="w-full text-[16px] text-gray-900 uppercase border-b bg-gray-100">
           <tr>
-            <th scope="col-3" className="w-1/2 px-2 py-3 text-[16px]">
+            <th scope="col-3" className="px-2 py-3 font-bold border-r">
               Producto
             </th>
-            <th scope="col" className="px-0 py-3 text-center text-[16px]">
+            <th scope="col" className="px-0 py-3  w-[200px] text-center font-bold border-r">
               Cantidad
             </th>
-            <th scope="col" className="px-2 w-[200px] py-3 text-[16px]">
+            <th scope="col" className="px-2 py-3 w-[200px] text-center font-bold">
               Costo total
             </th>
           </tr>
