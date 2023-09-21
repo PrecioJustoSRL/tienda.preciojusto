@@ -33,7 +33,7 @@ export default function Home() {
         }
 
         
-        if (read !== 'RESETEAR-CONTRASEÑA') {
+        if (read !== 'RECUPERAR') {
             setUserSuccess('CompleteREAD')
             return 	setTimeout(() => { setIsDisable(false) }, 6000)
 

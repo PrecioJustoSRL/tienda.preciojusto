@@ -167,7 +167,6 @@ console.log(data)
         updateContext(value)
     // console.log(data)
     // console.log(error)
-
 }
 
 const readUserData = async (rute, uuid, updateContext, eq,) => {
