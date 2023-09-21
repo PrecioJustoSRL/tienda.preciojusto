@@ -70,8 +70,8 @@ export default function Home() {
                         <Input type="password" name="password2" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-100 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
                     </div>
                  
-                    <Button type="submit" theme="Transparent">Continuar</Button>
-                    <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 hover:underline">Inicia Sessión</Link >
+                    <Button type="submit" theme="Primary">Continuar</Button>
+                    <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 font-bold  underline">Inicia Sessión</Link >
           </div>
                 </form>
             </div>
