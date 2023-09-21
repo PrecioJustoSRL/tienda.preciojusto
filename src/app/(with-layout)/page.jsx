@@ -1,5 +1,5 @@
 'use client'
-import { readUserAllData, updateUserData, readUserData } from '@/supabase/utils'
+import { readUserAllData, updateUserData, readUserData, getSpecificData } from '@/supabase/utils'
 import { useUser } from '@/context/Context.js'
 
 import Button from '@/components/Button'
@@ -18,9 +18,16 @@ import { QRreaderUtils } from '@/utils/QRreader'
 import { useState } from 'react'
 import Title from '@/components/Title'
 import styles from '@/app/page.module.css'
+import { getDayMonthYear } from '@/utils/DateFormat'
 
 function Home() {
-    const { filterDis, setFilterDis, user, userDB, cart, setUserCart, modal, setUserData, setModal, productDB, setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann, qrBCP, setQrBCP } = useUser()
+    const { filterDis, setFilterDis, 
+        user, userDB, cart, setUserCart, 
+        modal, setUserData, 
+        setModal, productDB,
+         setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
+         qrBCP, setQrBCP,
+         ultimoPedido, setUltimoPedido } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
     const [categoria, setCategoria] = useState('')
     const router = useRouter()
@@ -154,11 +161,12 @@ function Home() {
     console.log(history.length)
 
     function confeti() {
-        router.push(`/Cliente/Comprar/Detalle?idBCP=${6365157}`)
+        router.push(`/Cliente/Comprar/Detalle?idBCP=${ultimoPedido.idBCP}`)
     }
-
-
-
+// year = Date().getFullYear()
+// year = Date().getFullYear()
+// year = Date().getFullYear()
+// console.log(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0))
     useEffect(() => {
 
         if (tienda === undefined) {
@@ -166,12 +174,12 @@ function Home() {
         }
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
-        // readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
-
+        const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0)
+        getSpecificData('Pedido', 'cliente', user.uuid, setUltimoPedido, 'fecha', getDayMonthYear() )
 
     }, [user, filterQR]);
 
-    console.log(filter)
+    console.log(ultimoPedido)
     return (
 
         <main className="">
@@ -333,11 +341,7 @@ function Home() {
 
 
                 <div className="relative bg-transparent lg:bg-transparent mt-6  rounded-t-[50px]  w-full flex flex-col items-center justify-center px-5 pt-8 pb-16 lg:pt-0">
-
-
-
-
-                    {<div className={`w-full max-w-[600px] lg:w-[50%] bg-[#1C355E] text-white text-center p-5 text-[18px] font-bold rounded-full z-20 ${styles.scale}`} onClick={confeti}>
+                    {ultimoPedido !== undefined && ultimoPedido !== null && <div className={`select-none w-full max-w-[600px] lg:w-[50%] bg-[#1C355E] text-white text-center p-5 text-[18px] font-bold rounded-full z-20 ${styles.scale}`} onClick={confeti}>
                         Felicidades por su compra.<br /> presione AQUI para ver los <br />detalles
                         <span className='ml-1.5 inline-block bg-[#32CD32] rounded-full'>
                             <svg width="15" height="15" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,8 +349,6 @@ function Home() {
                             </svg>
                         </span>
                     </div>}
-
-
 
                     {filter.length == 0 && filterQR.length == 0 &&
                         productDB !== null && productDB !== undefined &&

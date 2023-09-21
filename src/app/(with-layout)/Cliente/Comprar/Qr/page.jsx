@@ -37,10 +37,10 @@ function Comprar({ theme, styled, click, children }) {
 
     function closeModal() {
 
-        console.log(window.location.href.includes('Comprar/'))
-        window.location.href.includes('Comprar/')
-            ? router.replace('/')
-            : router.back()
+        // console.log(window.location.href.includes('Comprar/'))
+        // window.location.href.includes('Comprar/')
+            // ? router.replace('/')
+             router.back()
         setUserCart({})
         setState({})
         // router.back()

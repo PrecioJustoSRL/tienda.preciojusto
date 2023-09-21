@@ -8,9 +8,9 @@ export default () => {
     <Confetti
       width={window.innerWidth}
       height={window.innerHeight}
-      numberOfPieces={800}
+      numberOfPieces={1000}
       recycle={false}
-      tweenDuration={4000}
+      tweenDuration={2000}
     />
 
 

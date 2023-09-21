@@ -15,7 +15,7 @@ import dynamic from "next/dynamic";
 import Msg from "@/components/Msg"
 import Modal from "@/components/Modal"
 import { useMask } from '@react-input/mask';
-
+import { getDayMonthYear } from '@/utils/DateFormat';
 const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
   ssr: false,
 });
@@ -94,10 +94,7 @@ function Comprar({ theme, styled, click, children }) {
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
         return data
       })
-      await writeUserData('Pedido', { distribuidor: arr[0].distribuidor, compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
-
-
-
+      await writeUserData('Pedido', { fecha: getDayMonthYear(), distribuidor: arr[0].distribuidor, compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
 
       router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
 

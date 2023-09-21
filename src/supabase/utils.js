@@ -2,7 +2,7 @@ import { supabase } from './config'
 
 //--------------------------Authentications----------------------------------
 
-const onAuth = (setUserProfile, ) => {
+const onAuth = (setUserProfile,) => {
 
     console.log('onAuth')
     const data = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -16,7 +16,7 @@ const onAuth = (setUserProfile, ) => {
             console.log(session.expires_at)
             console.log(new Date(session.expires_at))
             console.log(new Date().getTime())
-           const access_token = session.access_token
+            const access_token = session.access_token
             const refresh_token = session.refresh_token
             // const await =supabase.auth.setSession({
             //     access_token,
@@ -32,17 +32,17 @@ const onAuth = (setUserProfile, ) => {
                 .from('Users')
                 .select()
                 .eq('uuid', session.user.id)
-                console.log(error)
+            console.log(error)
 
-            if(error && error.code === 'PGRST301'){
+            if (error && error.code === 'PGRST301') {
                 console.log('error.code')
                 setUserProfile(null)
                 return
             }
-            data !== null && data !== undefined  && data.length
+            data !== null && data !== undefined && data.length
                 ? setUserProfile(data[0])
                 : setUserProfile(session.user)
-                return
+            return
         }
         setUserProfile(null)
 
@@ -149,6 +149,24 @@ const getUserData = async (setUserProfile) => {
 }
 
 
+const getSpecificData = async (rute, eq, uuid, updateContext, eq2, uuid2) => {
+    const { data, error } = await supabase
+        .from(rute)
+        .select()
+        .eq(eq, uuid)
+        .eq(eq2, uuid2)
+        // .gt(gt, value)
+console.log(data)
+       let value = data.length > 0 
+       ? data.reduce((acc, i)=>{
+           return i.id > acc.id ? i : acc
+        }, {id: -1})
+        : null
+        updateContext(value)
+    // console.log(data)
+    // console.log(error)
+
+}
 
 const readUserData = async (rute, uuid, updateContext, eq,) => {
     const result = await supabase
@@ -173,7 +191,7 @@ const readUserAllData = async (rute, context, updateContext) => {
     const result = await supabase
         .from(rute)
         .select()
-console.log(result)
+    console.log(result)
     return updateContext(result.data)
 
 }
@@ -205,5 +223,5 @@ const deleteUserData = async (rute, uuid, eq) => {
 
 
 
-export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData, getUserData }
+export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData, getUserData, getSpecificData }
 

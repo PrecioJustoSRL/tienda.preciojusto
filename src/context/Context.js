@@ -16,6 +16,7 @@ export function UserProvider({ children }) {
 	const [cartDB, setCartDB] = useState({})
 	const [success, setSuccess] = useState(null)
 	const [pedidos, setPedidos] = useState([])
+	const [ultimoPedido, setUltimoPedido] = useState(undefined)
 	const [qr, setQr] = useState('');
 	const [QRurl, setQRurl] = useState('');
 	const [recetaDB, setRecetaDB] = useState({});
@@ -82,15 +83,9 @@ export function UserProvider({ children }) {
 				setUserSuccess(null)
 			}, time ? time : 6000)
 		}
-
-
-
-
 		return () => {
 			clearTimeout(timer)
 		};
-
-
 	}
 
 	const setIntroVideo = (data) => {
@@ -161,7 +156,8 @@ export function UserProvider({ children }) {
 			qrBCP, paySuccess, filterDis, check,
 			session,
 			cartDB,
-			precioJustoPDB, setPrecioJustoPDB,
+			precioJustoPDB, ultimoPedido, 
+			setUltimoPedido, setPrecioJustoPDB,
 			setCartDB,
 			setSession,
 			setCheck,
@@ -211,7 +207,7 @@ export function UserProvider({ children }) {
 		businessData,
 		webScann,
 		qrBCP,
-		paySuccess, filterDis, check, session, precioJustoPDB])
+		paySuccess, filterDis, check, session, precioJustoPDB, ultimoPedido])
 
 	return (
 		<UserContext.Provider value={value} >

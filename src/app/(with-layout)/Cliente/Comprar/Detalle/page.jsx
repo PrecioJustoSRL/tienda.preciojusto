@@ -105,56 +105,59 @@ function Comprar({ theme, styled, click, children }) {
         <table className="w-full lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
           <thead className="text-[12px] text-gray-700 uppercase bg-gray-50">
             <tr>
-              <th scope="col-3" className="w-1/2 px-2 py-3 text-[16px]">
+              <th scope="col-3" className="px-2 py-3 text-[16px] font-bold border-r">
                 Producto
               </th>
-              <th scope="col" className="px-0 py-3 text-[16px]">
+              <th scope="col" className="px-0 py-3  w-[200px] text-[16px] text-center font-bold border-r">
                 Cantidad
               </th>
-              <th scope="col" className="px-2 w-[200px] py-3 text-[16px]">
+              <th scope="col" className="px-2 py-3 w-[200px] text-[16px] text-center font-bold ">
                 Costo total
               </th>
             </tr>
           </thead>
           <tbody>
 
-            {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 ? Object.values(cartDB.cart).map((i, index) => {
-              return <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
-                <td className="px-3 py-4  flex flex-col text-[16px]  text-gray-700">
-                  {i['nombre de producto 1']}
-                  <br />
-                  <span className="text-[16px]  text-gray-700  tracking-tight">Precio unidad: {i.costo} Bs.</span>
+            {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0
+              ? Object.values(cartDB.cart).map((i, index) => {
+                return <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
+                  <td className=" px-3 py-4  flex flex-col text-[16px]  text-gray-900 border-r">
+                    {i['nombre de producto 1']}
+                    <br />
+                    Precio unidad: {i.costo} Bs.
+                  </td>
+                  <td className="px-3 py-4 text-center text-[16px] text-gray-900 border-r">
+                    {i.cantidad}
+                  </td>
+                  <td className="px-3 py-4 text-center text-[16px] text-gray-900">
+                     {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined ? cart[i.uuid].cantidad * i.costo : i.costo} Bs.
+                  </td>
+                </tr>
+              })
+              : ''}
+
+            {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 ?
+              <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
+                <td className="px-3 py-4  flex flex-col text-[16px] text-gray-900 border-r">
+                  TOTAL
                 </td>
-                <td className="px-3 py-4 text-center text-gray-900">
-                  {i.cantidad}
-                </td>
-                <td className="px-3 py-4 font-semibold text-gray-900">
-                  <div className="flex items-baseline text-gray-900">
-                    <span className="text-[16px]  text-gray-700  tracking-tight">{cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined ? cart[i.uuid].cantidad * i.costo : i.costo} Bs.</span>
-                  </div>
-                </td>
-              </tr>
-            })
-              : <span className='block text-[16px] text-center'>No tienes productos <br /> selecciona alguno <br /> </span>}
-            {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 ? Object.values(cartDB.cart).map((i, index) => {
-              return <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
-                <td className="px-3 py-4  flex flex-col text-[16px]  text-gray-700">
-                  TOTAl
-                </td>
-                <td className="px-3 py-4  text-gray-900">
+                <td className="px-3 py-4 text-center text-gray-900 border-r">
                   {cartDB.check ? 'Provincía (+ 351 BS)' : ''}
                 </td>
-                <td className="px-3 py-4 text-[16px] text-gray-900">
+                <td className="px-3 py-4 text-[16px] text-center text-gray-900 border-r">
                   {cartDB.cart !== undefined && cartDB.amount} Bs
                 </td>
               </tr>
-            }) : ''}
+              : ''}
+
+
+
           </tbody>
         </table>
         <br />
         <br />
         <br />
-        {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 && <span className='text-[16px] mt-[30px]'>*En uno momento ellos se comunicaran contigo</span>}
+        {cartDB.cart !== undefined && Object.values(cartDB.cart).length > 0 && <span className='text-[16px] mt-[30px]'>*En uno momento tus proveedores se comunicaran contigo</span>}
 
         <div className='flex flex-col h-[130px] justify-between items-center lg:flex-row lg:justify-around lg:gap-[10px] p-5 justify-center'>
           <Button theme='Primary' click={seguimiento}>Seguimiento de compra</Button>
