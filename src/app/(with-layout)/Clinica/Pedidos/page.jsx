@@ -175,7 +175,7 @@ function Home() {
                                 <td className="px-3 py-4 w-[200px] text-gray-900 text-center border-r">
                                     {userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
                                         ? <Select arr={['Pendiente', 'Rechazado', 'Autorizado']} name='autorizacion' defaultValue={i.autorizacion} uuid={i.idBCP} click={onClickHandlerCategory} />
-                                        : <button className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.estado == 'Pendiente' && 'bg-gray-400'} ${i.estado == 'Felicitaciones' && 'bg-green-400'} ${i.estado == 'Atendido' && 'bg-yellow-300'}`} onClick={e => confeti(i)}>
+                                        : <button className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.idBCP == 'Rechazado' && 'bg-red-400'} ${i.idBCP == 'Authorizado' && 'bg-green-300'} ${i.idBCP == 'Pendiente' && 'bg-gray-400'}`} onClick={e => confeti(i)}>
                                             {i['autorizacion']}
                                         </button>}
                                 </td>
