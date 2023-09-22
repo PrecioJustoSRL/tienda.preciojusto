@@ -17,7 +17,7 @@ export default function Button({ click, type, name, onChange, reference, placeho
     function handlerOnkeyPress(e) {
         console.log(keyValue.length)
 
-        if (category && category === 'phone' && (keyValue.length === 6 || keyValue.length === 0)) {
+        if (category && category === 'phone' && keyValue.length === 0) {
             console.log('first')
             if (e.key == 6 || e.key == 7) {
                 return e.key

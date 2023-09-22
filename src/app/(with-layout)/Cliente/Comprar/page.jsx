@@ -36,6 +36,10 @@ function Comprar({ theme, styled, click, children }) {
   function handlerPay(e) {
     e.preventDefault()
     e.stopPropagation()
+    if (modal === 'SuccessFull') {
+      return
+    }
+
     if (state['nombre del paciente'] && state['celular del paciente'] && state['celular del paciente'].length === 10 && state['referencia del paciente'].length === 10 && state['referencia del paciente']) {
       if (pay === true) {
         setModal('SuccessFull')
@@ -98,7 +102,8 @@ function Comprar({ theme, styled, click, children }) {
 
       router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
 
-      // const interval = setTimeout(() => { verify() }, 10000)
+
+      return setModal('')
     } catch (err) {
       console.log(err)
     }
@@ -131,7 +136,7 @@ function Comprar({ theme, styled, click, children }) {
     {pay && <Modal
       funcion={handlerPay}
       successText={user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora' ? 'Confirmar Solicitud' : 'Confirmar compra'}
-      cancelText="Revisar" 
+      cancelText="Revisar"
       primary="bg-amber-400 hover:bg-amber-400  text-black font-bold">
       Revisar una vez mas mis productos
     </Modal>}
@@ -152,7 +157,7 @@ function Comprar({ theme, styled, click, children }) {
         </div>
         <div>
           <Label htmlFor="">Numero de celular de referencia</Label>
-          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} category='phone'  require />
+          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} category='phone' require />
 
           {/* <Input type="number" name="referencia del paciente" reference={inputRefWhatsApp} onChange={onChangeHandler} require /> */}
         </div>

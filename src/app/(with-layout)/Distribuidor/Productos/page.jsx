@@ -105,8 +105,8 @@ function Home() {
         setState(obj)
         await readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
         setModal('')
-
     }
+    
     async function deletConfirm() {
         await updateUserData('Producto', { ...state[item.uuid], archivado: true }, item.uuid)
         // postImage[item.uuid] && await uploadStorage('Producto', postImage[item.uuid], item.uuid, updateUserData, true)
@@ -258,7 +258,7 @@ function Home() {
                                 <td className="px-3 py-4 text-gray-900 text-center font-bold border-r">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[200px] px-3 py-4 text-gray-900 border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea> */}
                                     <span className='block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 rounded-lg '>
                                         {i['nombre de producto 1']}

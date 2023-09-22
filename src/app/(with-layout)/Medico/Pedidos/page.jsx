@@ -159,7 +159,7 @@ function Home() {
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['empresa']}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     {i['whatsapp']}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
