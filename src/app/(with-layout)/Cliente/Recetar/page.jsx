@@ -122,7 +122,7 @@ function Comprar({ theme, styled, click, children }) {
       <div className='w-full flex justify-center'>
 
 
-        <div className='w-[80vw] h-[80vw] max-w-[300px] max-h-[300px]'>
+        <div className='w-[80vw] h-[80vw] max-w-[300px] max-h-[350px] max-w-[350px]'>
           {qr !== '' && <QRCode
             id='qr'
             size={256}
