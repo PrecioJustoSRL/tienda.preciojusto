@@ -1,0 +1,80 @@
+.animation {
+  animation-name: animation;
+  animation-duration: 4.5s;
+  animation-timing-function: ease-in-out;
+  transform-origin: 50% 50%;
+}
+
+
+.animation1 {
+  animation-name: animation1;
+  animation-duration: 4.2s;
+  animation-timing-function: ease-in-out;
+  transform-origin: 50% 50%;
+  opacity: 0;
+
+}
+
+
+.animation2 :nth-child(n) {
+  animation-name: animation2;
+  animation-duration: 4.2s;
+  /* animation-iteration-count: infinite; */
+  animation-timing-function: ease-in-out;
+  /* transform-origin: 50% 50%; */
+  color: #ffffff;
+  opacity: 0;
+
+}
+
+@keyframes animation {
+  0% {
+    background-color: #2A52BE;
+  }
+
+  90% {
+    background-color: #2A52BE;
+    opacity: 1;
+  }
+  100% {
+    background-color: transparent;
+    opacity: 0;
+  }
+}
+
+@keyframes animation1 {
+  0% {
+    opacity: 1;
+    transform: skew(90deg, 0deg);
+  }
+  25% {
+    transform: skew(0deg);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes animation2 {
+  0% {
+    opacity: 1;
+    color: transparent;
+  }
+
+  25% {
+    color: #2A52BE;
+  }
+
+  50% {
+    color: #ffffff;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

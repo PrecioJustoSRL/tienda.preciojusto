@@ -2,7 +2,7 @@ export default function Loader()
 
 {
     return (
-        <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center  bg-[#2A52BE] items-center z-50">
+        <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center  bg-[#2A52BE] items-center z-40">
          <div> <img src='/logo-circle.png' className="h-[100px]"/> </div>
          <br/>
              <div aria-label="Loading..." role="status" className="flex items-center space-x-2">

@@ -11,6 +11,7 @@ import Video from '@/components/Video'
 import { useRouter } from 'next/navigation';
 import LoaderWithLogo from '@/components/LoaderWithLogo'
 import Particles from '@/components/Particles'
+import IntroLoader from '@/components/IntroLoader'
 
 
 export default function Home() {
