@@ -71,7 +71,7 @@ function Home() {
             <Video />
             <div className='w-screen h-screen  flex flex-col justify-center items-center p-5'>
 
-            <form className={`space-y-6 lg:space-y-3 w-[100%] bg-[#00000090] rounded-[30px] lg:max-w-[350px] ${introVideo == true ? 'h-0 overflow-hidden' : 'h-auto px-5 py-10 lg:p-10'}`}  onSubmit={registerHandler} >
+            <form className={`space-y-6 lg:space-y-3 w-[100%] bg-[#00000090] rounded-[30px] sm:max-w-[400px] ${introVideo == true ? 'h-0 overflow-hidden' : 'h-auto px-5 py-10 lg:p-10'}`}  onSubmit={registerHandler} >
                     <div className='w-full text-center flex justify-center'>
                         <Image src="/logo-main.svg" width="150" height="150" alt="User" />
                     </div>

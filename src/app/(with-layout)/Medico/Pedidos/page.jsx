@@ -162,7 +162,7 @@ function Home() {
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     {i['whatsapp']}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 text-center border-r">
+                                <td className="w-[100px] px-3 py-4 text-gray-900 text-center border-r">
                                     {i.fecha}
                                 </td>
                                 {/* 

@@ -14,6 +14,7 @@ import { writeUserData, readUserData, updateUserData, deleteUserData } from '@/s
 import { uploadStorage } from '@/supabase/storage'
 import dynamic from "next/dynamic";
 import QRCode from "qrcode.react";
+import LoaderBlack from '@/components/LoaderBlack'
 
 const InvoicePDF = dynamic(() => import("@/components/recetaPDFdoc"), {
     ssr: false,
@@ -39,13 +40,16 @@ function Home() {
         setState({ ...state, [i.qr]: { ...state[i.qr], qr: i.qr, [e.target.name]: e.target.value } })
     }
 
-    function save(e, i) {
+    async function save(e, i) {
         console.log(state[i.qr])
         e.preventDefault()
-        updateUserData('Receta', state[i.qr], i.qr, 'qr')
+        setModal('Guardando')
+        await updateUserData('Receta', state[i.qr], i.qr, 'qr')
+        await readUserData('Receta', user.uuid, setRecetaDBP, 'medico')
         const obj = { ...state }
         delete obj[i.qr]
         setState(obj)
+        setModal('')
     }
     function delet(i, data) {
         setUserItem(i)
@@ -194,6 +198,7 @@ function Home() {
                     </tbody>
                 </table>
             </div>
+            {modal === 'Guardando' && <LoaderBlack />}
         </div>
     )
 }

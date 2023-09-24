@@ -184,6 +184,22 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
     return result.data
 }
 
+const readUserDataEq = async (rute, uuid, updateContext, eq, value, eq2) => {
+    const result = await supabase
+        .from(rute)
+        .select()
+        .eq(eq ? eq : 'uuid', uuid)
+        .eq(eq2, value)
+
+
+    if (updateContext) {
+        result.data !== null && result.data.length !== 0
+            ? (result.data.lenght > 1 ? updateContext(result.data[0]) : updateContext(result.data))
+            : updateContext(null)
+    }
+    // console.log(result)
+    return result.data
+}
 // result.data !== null && result.data.length !== 0 
 // ? ( result.data.lenght > 1 ? result.data[0] :  result.data )
 // : null
@@ -224,5 +240,5 @@ const deleteUserData = async (rute, uuid, eq) => {
 
 
 
-export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData, getUserData, getSpecificData }
+export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData, getUserData, getSpecificData, readUserDataEq }
 

@@ -130,7 +130,7 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-            <table className="w-full min-w-[1500px] border-[1px] border-t-4 border-t-gray-400">
+            <table className="w-full min-w-[1600px] border-[1px] border-t-4 border-t-gray-400">
             <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
@@ -157,7 +157,12 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Costo
                             </th>
-
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
+                                Empresa
+                            </th>
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
+                                Contacto
+                            </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Fecha
                             </th>
@@ -175,9 +180,9 @@ function Home() {
                                 <td className="px-3 py-4 w-[200px] text-gray-900 text-center border-r">
                                     {userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
                                         ? <Select arr={['Pendiente', 'Rechazado', 'Autorizado']} name='autorizacion' defaultValue={i.autorizacion} uuid={i.idBCP} click={onClickHandlerCategory} />
-                                        : <button className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.idBCP == 'Rechazado' && 'bg-red-400'} ${i.idBCP == 'Authorizado' && 'bg-green-300'} ${i.idBCP == 'Pendiente' && 'bg-gray-400'}`} onClick={e => confeti(i)}>
+                                        : <span className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.autorizacion == 'Rechazado' && 'bg-red-400'} ${i.autorizacion == 'Autorizado' && 'bg-green-300'} ${i.autorizacion == 'Pendiente' && 'bg-gray-400'}`}>
                                             {i['autorizacion']}
-                                        </button>}
+                                        </span>}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     <button className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
@@ -200,8 +205,13 @@ function Home() {
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
                                 </td>
-
-                                <td className="px-3 py-4 text-gray-900 text-center border-r">
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {i['empresa']}
+                                </td>
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {i['whatsapp']}
+                                </td>
+                                <td className="w-[100px] px-3 py-4 text-gray-900 text-center border-r">
                                     {getDayMonthYear(i['created_at'])}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 text-center border-r">
