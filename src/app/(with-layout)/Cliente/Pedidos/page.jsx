@@ -45,7 +45,11 @@ function Home() {
             ? router.push(`/Cliente/Comprar/Detalle?idBCP=${i.idBCP}`)
             : router.push(`/Cliente/Comprar/Qr?idBCP=${i.idBCP}`)
     }
-
+    function sortArray(x, y) {
+        if (x['nombre del paciente'].toLowerCase() < y['nombre del paciente'].toLowerCase()) { return -1 }
+        if (x['nombre del paciente'].toLowerCase() > y['nombre del paciente'].toLowerCase()) { return 1 }
+        return 0
+    }
     const prev = () => {
         requestAnimationFrame(() => {
             const scrollLeft = refFirst.current.scrollLeft;
@@ -131,7 +135,7 @@ function Home() {
                         </tr>
                     </thead>
                     <tbody className='w-full'>
-                        {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
+                        {pedidos && pedidos !== undefined && pedidos.sort(sortArray).map((i, index) => {
                             return <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
                                 <td className="px-3 py-4  text-gray-900  text-center font-bold  border-r">
                                     {index + 1}

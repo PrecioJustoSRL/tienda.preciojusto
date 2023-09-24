@@ -198,7 +198,10 @@ function Home() {
                 </button>
             </Modal>}
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && webScann === false && <div>
-                <label htmlFor="qr" className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px] flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full px-[5px] z-20' >
+
+
+            <div  className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] lg:min-w-[600px]  text-gray-950 text-[16px] h-[50px] rounded-full px-0 z-20' style={{ display: 'grid', gridTemplateColumns: 'auto 50px', gridAutoFlow: 'dense' }}>
+                <label htmlFor="qr" className='w-[100%] block relative flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full px-[5px] z-20' >
 
                     <span className='py-[10px] px-[20px]'>
                         <svg width="32" height="32" viewBox="0 0 323 323" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -218,13 +221,14 @@ function Home() {
                             <path d="M138.71 172.4H12.4399C9.25734 172.4 6.20509 173.664 3.95465 175.915C1.70421 178.165 0.439941 181.217 0.439941 184.4V310.67C0.439941 313.852 1.70421 316.905 3.95465 319.155C6.20509 321.406 9.25734 322.67 12.4399 322.67H138.71C141.893 322.67 144.945 321.406 147.195 319.155C149.446 316.905 150.71 313.852 150.71 310.67V184.4C150.71 181.217 149.446 178.165 147.195 175.915C144.945 173.664 141.893 172.4 138.71 172.4ZM129.24 215.33V301.2H21.9099V193.87H129.24V215.33Z" fill="black" />
                         </svg>
                     </span>
-                    <span className=' left-0 top-0 bottom-0 my-auto text-center text-[16px] font-bold'>{user.rol == 'Cliente' ? 'Ya tengo una RECETA QR...' : 'Ver recetas QR...'}</span>
-                    <span onClick={handlerWebScann} className='h-full flex items-center inline-block text-right border-l-[3px] border-gray-100 py-[10px] px-[20px] z-50 '>
+                    <span className='block w-[100%] left-0 top-0 bottom-0 my-auto text-center text-[16px] font-bold'>{user.rol == 'Cliente' ? 'Ya tengo una RECETA QR...' : 'Ver recetas QR...'}</span>
+                </label>
+                <span onClick={handlerWebScann} className='h-[50px] w-[50px] flex items-center inline-block text-right border-l-[3px] border-gray-100  bg-[#32CD32] rounded-full py-[11px] px-[10px] z-50 '>
                         <svg className='inline-block h-full' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18 3H15.414L12.707 0.293001C12.6143 0.199958 12.5041 0.126171 12.3828 0.0758854C12.2614 0.0256001 12.1313 -0.000189449 12 1.04767e-06H8C7.86866 -0.000189449 7.73857 0.0256001 7.61724 0.0758854C7.4959 0.126171 7.38571 0.199958 7.293 0.293001L4.586 3H2C0.897 3 0 3.897 0 5V16C0 17.103 0.897 18 2 18H18C19.103 18 20 17.103 20 16V5C20 3.897 19.103 3 18 3ZM10 15C7.29 15 5 12.71 5 10C5 7.29 7.29 5 10 5C12.71 5 15 7.29 15 10C15 12.71 12.71 15 10 15Z" fill="black" />
                         </svg>
                     </span>
-                </label>
+                </div>
                 <input id="qr" type="file" className='hidden' onChange={HandlerOnChange} accept="image/* " />
             </div>}
             {webScann && <div className={`lg:hidden w-screen relative left-0 bg-white z-50`}>

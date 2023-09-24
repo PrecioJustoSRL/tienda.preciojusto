@@ -171,7 +171,7 @@ function Home() {
                     }
                 </div>
                 <div className='grid grid-cols-3 w-[1000px]'>
-                    <Input type="text" valu={user.uuid} />
+                    <Input type="text" name="" valu={user.uuid} />
                     <span className='flex items-center text-[14px] pl-5'>*ID para compartir productos</span>
                 </div>
                 <div className='min-w-[1900px] flex justify-start items-center my-5 '>
@@ -291,11 +291,11 @@ function Home() {
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['costo']} */}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
                                     <Select arr={['Titanio', 'Acero Inox', 'Otros']} name='categoria' defaultValue={i.categoria} uuid={i.uuid} click={onClickHandlerCategory} />
                                     {/* {i['costo']} */}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
                                     <Select arr={dispo} name='disponibilidad' defaultValue={i.disponibilidad} uuid={i.uuid} click={onClickHandlerAvailability} />
                                 </td>
                                 <td className="w-[100px] px-3 py-4 text-gray-900 border-r">

@@ -126,11 +126,14 @@ function Home() {
     }
 
 
-    function save(idBCP) {
-        updateUserData('Pedido', state[idBCP], idBCP, 'idBCP')
+    async function save(idBCP) {
+        setModal('Guardando')
+        await updateUserData('Pedido', state[idBCP], idBCP, 'idBCP')
+        readUserData('Pedido', user.uuid, setUserPedidos, 'distribuidor')
         const obj = { ...state }
         delete obj[idBCP]
         setState(obj)
+        setModal('')
     }
 
     function delet(i) {
@@ -141,7 +144,11 @@ function Home() {
         // setState(obj)
     }
 
-
+    function sortArray(x, y) {
+        if (x['nombre del paciente'].toLowerCase() < y['nombre del paciente'].toLowerCase()) { return -1 }
+        if (x['nombre del paciente'].toLowerCase() > y['nombre del paciente'].toLowerCase()) { return 1 }
+        return 0
+    }
     const prev = () => {
         requestAnimationFrame(() => {
             const scrollLeft = refFirst.current.scrollLeft;
@@ -155,29 +162,32 @@ function Home() {
         requestAnimationFrame(() => {
             const scrollLeft = refFirst.current.scrollLeft;
             console.log(scrollLeft)
-            const itemWidth = screen.width  - 50
+            const itemWidth = screen.width - 50
             console.log(itemWidth)
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
-    
+
     useEffect(() => {
         readUserData('Pedido', user.uuid, setUserPedidos, 'distribuidor')
     }, [])
 
     return (
         <div className='h-full'>
-        <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
-        <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
+            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el pedido del siguiente paciente:  {item['nombre del paciente']}</Modal>}
+            {modal === 'Guardando' && <LoaderBlack />}
+
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-                
+
                 <h3 className='font-medium text-[16px]'>Pedidos</h3>
                 <div className='flex justify-center w-full'>
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre o correo' />
                 </div>
                 <div className=' flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Debitos</h3>
-                    <div className="grid grid-cols-2 gap-4 w-[500px] ">
+                    <div className="grid grid-cols-2 gap-4 w-[300px] ">
                         <Tag theme={debito == 'Correcto' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Correcto' ? '' : 'Correcto')}>Sin deuda</Tag>
                         <Tag theme={debito == 'Inconcluso' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Inconcluso' ? '' : 'Inconcluso')}>Sin cancelar</Tag>
                     </div>
@@ -191,7 +201,7 @@ function Home() {
                     </div>
                 </div>
 
-                <table className="w-full min-w-[1500px] border-[1px] border-t-4 border-t-gray-400">
+                <table className="w-full min-w-[1700px] border-[1px] border-t-4 border-t-gray-400">
                     <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
@@ -228,22 +238,22 @@ function Home() {
                                 Fecha
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold">
-                                Eliminar
+                                Guardar
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {pedidos && pedidos !== undefined && pedidos.map((i, index) => {
-                            return i['nombre del paciente'].toLowerCase().includes(filter.toLowerCase()) && i.estado.includes(envio) && i.message.includes(debito) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                        {pedidos && pedidos !== undefined && pedidos.sort(sortArray).map((i, index) => {
+                            return i['nombre del paciente'].toLowerCase().includes(filter.toLowerCase()) && i.estado.includes(envio) && i.message.includes(debito) && <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 text-center border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
                                     <button className={`px-3 py-4 font-semibold  w-full text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
                                         {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
                                     </button>
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
                                     <Select arr={['Pendiente', 'Atendido', 'Felicitaciones']} name='estado' defaultValue={i.estado} uuid={i.idBCP} click={onClickHandlerCategory} />
                                     {/* {i['costo']} */}
                                 </td>
@@ -254,30 +264,30 @@ function Home() {
                                     {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
                                 </td>
 
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="px-3 py-4 text-gray-900 text-center border-r">
                                     {i['check'] == true ? 'Provincia' : 'Ciudad'}
                                 </td>
 
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
                                     {i['amount']} Bs
                                 </td>
 
-                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
                                     {i['celular del paciente']}
                                 </td>
-                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
                                     {i['referencia del paciente']}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['correo']}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
+                                <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
                                     {getDayMonthYear(i['created_at'])}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900">
+                                <td className="w-[150px] px-3 py-4 text-gray-900">
                                     {state[i.idBCP]
                                         ? <Button theme={"Primary"} click={() => save(i.idBCP)}>Guardar</Button>
-                                        : <Button theme={"Danger"} click={() => delet(i.idBCP)}>Eliminar</Button>
+                                        : <Button theme={"Disable"}>Guardar</Button>
                                     }
                                 </td>
                             </tr>
