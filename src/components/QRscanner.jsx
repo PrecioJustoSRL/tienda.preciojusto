@@ -19,7 +19,7 @@ const Component = () => {
   return (
     <QrScanner
       // constraints={{
-      //   facingMode: 'environment'
+      //    facingMode: 'environment'
       // }}
       onDecode={(result) => handlerQR(result)}
       onError={(error) => console.log(error?.message)}
