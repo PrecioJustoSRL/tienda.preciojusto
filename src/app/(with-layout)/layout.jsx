@@ -83,6 +83,37 @@ function Home({ children }) {
     // setWhatsapp(!whatsapp)
   }
 
+
+  // window.addEventListener('popstate', function (e) {
+  //   // console.log(e)
+  //   // console.log(pathname)
+  //   pathname === '/' ? setModal('Exit') : ''
+  //   //  router.replace('/')
+  //    // window.location.assign("https://preciojusto.pro/");
+  //  });
+
+
+// window.location.hash="#";
+
+// if(pathname === '/') {
+//   window.addEventListener('popstate', function(event) {
+//     history.pushState(null, null, window.location.pathname);
+//     history.pushState(null, null, window.location.pathname);
+//     }, false)
+// }
+// else {
+//   // window.location.hash="";
+//   window.location.hash="";
+//   // window.onhashchange=function(){window.location.hash="";}
+// }
+// console.log(window.location)
+// console.log(history.length)
+
+// window.addEventListener('popstate', function(event) {
+// 	history.pushState(null, null, window.location.pathname);
+// 	history.pushState(null, null, window.location.pathname);
+// 	}, false)
+
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile)
     if (user === null) router.push('/Login')
@@ -113,6 +144,9 @@ function Home({ children }) {
           {modal == 'SignOut' && <Modal funcion={signOutConfirm}>
             Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
           </Modal>}
+          {modal == 'Exit' && <Modal funcion={signOutConfirm}>
+            Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
+          </Modal>}
           {modal == 'Verifica' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
             Completa tu perfil para hacer tu primera compra.
           </Modal>}
@@ -129,7 +163,8 @@ function Home({ children }) {
           {introClientVideo && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerClientVideo}></div>}
           {whatsapp && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerWhatsapp}></div>}
           {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
-
+          {webScann && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
+ 
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
             <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm flex items-center justify-between bg-[#2A52BE]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
               {pathname !== '/' && <div className='flex  hidden lg:block'>

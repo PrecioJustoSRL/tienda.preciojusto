@@ -46,8 +46,13 @@ function Home() {
         }, 0)
         return val
     }
-
     async function save(i) {
+        setUserItem(i)
+        setModal('Save')
+        console.log(state[i.idBCP].autorizacion)
+    }
+
+    async function saveConfirm(i) {
         console.log(state[i.idBCP])
         setModal('Guardando')
         await updateUserData('Pedido', state[i.idBCP], i.idBCP, 'idBCP')
@@ -64,7 +69,11 @@ function Home() {
         await readUserData('Pedido', user.uuid, setUserDistributorPDB, 'Clinica')
         setModal('')
     }
-
+    function cancelHandler () {
+        // const obj = { ...state }
+        // delete obj[item.idBCP]
+        // setState(obj)
+    }
     function confeti(i) {
         console.log('ped')
         i.message === 'Correcto'
@@ -125,6 +134,9 @@ function Home() {
     return (
         <div className='h-full'>
             {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el pedido del siguiente paciente:  {item['nombre del paciente']}</Modal>}
+            {modal === 'Save' && <Modal funcion={saveConfirm} cancel={cancelHandler}>
+                Estas seguro de {state[item.idBCP].autorizacion === 'Autorizado' && 'AUTORIZAR'} {state[item.idBCP].autorizacion === 'Rechazado' && 'RECHAZAR'} {state[item.idBCP].autorizacion === 'Pendiente' && 'autorizar'} {state[item.idBCP].autorizacion === 'Pendiente' && 'POSPONER'}el pedido del siguiente paciente:  {item['nombre del paciente']}
+                </Modal>}
             {modal === 'Guardando' && <LoaderBlack />}
 
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
@@ -214,11 +226,15 @@ function Home() {
                                 <td className="w-[100px] px-3 py-4 text-gray-900 text-center border-r">
                                     {getDayMonthYear(i['created_at'])}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 text-center border-r">
+                                <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
 
                                     {state[i.idBCP]
                                         ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
-                                        : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
+                                        : (userDB[0].access === 'Verificadora' 
+                                            ? <Button theme={"Disable"} >Guardar</Button>
+                                            :(i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado')
+                                                ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
+                                                : 'no permitido')
                                     }
                                 </td>
                             </tr>

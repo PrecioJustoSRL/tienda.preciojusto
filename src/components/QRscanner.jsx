@@ -3,16 +3,16 @@
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useUser } from '@/context/Context.js'
 import { readUserData } from '@/supabase/utils'
-
+import { useRouter } from 'next/navigation';
 const Component = () => {
   const { setRecetaDBP, setWebScann, setFilter, setFilterQR} = useUser()
-
+const router = useRouter()
   const handlerQR = async (result) => {
     if (result) {
       console.log(result)
       const data = await readUserData('Receta', result, setRecetaDBP, 'qr')
       setFilterQR(result)
-      setWebScann(false)
+      router.replace('/')
     }
   }
 

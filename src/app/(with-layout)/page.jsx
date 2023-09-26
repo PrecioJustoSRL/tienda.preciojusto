@@ -93,6 +93,9 @@ function Home() {
             : setFilter(data)
         // setSearch(false)
     }
+
+    console.log(history)
+   
     // console.log(window.history.length)
     // console.log(window.location.href)
     // console.log(window.history.state)
@@ -119,16 +122,16 @@ function Home() {
 
 
 
-    // window.onbeforeunload =  function (e) {
-    //     console.log(e)
-    //     const confirms =  confirm('Estas seguro de salir, se perderan tus datos')
-    //     // if (confirms !== true) {
-    //     //     router.push('/Cliente')
-    //     //     return
-    //     // }
-    //     console.log(confirms)
-    //     return confirms
-    // };
+    window.onbeforeunload =  function (e) {
+        e.preventDefault()
+        const confirms =  confirm('Estas seguro de salir, se perderan tus datos')
+        // if (confirms !== true) {
+        //     router.push('/Cliente')
+        //     return
+        // }
+        console.log(confirms)
+        return confirms
+    };
 
 
 
@@ -153,13 +156,22 @@ function Home() {
     //    window.history.pushState({}, '')
     //  })
 
-    window.onbeforeunload = function () {
-        return "¿Desea recargar la página web?";
-    };
+    // window.onbeforeunload = function () {
+    //    window.open('https://youtube.com')
+    //     return 'guyutut'
+    // };
     // window.history.forward()
-
-    console.log(history.length)
-
+ // console.log()
+        // setTimeout(console.log(123),1000)
+        // return () => {
+            // 
+        // }
+        // window.addEventListener('popstate', function (e) {
+        //    console.log('pathname')
+        //     setModal('Exit')
+        //     router.replace('/')
+        //     // window.location.assign("https://preciojusto.pro/");
+        //   });
     function confeti() {
         router.push(`/Cliente/Comprar/Detalle?idBCP=${ultimoPedido.idBCP}`)
     }
@@ -176,7 +188,6 @@ function Home() {
         if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
         const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0)
         getSpecificData('Pedido', 'cliente', user.uuid, setUltimoPedido, 'fecha', getDayMonthYear())
-
     }, [user, filterQR]);
 
     console.log(cart)
