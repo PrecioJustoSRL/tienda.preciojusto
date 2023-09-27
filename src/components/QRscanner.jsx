@@ -12,15 +12,15 @@ const router = useRouter()
       console.log(result)
       const data = await readUserData('Receta', result, setRecetaDBP, 'qr')
       setFilterQR(result)
-      router.replace('/')
+     return router.replace('/')
     }
   }
 
   return (
     <QrScanner
-      // constraints={{
-      //    facingMode: 'environment'
-      // }}
+      constraints={{
+         facingMode: 'environment'
+      }}
       onDecode={(result) => handlerQR(result)}
       onError={(error) => console.log(error?.message)}
     />
