@@ -118,7 +118,8 @@ function Home({ children }) {
     if (user === undefined) onAuth(setUserProfile)
     if (user === null) router.push('/Login')
     readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor')
-    readUserAllData('Producto', productDB, setUserProduct)
+    user !== undefined && user !== null && readUserData('Producto', user.ciudad, setUserProduct, 'ciudad')
+    // readUserAllData('Producto', productDB, setUserProduct)
     if (user !== undefined && user !== null && user.rol !== undefined && user.rol !== null && userDB === undefined) {
       readUserData(user.rol, user.uuid, setUserData)
     }
