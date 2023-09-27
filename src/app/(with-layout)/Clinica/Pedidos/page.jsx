@@ -52,12 +52,15 @@ function Home() {
         console.log(state[i.idBCP].autorizacion)
     }
 
-    async function saveConfirm(i) {
-        console.log(state[i.idBCP])
+    async function saveConfirm() {
+        console.log(state[item.idBCP])
         setModal('Guardando')
-        await updateUserData('Pedido', state[i.idBCP], i.idBCP, 'idBCP')
+        const object = {
+            ...state[item.idBCP], ['nombre cliente']: userDB[0].nombre, ['uuid autorizadora']: user.uuid, rol: user.rol
+        }
+        await updateUserData('Pedido', object, item.idBCP, 'idBCP')
         const obj = { ...state }
-        delete obj[i.idBCP]
+        delete obj[item.idBCP]
         setState(obj)
 
 
@@ -190,7 +193,7 @@ function Home() {
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
                                 <td className="px-3 py-4 w-[200px] text-gray-900 text-center border-r">
-                                    {userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
+                                    {userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador'] && i.estado === 'Pendiente'
                                         ? <Select arr={['Pendiente', 'Rechazado', 'Autorizado']} name='autorizacion' defaultValue={i.autorizacion} uuid={i.idBCP} click={onClickHandlerCategory} />
                                         : <span className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.autorizacion == 'Rechazado' && 'bg-red-400'} ${i.autorizacion == 'Autorizado' && 'bg-green-300'} ${i.autorizacion == 'Pendiente' && 'bg-gray-400'}`}>
                                             {i['autorizacion']}
@@ -229,9 +232,9 @@ function Home() {
                                 <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
 
                                     {state[i.idBCP]
-                                        ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
+                                        ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>)
                                         : (userDB[0].access === 'Verificadora' 
-                                            ? <Button theme={"Disable"} >Guardar</Button>
+                                            ? ( i.estado === 'Atendido' ? 'No permitido' :<Button theme={"Disable"} >Guardar</Button>)
                                             :(i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado')
                                                 ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
                                                 : 'no permitido')

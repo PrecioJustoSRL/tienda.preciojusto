@@ -98,7 +98,18 @@ function Comprar({ theme, styled, click, children }) {
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
         return data
       })
-      await writeUserData('Pedido', { fecha: getDayMonthYear(), distribuidor: arr[0].distribuidor, empresa: arr[0].empresa, whatsapp: arr[0].whatsapp, compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
+      await writeUserData('Pedido', { 
+        fecha: getDayMonthYear(), distribuidor: arr[0].distribuidor, 
+        empresa: arr[0].empresa, 
+        whatsapp: arr[0].whatsapp, 
+        compra: arr, 
+        envio: check, 
+        ...state, 
+        estado: 'Pendiente', 
+        cliente: user.uuid, 
+        correo: user.correo, 
+        ...write, ['nombre cliente']: userDB[0].nombre, rol: user.rol }
+        , null, null, null, null, null, null)
 
       router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
 

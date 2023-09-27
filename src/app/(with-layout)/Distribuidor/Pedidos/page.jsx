@@ -8,7 +8,7 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserDataEq } from '@/supabase/utils'
+import { writeUserData, readUserData, updateUserData, deleteUserData, readUserDataEq, getUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import Input from '@/components/Input'
 import { generateUUID } from '@/utils/UIDgenerator'
@@ -129,7 +129,7 @@ function Home() {
     async function save(idBCP) {
         setModal('Guardando')
         await updateUserData('Pedido', state[idBCP], idBCP, 'idBCP')
-        readUserDataEq('Pedido', 'distribuidor', user.uuid, setUserPedidos, 'message', 'Correcto' )
+        readUserData('Pedido',  user.uuid, setUserPedidos, 'distribuidor',)
         const obj = { ...state }
         delete obj[idBCP]
         setState(obj)
@@ -168,8 +168,13 @@ function Home() {
         });
     };
 
+function getUserData () {
+    
+}
+
     useEffect(() => {
-        readUserDataEq('Pedido', 'distribuidor', user.uuid, setUserPedidos, 'message', 'Correcto' )
+        readUserData('Pedido',  user.uuid, setUserPedidos, 'distribuidor',)
+        // readUserDataEq('Pedido', 'distribuidor', user.uuid, setUserPedidos, 'message', 'Correcto' )
     }, [])
 
     return (
@@ -185,13 +190,13 @@ function Home() {
                 <div className='flex justify-center w-full'>
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre o correo' />
                 </div>
-                <div className=' flex justify-start items-center my-5 '>
+                {/* <div className=' flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Debitos</h3>
                     <div className="grid grid-cols-2 gap-4 w-[300px] ">
                         <Tag theme={debito == 'Correcto' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Correcto' ? '' : 'Correcto')}>Sin deuda</Tag>
                         <Tag theme={debito == 'Inconcluso' ? 'Primary' : 'Secondary'} click={() => setDebito(debito == 'Inconcluso' ? '' : 'Inconcluso')}>Sin cancelar</Tag>
                     </div>
-                </div>
+                </div> */}
                 <div className=' flex justify-start items-center w-[500px] my-5  '>
                     <h3 className="flex pr-12 text-[14px]">Estado de envios</h3>
                     <div className="grid grid-cols-3 gap-4 w-[500px] " >
@@ -206,6 +211,9 @@ function Home() {
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
                                 #
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Debito
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Debito
@@ -244,7 +252,7 @@ function Home() {
                     </thead>
                     <tbody>
                         {pedidos && pedidos !== undefined && pedidos.sort(sortArray).map((i, index) => {
-                            return i['nombre del paciente'].toLowerCase().includes(filter.toLowerCase()) && i.estado.includes(envio) && i.message.includes(debito) && <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
+                            return i['nombre del paciente'].toLowerCase().includes(filter.toLowerCase()) && i.estado.includes(envio) && (i.message.includes('Correcto') || i.autorizacion.includes('Autorizado')) && <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
