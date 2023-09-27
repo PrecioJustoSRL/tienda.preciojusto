@@ -2,38 +2,25 @@ import { supabase } from './config'
 
 //--------------------------Authentications----------------------------------
 
-const onAuth = (setUserProfile,) => {
+const onAuth = async (setUserProfile,) => {
 
     console.log('onAuth')
-    const data = supabase.auth.onAuthStateChange(async (event, session) => {
+
+        await supabase.auth.refreshSession()
+
+
+    supabase.auth.onAuthStateChange(async (event, session) => {
+
         console.log('onAuthStateChange')
         if (session) {
             console.log(session)
-            console.log('session')
-            // session.user.id && router && router.push('/Cliente')
-            // setSession(session.user)
-
-            console.log(session.expires_at)
-            console.log(new Date(session.expires_at))
-            console.log(new Date().getTime())
-            const access_token = session.access_token
-            const refresh_token = session.refresh_token
-            // const await =supabase.auth.setSession({
-            //     access_token,
-            //     refresh_token,
-            // })
-
-            // const { dat, err } = await supabase.auth.refreshSession({refresh_token})
-            // const { sessi, user } = dat
-
-            // console.log(sessi)
 
             const { data, error } = await supabase
                 .from('Users')
                 .select()
                 .eq('uuid', session.user.id)
             console.log(error)
-
+            console.log(data)
             if (error && error.code === 'PGRST301') {
                 console.log('error.code')
                 setUserProfile(null)
@@ -45,26 +32,7 @@ const onAuth = (setUserProfile,) => {
             return
         }
         setUserProfile(null)
-
     })
-    // data.data.subscription.callback( async (event, session) => {
-    //     console.log('onAuthStateChange')
-    //     if (session) {
-    //         console.log('session')
-    //         const { data } = await supabase
-    //             .from('Users')
-    //             .select()
-    //             .eq('uuid', session.user.id)
-    //         // console.log(data)
-    //         data !== null && data !== undefined  && data.length
-    //             ? setUserProfile(data[0])
-    //             : setUserProfile(session.user)
-    //         return
-    //     } else {
-    //         return setUserProfile(null)
-    //     }
-    // })
-
 }
 
 const signUpWithEmailAndPassword = async (email, password, setUserProfile) => {
@@ -82,21 +50,6 @@ const signInWithEmailAndPassword = async (email, password, setUserSuccess) => {
         email,
         password,
     })
-    // if (result.data.user !== null && result.data.user.id) {
-    //     console.log(session.user.id)
-    //     console.log('session')
-    //     const { data } = supabase
-    //         .from('Users')
-    //         .select()
-    //         .eq('uuid', result.data.user.id)
-    //     console.log(data)
-    //     data !== null && data !== undefined  && data.length
-    //         ? setUserProfile(data[0])
-    //         : setUserProfile(session.user)
-    //     return
-    // } else {
-    //     return setUserProfile(null)
-    // }
 
     result.data.user == null && setUserSuccess('AccountNonExist')
 }
@@ -156,15 +109,15 @@ const getSpecificData = async (rute, eq, uuid, updateContext, eq2, uuid2) => {
         .eq(eq, uuid)
         .eq('message', 'Correcto')
         .eq(eq2, uuid2)
-        
-        // .gt(gt, value)
-console.log(data)
-       let value = data.length > 0 
-       ? data.reduce((acc, i)=>{
-           return i.id > acc.id ? i : acc
-        }, {id: -1})
+
+    // .gt(gt, value)
+    console.log(data)
+    let value = data.length > 0
+        ? data.reduce((acc, i) => {
+            return i.id > acc.id ? i : acc
+        }, { id: -1 })
         : null
-        updateContext(value)
+    updateContext(value)
     // console.log(data)
     // console.log(error)
 }
@@ -200,9 +153,7 @@ const readUserDataEq = async (rute, uuid, updateContext, eq, value, eq2) => {
     // console.log(result)
     return result.data
 }
-// result.data !== null && result.data.length !== 0 
-// ? ( result.data.lenght > 1 ? result.data[0] :  result.data )
-// : null
+
 const readUserAllData = async (rute, context, updateContext) => {
 
     const result = await supabase
@@ -218,10 +169,7 @@ const updateUserData = async (rute, object, uuid, eq) => {
         .from(rute)
         .update(object)
         .eq(eq ? eq : 'uuid', uuid)
-    // if (result.data !== null && result.data.length !== 0) {
-    //     console.log('act')
-    //     key ? updateContext({ ...context, [key]: result.data[0] }) : updateContext(arr == true ? result.data : result.data[0])
-    // } 
+
     console.log(result)
 }
 
@@ -235,10 +183,53 @@ const deleteUserData = async (rute, uuid, eq) => {
 
 }
 
-
-
-
-
-
 export { onAuth, signUpWithEmailAndPassword, signInWithEmailAndPassword, signOut, passwordResset, passwordRedirect, writeUserData, readUserData, deleteUserData, updateUserData, readUserAllData, getUserData, getSpecificData, readUserDataEq }
 
+
+
+
+
+
+   // if (result.data.user !== null && result.data.user.id) {
+    //     console.log(session.user.id)
+    //     console.log('session')
+    //     const { data } = supabase
+    //         .from('Users')
+    //         .select()
+    //         .eq('uuid', result.data.user.id)
+    //     console.log(data)
+    //     data !== null && data !== undefined  && data.length
+    //         ? setUserProfile(data[0])
+    //         : setUserProfile(session.user)
+    //     return
+    // } else {
+    //     return setUserProfile(null)
+    // }
+
+
+
+
+    // if (window.localStorage && await window.localStorage.getItem('sb-hhxlyesjmtbhnqwsoplw-auth-token') !== undefined) {
+          
+    //     console.log('localStorage')
+    //         const res = await window.localStorage.getItem('sb-hhxlyesjmtbhnqwsoplw-auth-token')
+    //         console.log(res)
+    //         const db = await JSON.parse(res)
+    //         console.log(db)
+    //        await supabase.auth.refreshSession()
+
+    //         const result = await supabase
+    //             .from('Users')
+    //             .select()
+    //             .eq('uuid', db.user.id)
+    //         console.log(result)
+    //         if (result.error) {
+    //             console.log('error.code')
+    //             setUserProfile(null)
+    //             return
+    //         }
+    //         result.data !== null && result.data !== undefined && result.data.length
+    //             ? setUserProfile(result.data[0])
+    //             : setUserProfile(db.user)
+    //         return
+    //     }

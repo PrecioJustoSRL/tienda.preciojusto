@@ -192,7 +192,7 @@ function Home() {
                 </div>
                 <div className='min-w-[1900px] flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Sistema</h3>
-                    <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 100px) 100px 100px 100px 200px 200px 100px' }}>
+                    <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 100px) 100px 100px 100px 200px 200px 100px 150px' }}>
                         <Tag theme={sistema == '1.5' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '1.5' ? '' : '1.5')}>1.5</Tag>
                         <Tag theme={sistema == '2.0' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '2.0' ? '' : '2.0')}>2.0</Tag>
                         <Tag theme={sistema == '2.4' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == '2.4' ? '' : '2.4')}>2.4</Tag>
@@ -206,6 +206,7 @@ function Home() {
                         <Tag theme={sistema == 'Columna y neurocirugía' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Columna y neurocirugía' ? '' : 'Columna y neurocirugía')}>Columna y neurocirugía</Tag>
                         <Tag theme={sistema == 'Fijadores externos' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Fijadores externos' ? '' : 'Fijadores externos')}>Fijadores externos</Tag>
                         <Tag theme={sistema == 'Otros' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Otros' ? '' : 'Otros')}>Otros</Tag>
+                        <Tag theme={sistema == 'Misceláneos' ? 'Primary' : 'Secondary'} click={() => setSistema(sistema == 'Misceláneos' ? '' : 'Misceláneos')}>Misceláneos</Tag>
                     </div>
                 </div>
                 <table className="w-full min-w-[1900px] border-[1px] border-t-4 border-t-gray-400">
@@ -285,7 +286,7 @@ function Home() {
                                     {/* {i['uso frecuente']} */}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
-                                    <Select arr={['1.5', ' 2.0', ' 2.4', '2.5', '2.7', '3.5', '4.5', 'Clavos', 'Protesis', 'Costillas', 'Columna y neurocirugia', 'Fijadores externos', 'Otros']} name='sistema' defaultValue={i.sistema} uuid={i.uuid} click={onClickHandlerSystem} />
+                                    <Select arr={['1.5', ' 2.0', ' 2.4', '2.5', '2.7', '3.5', '4.5', 'Clavos', 'Protesis', 'Costillas', 'Columna y neurocirugia', 'Fijadores externos', 'Otros', 'Misceláneos']} name='sistema' defaultValue={i.sistema} uuid={i.uuid} click={onClickHandlerSystem} />
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
