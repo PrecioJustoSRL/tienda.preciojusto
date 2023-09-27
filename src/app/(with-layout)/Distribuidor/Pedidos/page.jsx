@@ -8,12 +8,12 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import { writeUserData, readUserData, updateUserData, deleteUserData } from '@/supabase/utils'
+import { writeUserData, readUserData, updateUserData, deleteUserData, readUserDataEq } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import Input from '@/components/Input'
 import { generateUUID } from '@/utils/UIDgenerator'
 import LoaderBlack from '@/components/LoaderBlack'
-import { disponibilidad as dispo } from '@/constants'
+import { disponibilidad as dispo, sistema as sis } from '@/constants'
 import Modal from '@/components/Modal'
 import { getDayMonthYear } from '@/utils/DateFormat'
 
@@ -129,7 +129,7 @@ function Home() {
     async function save(idBCP) {
         setModal('Guardando')
         await updateUserData('Pedido', state[idBCP], idBCP, 'idBCP')
-        readUserData('Pedido', user.uuid, setUserPedidos, 'distribuidor')
+        readUserDataEq('Pedido', 'distribuidor', user.uuid, setUserPedidos, 'message', 'Correcto' )
         const obj = { ...state }
         delete obj[idBCP]
         setState(obj)
@@ -169,7 +169,7 @@ function Home() {
     };
 
     useEffect(() => {
-        readUserData('Pedido', user.uuid, setUserPedidos, 'distribuidor')
+        readUserDataEq('Pedido', 'distribuidor', user.uuid, setUserPedidos, 'message', 'Correcto' )
     }, [])
 
     return (

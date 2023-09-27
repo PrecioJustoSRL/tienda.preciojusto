@@ -17,7 +17,7 @@ import { useMask } from '@react-input/mask';
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { generateUUID } from '@/utils/UIDgenerator'
-import { disponibilidad } from '@/constants'
+import { disponibilidad as dispo, sistema as sis } from '@/constants'
 
 
 function Home() {
@@ -197,11 +197,11 @@ function Home() {
                 </div>
                 <div>
                     <Label htmlFor="">Sistema</Label>
-                    <Select arr={['1.5', ' 2.0', ' 2.4', '2.5', '2.7', '3.5', '4.5', 'Clavos', 'Protesis', 'Costillas', 'Columna y neurocirugia', 'Fijadores externos', 'Otros']} name='sistema' click={onClickHandlerSystem} />
+                    <Select arr={sis} name='sistema' click={onClickHandlerSystem} />
                 </div>
                 <div>
                     <Label htmlFor="">Disponibilidad</Label>
-                    <Select arr={disponibilidad} name='disponibilidad' click={onClickHandlerAvailability} />
+                    <Select arr={dispo} name='disponibilidad' click={onClickHandlerAvailability} />
                 </div>
                 <div>
                     <Label htmlFor="">Costo</Label>

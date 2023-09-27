@@ -137,7 +137,7 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
     return result.data
 }
 
-const readUserDataEq = async (rute, uuid, updateContext, eq, value, eq2) => {
+const readUserDataEq = async (rute, eq, uuid, updateContext, eq2, value) => {
     const result = await supabase
         .from(rute)
         .select()

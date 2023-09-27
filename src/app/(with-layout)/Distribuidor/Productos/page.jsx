@@ -13,7 +13,7 @@ import { uploadStorage } from '@/supabase/storage'
 import Input from '@/components/Input'
 import { generateUUID } from '@/utils/UIDgenerator'
 import LoaderBlack from '@/components/LoaderBlack'
-import { disponibilidad as dispo } from '@/constants'
+import { disponibilidad as dispo, sistema as sis } from '@/constants'
 import Modal from '@/components/Modal'
 
 function Home() {
@@ -285,8 +285,8 @@ function Home() {
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='uso frecuente' defaultValue={i['uso frecuente']} className="block p-1.5  w-full h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
                                     {/* {i['uso frecuente']} */}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 border-r">
-                                    <Select arr={['1.5', ' 2.0', ' 2.4', '2.5', '2.7', '3.5', '4.5', 'Clavos', 'Protesis', 'Costillas', 'Columna y neurocirugia', 'Fijadores externos', 'Otros', 'Misceláneos']} name='sistema' defaultValue={i.sistema} uuid={i.uuid} click={onClickHandlerSystem} />
+                                <td className="w-[150px] px-3 py-4 text-gray-900 border-r">
+                                    <Select arr={sis} name='sistema' defaultValue={i.sistema} uuid={i.uuid} click={onClickHandlerSystem} />
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-[14px] font-normal text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aquí..."></textarea>
