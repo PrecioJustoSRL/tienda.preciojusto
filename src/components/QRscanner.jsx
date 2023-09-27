@@ -18,9 +18,9 @@ const router = useRouter()
 
   return (
     <QrScanner
-      constraints={{
-         facingMode: 'environment'
-      }}
+      // constraints={{
+      //    facingMode: 'environment'
+      // }}
       onDecode={(result) => handlerQR(result)}
       onError={(error) => console.log(error?.message)}
     />

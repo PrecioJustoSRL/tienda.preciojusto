@@ -30,7 +30,9 @@ function Comprar({ theme, styled, click, children }) {
 
     const searchParams = useSearchParams()
     const idBCP = searchParams.get('idBCP')
-    console.log(idBCP)
+    const idBCPdiferido = searchParams.get('idBCPdiferido')
+
+    // console.log(idBCP)
 
 
 
@@ -39,8 +41,8 @@ function Comprar({ theme, styled, click, children }) {
 
         // console.log(window.location.href.includes('Comprar/'))
         // window.location.href.includes('Comprar/')
-            // ? router.replace('/')
-             router.back()
+        // ? router.replace('/')
+        router.back()
         setUserCart({})
         setState({})
         // router.back()
@@ -52,12 +54,86 @@ function Comprar({ theme, styled, click, children }) {
         return "¿Desea recargar la página web?";
     };
 
+
+
+
+
+
+
+
+
+
+    const requestQR = async () => {
+        const res = await readUserData('Pedido', idBCP ? idBCP : idBCPdiferido, null,  idBCP ? 'idBCP' : 'idBCPdiferido')
+        if (idBCPdiferido) {
+            router.replace(`/Cliente/Comprar/Qr?idBCP=${res[0].idBCP}`)
+            return
+
+        }
+        // console.log(res[0].idBCPdiferido)
+        if (res && res[0] && res[0].idBCPdiferido) {
+            router.replace(`/Cliente/Comprar/Qr?idBCPdiferido=${res[0].idBCPdiferido}`)
+            return
+        }
+
+        try {
+            console.log('her')
+            //**********************BCP*************************
+            const res = await fetch(window.location.href.includes('https') ? 'https://tienda.preciojusto.pro/api' : 'http://localhost:3000/api', {
+                method: 'POST',
+                body: JSON.stringify({ amount: 0 }),
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8'
+                })
+            })
+            const data = await res.json()
+            setQrBCP(data.data)
+            // setQrBCP(data.data.qrImage)
+
+            const write = {
+                idBCPdiferido: data.data.id,
+                expirationDiferido: data.data.expirationDate,
+                amountDiferido: 0,
+                messageDiferido: 'Inconcluso',
+                qrBase64diferido: data.data
+            }
+
+            // console.log(write)
+            await updateUserData('Pedido', write, idBCP, 'idBCP')
+
+            router.replace(`/Cliente/Comprar/Qr?idBCPdiferido=${data.data.id}`)
+
+
+            return setModal('')
+        } catch (err) {
+            // console.log(err)
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     async function verify() {
         setModal('verify')
         console.log(idBCP)
-        const res = await readUserData('Pedido', idBCP, null, 'idBCP')
+        console.log(idBCPdiferido)
+
+        const res = await readUserData('Pedido', idBCP ? idBCP : idBCPdiferido, null, idBCP ?'idBCP':'idBCPdiferido')
         console.log(res)
-        setDataQR(JSON.parse(res[0].qrBase64))
+        console.log(idBCP? JSON.parse(res[0].qrBase64) : JSON.parse(res[0].qrBase64diferido))
+        setDataQR(idBCP? JSON.parse(res[0].qrBase64) : JSON.parse(res[0].qrBase64diferido))
         res[0].message === 'Correcto' && router.push(`/Cliente/Comprar/Detalle?idBCP=${idBCP}`)
         // const mySuscription = supabase
         // .from('*')
@@ -67,11 +143,10 @@ function Comprar({ theme, styled, click, children }) {
         // .subscribe()
         setModal('')
     }
-    console.log(user)
+    console.log(dataQR)
 
     useEffect(() => {
-
-        idBCP && verify()
+    (idBCP || idBCPdiferido )&& verify()
     }, [idBCP]);
 
     return (<div className='w-full min-h-screen relative px-5 pb-[50px] bg-gray-100'>
@@ -108,6 +183,11 @@ function Comprar({ theme, styled, click, children }) {
                 {dataQR !== undefined && <a
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
                     href={`data:image/png;base64,${dataQR.qrBase64}`} download>Guardar ImagenQR</a>}
+                <br />
+                {dataQR !== undefined && <button
+                    className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
+                    onClick={requestQR}
+                >{idBCP ? 'Pagar por diferido': 'Pagar al contado '}</button>}
                 <br />
                 {dataQR !== undefined && <button
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"

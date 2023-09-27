@@ -67,6 +67,11 @@ function Comprar({ theme, styled, click, children }) {
   }
   console.log(window.location.href.includes('https'))
 
+
+
+
+
+  
   const requestQR = async () => {
     const amount = calculator()
     try {
@@ -119,6 +124,12 @@ function Comprar({ theme, styled, click, children }) {
       console.log(err)
     }
   }
+
+
+
+
+
+
 
   function closeModal() {
     setModal('')

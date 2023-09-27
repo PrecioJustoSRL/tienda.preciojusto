@@ -72,7 +72,7 @@ function Home() {
         await readUserData('Pedido', user.uuid, setUserDistributorPDB, 'Clinica')
         setModal('')
     }
-    function cancelHandler () {
+    function cancelHandler() {
         // const obj = { ...state }
         // delete obj[item.idBCP]
         // setState(obj)
@@ -139,14 +139,14 @@ function Home() {
             {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el pedido del siguiente paciente:  {item['nombre del paciente']}</Modal>}
             {modal === 'Save' && <Modal funcion={saveConfirm} cancel={cancelHandler}>
                 Estas seguro de {state[item.idBCP].autorizacion === 'Autorizado' && 'AUTORIZAR'} {state[item.idBCP].autorizacion === 'Rechazado' && 'RECHAZAR'} {state[item.idBCP].autorizacion === 'Pendiente' && 'autorizar'} {state[item.idBCP].autorizacion === 'Pendiente' && 'POSPONER'}el pedido del siguiente paciente:  {item['nombre del paciente']}
-                </Modal>}
+            </Modal>}
             {modal === 'Guardando' && <LoaderBlack />}
 
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-            <table className="w-full min-w-[1600px] border-[1px] border-t-4 border-t-gray-400">
-            <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
+                <table className="w-[2500px] border-[1px] border-t-4 border-t-gray-400">
+                    <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
                                 #
@@ -171,6 +171,12 @@ function Home() {
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Costo
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                a cuenta
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                saldo
                             </th>
                             <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Empresa
@@ -214,11 +220,17 @@ function Home() {
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     {JSON.parse(i.compra).map((el, index) => <li key={index}>{el['nombre de producto 1']}{' *('}{el['cantidad']}{')'}</li>)}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 text-center border-r">
+                                <td className="px-3 py-4 text-center  text-gray-900 text-center border-r">
                                     {i['check'] == true ? 'Provincia' : 'Ciudad'}
                                 </td>
-                                <td className="px-3 py-4 text-gray-900 text-center border-r">
+                                <td className="px-3 py-4 text-center  text-gray-900 text-center border-r">
                                     {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
+                                </td>
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0) - i.amount}
+                                </td>
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {i['amount']}
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['empresa']}
@@ -233,9 +245,9 @@ function Home() {
 
                                     {state[i.idBCP]
                                         ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>)
-                                        : (userDB[0].access === 'Verificadora' 
-                                            ? ( i.estado === 'Atendido' ? 'No permitido' :<Button theme={"Disable"} >Guardar</Button>)
-                                            :(i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado')
+                                        : (userDB[0].access === 'Verificadora'
+                                            ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Disable"} >Guardar</Button>)
+                                            : (i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado')
                                                 ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
                                                 : 'no permitido')
                                     }

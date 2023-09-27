@@ -374,7 +374,7 @@ function Home() {
                         }
                         )}
 
-                    {filter.length > 0 && productDB !== null && productDB !== undefined &&
+                    {filter.length > 0 && filterQR.length === 0 && productDB !== null && productDB !== undefined &&
                         productDB.sort(sortArray).map((i, index) => {
                             if (i.distribuidor !== 'Precio-Justo-SRL-Data') return tienda === 'Recetar'
                                 ? (i['nombre de producto 1'].toLowerCase().includes(filter.toLowerCase()) ||

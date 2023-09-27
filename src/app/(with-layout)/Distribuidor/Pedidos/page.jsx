@@ -213,6 +213,9 @@ function getUserData () {
                                 #
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Cliente
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Debito
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
