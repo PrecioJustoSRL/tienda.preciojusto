@@ -226,11 +226,12 @@ function Home() {
                                 <td className="px-3 py-4 text-center  text-gray-900 text-center border-r">
                                     {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
                                 </td>
+                               
                                 <td className="px-3 py-4 text-gray-900 border-r">
-                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0) - i.amount}
+                                    {i['amount']} Bs
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
-                                    {i['amount']}
+                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0) - i.amount} Bs
                                 </td>
                                 <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['empresa']}

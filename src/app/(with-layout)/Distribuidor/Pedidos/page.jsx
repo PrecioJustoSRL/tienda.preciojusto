@@ -43,7 +43,13 @@ function Home() {
     console.log(distributorPDB)
 
 
-
+    function calculator(data) {
+        const val = Object.values(data).reduce((acc, i, index) => {
+            const sum = i['costo'] * i['cantidad']
+            return sum + acc
+        }, 0)
+        return val
+    }
 
 
     const importacionConfirm = async (e) => {
@@ -218,9 +224,6 @@ function getUserData () {
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Debito
                             </th>
-                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
-                                Debito
-                            </th>
                             <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Estado
                             </th>
@@ -235,6 +238,12 @@ function getUserData () {
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Costo
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                A cuenta
+                            </th>
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Saldo
                             </th>
                             <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Celular Paciente
@@ -259,6 +268,11 @@ function getUserData () {
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                {i.rol} <br />
+                                {i['nombre cliente']} <br />
+                                <br />
+                            </td>
                                 <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
                                     <button className={`px-3 py-4 font-semibold  w-full text-center rounded-full ${i.message == 'Correcto' ? 'bg-[#32CD32] text-gray-900' : 'bg-red-500 text-white'}`} onClick={e => confeti(i)}>
                                         {i['message'] === 'Correcto' ? 'Sin deuda' : 'Sin cancelar'}
@@ -279,10 +293,15 @@ function getUserData () {
                                     {i['check'] == true ? 'Provincia' : 'Ciudad'}
                                 </td>
 
+                                <td className="px-3 py-4 text-center  text-gray-900 text-center border-r">
+                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
+                                </td>
                                 <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
                                     {i['amount']} Bs
                                 </td>
-
+                                <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
+                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0) - i['amount']} Bs
+                                </td>
                                 <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
                                     {i['celular del paciente']}
                                 </td>
