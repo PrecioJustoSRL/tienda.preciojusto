@@ -142,6 +142,13 @@ function Home({ children }) {
               Contactar
             </button>
           </Modal>}
+          {modal === 'RequireAutorization' && <Modal funcion={soporte} alert={true} close={true}>
+            Su cuenta debe ser verificada, <br />por favor comuniquese con soporte.
+            <br /><br />
+            <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
+              Contactar
+            </button>
+          </Modal>}
           {modal == 'SignOut' && <Modal funcion={signOutConfirm}>
             Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
           </Modal>}

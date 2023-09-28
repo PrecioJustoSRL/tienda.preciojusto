@@ -212,7 +212,7 @@ function getUserData () {
                     </div>
                 </div>
 
-                <table className="w-full min-w-[1700px] border-[1px] border-t-4 border-t-gray-400">
+                <table className="w-full min-w-[3000px] border-[1px] bg-white text-[14px] text-left text-gray-500 border-t-4 border-t-gray-400">
                     <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
@@ -294,13 +294,14 @@ function getUserData () {
                                 </td>
 
                                 <td className="px-3 py-4 text-center  text-gray-900 text-center border-r">
-                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0)} Bs
+                                    {i.costo} Bs
                                 </td>
-                                <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
+                               
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {i['amount']} Bs
                                 </td>
-                                <td className="w-[100px] px-3 py-4 text-gray-900 border-r">
-                                    {calculator(JSON.parse(i.compra)) * 1 + (i['check'] == true ? 350 : 0) - i['amount']} Bs
+                                <td className="px-3 py-4 text-gray-900 border-r">
+                                    {i.costo - i.amount} Bs
                                 </td>
                                 <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
                                     {i['celular del paciente']}

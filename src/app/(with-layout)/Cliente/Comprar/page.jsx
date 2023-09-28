@@ -92,7 +92,8 @@ function Comprar({ theme, styled, click, children }) {
       const write = {
         idBCP: data.data.id,
         expiration: data.data.expirationDate,
-        amount: amount + (check ? 350 : 0),
+        amount: 0,
+        costo: amount + (check ? 350 : 0),
         message: 'Inconcluso',
         qrBase64: data.data
       }

@@ -64,6 +64,11 @@ function Comprar({ theme, styled, click, children }) {
 
 
     const requestQR = async () => {
+        if (userDB[0].autorizacion === false) {
+            setModal('RequireAutorization')
+            return
+        }
+
         const res = await readUserData('Pedido', idBCP ? idBCP : idBCPdiferido, null,  idBCP ? 'idBCP' : 'idBCPdiferido')
         if (idBCPdiferido) {
             router.replace(`/Cliente/Comprar/Qr?idBCP=${res[0].idBCP}`)
@@ -151,9 +156,9 @@ function Comprar({ theme, styled, click, children }) {
 
     return (<div className='w-full min-h-screen relative px-5 pb-[50px] bg-gray-100'>
         {success == 'Complete' && <Msg>Complete el formulario</Msg>}
+       
 
-
-        <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
+        <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-30">
             <div className='relative p-10 bg-white'>
                 <button type="button" className="absolute top-3 right-2.5 text-gray-600 bg-gray-200 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white p-3" onClick={closeModal}>
                     <span className='text-[12px] text-gray-600  pr-5'>Finalizar </span>

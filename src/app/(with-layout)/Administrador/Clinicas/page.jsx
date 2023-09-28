@@ -85,6 +85,7 @@ function Home() {
     async function autorizarConfirm() {
         console.log(item) 
         await updateUserData('Clinica', {autorizacion: !item.autorizacion}, item.uuid, null)
+        await updateUserData('Clinica', {autorizacion: !item.autorizacion}, item['ID Verificador'], null)
         await readUserAllData('Clinica', null, setTemporal)
         setModal('')
     }
