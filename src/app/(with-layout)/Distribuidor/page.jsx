@@ -28,7 +28,7 @@ function Home() {
     const inputRefDate = useMask({ mask: '__/__', replacement: { _: /\d/ } });
     const inputRefCVC = useMask({ mask: '___', replacement: { _: /\d/ } });
     const inputRefPhone = useMask({ mask: '+ 591 _ ___ ___', replacement: { _: /\d/ } });
-    const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
+    const inputRefWhatsApp = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
 
     function manageInputIMG(e) {
         // const fileName = `${e.target.name}`
@@ -88,7 +88,7 @@ function Home() {
                     </div>
                 </div>
                 <div className='flex w-full justify-around'>
-                    <Button theme='Primary'>Guardar</Button>
+                    <Button theme='Primary'>Enviar a verficación</Button>
                 </div>
             </form>
         </div>

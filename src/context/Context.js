@@ -89,19 +89,19 @@ export function UserProvider({ children }) {
 	}
 
 	const setIntroVideo = (data) => {
-		setUserIntroVideo(data)
-		// if (introVideo === undefined) {
-		// 	return
-		// }
-		const interval = setInterval(() => {
+		introVideo === undefined ?setUserIntroVideo(data): ''
+		
+		if (introVideo === true ){const interval = setInterval(() => {
 			console.log('int')
 			if (videoRef && videoRef.current && videoRef.current.ended) {
 				setUserIntroVideo(false)
 				clearInterval(interval)
 			}
-		}, 1000)
+		}, 1000)}
 
-		return clearInterval(interval)
+		return () => {
+			clearInterval(interval)
+		};
 	}
 
 

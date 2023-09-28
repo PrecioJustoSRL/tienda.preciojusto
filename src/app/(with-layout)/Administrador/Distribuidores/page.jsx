@@ -129,6 +129,9 @@ function Home() {
                             </th>
                             <th scope="col" className="px-3 py-3">
                                 Ver Pedidos
+                            </th>´
+                            <th scope="col" className="px-3 py-3">
+                                Autorización
                             </th>
                             <th scope="col" className="px-3 py-3">
                                 Bloquear
@@ -170,6 +173,12 @@ function Home() {
                                 </td>
                                 <td className="px-3 py-4">
                                     <Button theme={"Primary"} click={(e) => redirect(i.uuid)}>Ver productos</Button>
+                                </td>
+                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {i.autorizacion == true
+                                        ? <Button theme={"Success"} click={() => autorizar(i, 'Access')}>No autorizar</Button>
+                                        : <Button theme={"Secondary"} click={() => autorizar(i, 'Access')}>Autorizar</Button>
+                                    }
                                 </td>
                                 <td className="px-3 py-4">
                                     <Button theme={"Danger"} click={() => delet(i)}>Bloquear</Button>

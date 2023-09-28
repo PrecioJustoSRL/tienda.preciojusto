@@ -145,7 +145,7 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-                <table className="relative w-[2500px] border-[1px] border-t-4 border-t-gray-400">
+                <table className="relative w-[1800px]  border-[1px] border-t-4 border-t-gray-400">
                     <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col-3" className="px-3 py-3 text-center font-bold border-r">
@@ -248,7 +248,7 @@ function Home() {
                                         ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>)
                                         : (userDB[0].access === 'Verificadora'
                                             ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Disable"} >Guardar</Button>)
-                                            : (i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado')
+                                            : (i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado') && i.estado === 'Pendiente'
                                                 ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
                                                 : 'no permitido')
                                     }

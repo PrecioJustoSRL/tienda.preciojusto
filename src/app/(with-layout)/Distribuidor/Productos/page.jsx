@@ -59,7 +59,7 @@ function Home() {
 
 
         if (userDB === undefined) {
-            setModal('Verifica')
+            setModal('VerificaD')
             return
         }
 

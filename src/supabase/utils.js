@@ -75,7 +75,6 @@ const passwordRedirect = async (email) => {
 //--------------------------CRUD----------------------------------
 
 const writeUserData = async (rute, object, uuid, context, updateContext, setUserSuccess, msg, key) => {
-    // console.log(object)
 
     const result = await supabase
         .from(rute)
@@ -127,10 +126,12 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
         .from(rute)
         .select()
         .eq(eq ? eq : 'uuid', uuid)
-
+        console.log(result)
+        console.log(result.data.lenght)
+console.log(result.data.length === 1)
     if (updateContext) {
         result.data !== null && result.data.length !== 0
-            ? (result.data.lenght > 1 ? updateContext(result.data[0]) : updateContext(result.data))
+            ? (result.data.length === 1 ? updateContext(result.data[0]) : updateContext(result.data))
             : updateContext(null)
     }
     // console.log(result)

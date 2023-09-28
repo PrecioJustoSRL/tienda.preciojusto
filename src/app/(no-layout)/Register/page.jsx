@@ -1,5 +1,5 @@
 'use client'
-import { writeUserData, readUserData, onAuth, signOut, getUserData, readUserAllData} from '@/supabase/utils'
+import { writeUserData, readUserData, onAuth, signOut, getUserData, readUserAllData } from '@/supabase/utils'
 import { useUser } from '@/context/Context'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +14,7 @@ import Msg from '@/components/Msg'
 
 
 import { useRouter } from 'next/navigation';
+import { data } from 'autoprefixer'
 
 function Home() {
 
@@ -21,7 +22,7 @@ function Home() {
     const router = useRouter()
 
     const [rol, setRol] = useState('Cliente')
-    const [ciudad, setCiudad] = useState('La paz')
+    const [ciudad, setCiudad] = useState('Seleccionar')
 
 
     const onClickHandler = (name, value) => {
@@ -33,30 +34,28 @@ function Home() {
     }
     const registerHandler = async (e) => {
         e.preventDefault()
+        console.log('button')
         let nombre = e.target[0].value
-        const data = await writeUserData('Users', { uuid: user.id, nombre, rol, ciudad, correo: user.email}, user.id, user, setUserProfile, setUserSuccess)
-        console.log(data)
-        setUserProfile(data[0])
-        return data && dada[0] && dada[0].rol ? router.push('/Cliente') : ''
+
+        if (ciudad !== 'Seleccionar' && rol && user) {
+            const res = await writeUserData('Users', { uuid: user.id, nombre, rol, ciudad, correo: user.email }, user.id, user, setUserProfile)
+    
+        } else {
+            setUserSuccess('Complete')
+        }
     }
 
-   const redirectLogin = () => {
-    setUserProfile(null)
-    signOut()
-    router.push('/Login')
-}
+    const redirectLogin = () => {
+        setUserProfile(null)
+        signOut()
+        router.push('/Login')
+    }
 
-    console.log(productDB)
     useEffect(() => {
-        // console.log(user)
-        // if (user && user.rol) router.push('/Cliente')
-        // if (user == null || user == undefined || user.role !== 'authenticated') router.push('/SignUp')
-        // if (user && user.rol) readUserData('Users', user.uuid, setUserData)
         user === undefined && onAuth(setUserProfile)
-        if (user && user.rol) router.push('/')
-        // getUserData(setUserProfile)
-        // if (user !== undefined && user !== null) router.replace('/Cliente')
-    }, [user, productDB]);
+        if (user && user.rol) { router.push('/') }
+    }, [user]);
+    console.log(user)
 
 
     return (
@@ -71,7 +70,7 @@ function Home() {
             <Video />
             <div className='w-screen h-screen  flex flex-col justify-center items-center p-5'>
 
-            <form className={`space-y-6 lg:space-y-3 w-[100%] bg-[#00000090] rounded-[30px] sm:max-w-[400px] ${introVideo == true ? 'h-0 overflow-hidden' : 'h-auto px-5 py-10 lg:p-10'}`}  onSubmit={registerHandler} >
+                <form className={`space-y-6 lg:space-y-3 w-[100%] bg-[#00000090] rounded-[30px] sm:max-w-[400px] ${introVideo == true ? 'h-0 overflow-hidden' : 'h-auto px-5 py-10 lg:p-10'}`} onSubmit={registerHandler} >
                     <div className='w-full text-center flex justify-center'>
                         <Image src="/logo-main.svg" width="150" height="150" alt="User" />
                     </div>
@@ -79,7 +78,7 @@ function Home() {
                     <h5 className="text-[18px] text-center text-white">Registrate</h5>
                     <br />                        <div>
                         <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-white">Nombre</label>
-                        <Input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" require />
+                        <Input type="text" name="email" id="email" placeholder="" require />
                     </div>
                     <div>
                         <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-white">Tipo de cuenta</label>
@@ -92,17 +91,19 @@ function Home() {
                     <div className="flex items-start">
                         <div className="flex items-center">
                             <div className="flex items-center h-5">
-                                <input id="remember" type="checkbox" value="" className="w-[16px] h-[16px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 " require />
+                                <input id="remember" type="checkbox" value="" className="w-[16px] h-[16px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 " required />
                             </div>
                             <Link href="/Politicas" className="ml-2 text-[14px] font-medium text-gray-100 underline">Políticas de Servicio</Link>
-                        </div>        
-                    </div>                            
+                        </div>
+                    </div>
                     <Button type="submit" theme="Primary">Continuar</Button>
                     <br />
-                    <div className="text-[14px] text-center font-medium text-white dark:text-gray-300">Ya tienes una cuenta? <span onClick={redirectLogin} className="text-gray-100 font-bold underline">Inicia Sessión</span >
+                    <div className="text-[14px] text-center font-medium text-white dark:text-gray-300">Ya tienes una cuenta? <span onClick={redirectLogin} className="text-gray-100 font-bold underline cursor-pointer">Inicia Sessión</span >
                     </div>
                 </form>
             </div>
+            {success == 'Complete' && <Msg>Complete el formulario</Msg>}
+
             {/* {success == 'Importand' && <Msg>Esta información es importante,<br /> por favor revisa que sea correcta.</Msg>} */}
         </div>
     )
