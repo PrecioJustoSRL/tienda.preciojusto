@@ -334,7 +334,7 @@ function getUserData () {
 
 
 
-export default WithAuth(Home)
+export default Home
 
 
 
