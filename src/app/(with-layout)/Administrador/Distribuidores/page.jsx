@@ -13,7 +13,7 @@ import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAl
 import { uploadStorage } from '@/supabase/storage'
 
 function Home() {
-    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, } = useUser()
+    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, item} = useUser()
 
     const router = useRouter()
     const [state, setState] = useState({})
@@ -24,23 +24,16 @@ function Home() {
     const [ciudad, setCiudad] = useState('')
     const [filter, setFilter] = useState('')
 
-    const onClickHandlerCategory = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['categoria']: value } })
+    function autorizar(i, data) {
+        setUserItem(i)
+        setModal('autorizar')
     }
-    const onClickHandlerCity = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['ciudad']: value } })
-    }
-    function manageInputIMG(e, uuid) {
-        const file = e.target.files[0]
-        setPostImage({ ...postImage, [uuid]: file })
-        setUrlPostImage({ ...urlPostImage, [uuid]: URL.createObjectURL(file) })
-        setState({ ...state, [uuid]: { ...state[uuid], uuid } })
-    }
-    const onClickHandlerAvailability = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['disponibilidad']: value } })
-    }
-    const onClickHandlerSystem = (name, value, uuid) => {
-        setState({ ...state, [uuid]: { ...state[uuid], uuid, ['sistema']: value } })
+    async function autorizarConfirm() {
+        console.log(item) 
+        await updateUserData('Clinica', {autorizacion: !item.autorizacion}, item.uuid, null)
+        await updateUserData('Clinica', {autorizacion: !item.autorizacion}, item['ID Verificador'], null)
+        await readUserAllData('Clinica', null, setTemporal)
+        setModal('')
     }
     function onChangeHandler(e) {
         setFilter(e.target.value.toLowerCase())
@@ -83,6 +76,8 @@ function Home() {
 
         <div className='h-full'>
             <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh]">
+            {modal === 'autorizar' && <Modal funcion={autorizarConfirm}>Estas seguro de {item.autorizacion ? 'AUTORIZAR' :'DESAUTORIZAR'} al siguiente usuario: {item.nombre}</Modal>}
+
                 {modal === 'Delete' && <Modal click={deletConfirm} funcion={() => delet(i)}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Distribuidores</h3>
                 <br />
@@ -125,11 +120,12 @@ function Home() {
                                 Whatsapp
                             </th>
                             <th scope="col" className="px-3 py-3">
-                                Ver Productos
+                                Ver Pedidos
                             </th>
                             <th scope="col" className="px-3 py-3">
-                                Ver Pedidos
-                            </th>´
+                                Ver Productos
+                            </th>
+                            
                             <th scope="col" className="px-3 py-3">
                                 Autorización
                             </th>
@@ -174,7 +170,7 @@ function Home() {
                                 <td className="px-3 py-4">
                                     <Button theme={"Primary"} click={(e) => redirect(i.uuid)}>Ver productos</Button>
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 font-semibold text-gray-900">
                                     {i.autorizacion == true
                                         ? <Button theme={"Success"} click={() => autorizar(i, 'Access')}>No autorizar</Button>
                                         : <Button theme={"Secondary"} click={() => autorizar(i, 'Access')}>Autorizar</Button>
