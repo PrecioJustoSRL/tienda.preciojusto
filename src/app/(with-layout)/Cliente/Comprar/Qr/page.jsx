@@ -64,7 +64,7 @@ function Comprar({ theme, styled, click, children }) {
 
 
     const requestQR = async () => {
-        if (userDB[0].autorizacion === false) {
+        if (userDB.autorizacion === false) {
             setModal('RequireAutorization')
             return
         }
@@ -169,7 +169,7 @@ function Comprar({ theme, styled, click, children }) {
                 </button>
                 <br />
 
-                {userDB && userDB[0].access == 'Solicitadora' ? 'Comparte el Qr con tu verficador para acelerar la compra' : 'Paga por QR y adquiere tus productos'}
+                {userDB && userDB.access == 'Solicitadora' ? 'Comparte el Qr con tu verficador para acelerar la compra' : 'Paga por QR y adquiere tus productos'}
                 <br />
                 {
                     dataQR !== undefined

@@ -114,7 +114,7 @@ function Comprar({ theme, styled, click, children }) {
         estado: 'Pendiente', 
         cliente: user.uuid, 
         correo: user.correo, 
-        ...write, ['nombre cliente']: userDB[0].nombre, rol: user.rol }
+        ...write, ['nombre cliente']: userDB.nombre, rol: user.rol }
         , null, null, null, null, null, null)
 
       router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
@@ -158,7 +158,7 @@ function Comprar({ theme, styled, click, children }) {
 
     {pay && <Modal
       funcion={handlerPay}
-      successText={user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora' ? 'Confirmar Solicitud' : 'Confirmar compra'}
+      successText={user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora' ? 'Confirmar Solicitud' : 'Confirmar compra'}
       cancelText="Revisar"
       primary="bg-amber-400 hover:bg-amber-400  text-black font-bold">
       Revisar una vez mas mis productos
@@ -206,7 +206,7 @@ function Comprar({ theme, styled, click, children }) {
         </div>
 
       </div>
-      {user.rol == 'Clinica' && userDB && userDB[0].access == 'Solicitadora'
+      {user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora'
         ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0  left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5 z-50">
           <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Solicitud' : 'Solicitar'}</Button>
         </div>

@@ -45,7 +45,7 @@ function Home() {
     }
     async function save(e) {
         e.preventDefault()
-        if (userDB && userDB[0]['nombre']) {
+        if (userDB && userDB['nombre']) {
             setUserSuccess('Cargando')
             await updateUserData('Medico', { ...state, ciudad: user.ciudad, nombre: user.nombre }, user.uuid)
             postImage && uploadStorage('Medico', postImage, user.uuid, updateUserData, true)
@@ -72,25 +72,25 @@ function Home() {
                 <h3 className='text-center text-[14px] pb-3'>Agregar Perfil</h3>
                 <div className="w-full flex justify-center">
                     <label htmlFor="file" className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" >
-                        {urlPostImage || (userDB && userDB[0].url) ? <img className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" style={{ objectPosition: 'center' }} src={urlPostImage ? urlPostImage : userDB[0].url} alt="" />
+                        {urlPostImage || (userDB && userDB.url) ? <img className="block flex justify-center items-center w-[100px] h-[100px] bg-white border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 rounded-[100px]" style={{ objectPosition: 'center' }} src={urlPostImage ? urlPostImage : userDB.url} alt="" />
                             : 'Subir Imagen'}
                     </label>
-                    <input className="sr-only" onChange={manageInputIMG} accept="image/*" id='file' type="file" required={userDB && userDB[0]['nombre'] ? false : true} />
+                    <input className="sr-only" onChange={manageInputIMG} accept="image/*" id='file' type="file" required={userDB && userDB['nombre'] ? false : true} />
                 </div>
                 <br />
                 <br />
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                     {/* <div>
                         <Label htmlFor="">Nombre</Label>
-                        <Input type="text" name="nombre" onChange={onChangeHandler} defValue={userDB && userDB[0]['nombre']} require />
+                        <Input type="text" name="nombre" onChange={onChangeHandler} defValue={userDB && userDB['nombre']} require />
                     </div> */}
                     <div>
                         <Label htmlFor="">Especialidad</Label>
-                        <Select arr={['Traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' defaultValue={userDB && userDB[0]['especialidad']} click={onClickHandler} />
+                        <Select arr={['Traumatólogo', 'Neurocirujano', 'Cirujano Plástico', 'Cirujano Maxilofacial', 'Cirujano Toráxico', 'Otros']} name='especialidad' defaultValue={userDB && userDB['especialidad']} click={onClickHandler} />
                     </div>
                     <div>
                         <Label htmlFor="">Whatsapp</Label>
-                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB[0]['whatsapp']} category='phone'  require  />
+                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB['whatsapp']} category='phone'  require  />
                     </div>
                 </div>
                 <br />

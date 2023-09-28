@@ -105,7 +105,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                         {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0 && <span className='flex justify-center items-center text-[16px] text-right px-5 w-[40px] font-bold'> {cart[i.uuid].cantidad} </span>}
                         <Button theme='MiniSecondary' click={(e) => addPlussCart(e, i)}>+</Button>
                     </div>
-                    : (user.rol === 'Clinica' && userDB && userDB[0].access == 'Verificadora'
+                    : (user.rol === 'Clinica' && userDB && userDB.access == 'Verificadora'
                         ? <Button theme='MiniPrimaryInfo' onClick={(e) => seeMore(e, i)}>Info</Button>
                         : <Button theme='MiniPrimaryComprar' click={(e) => addCart(e, i)}>Comprar</Button>)}
             </div>}

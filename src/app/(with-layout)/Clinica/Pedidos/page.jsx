@@ -33,8 +33,8 @@ function Home() {
 
     async function deletConfirm() {
         await deleteUserData('Pedido', item.idBCP, 'idBCP')
-        userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
-            ? readUserData('Pedido', userDB[0]['ID Verificador'], setUserPedidos, 'cliente')
+        userDB && userDB.access === 'Verificadora' && userDB['ID Verificador']
+            ? readUserData('Pedido', userDB['ID Verificador'], setUserPedidos, 'cliente')
             : readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
         setModal('')
     }
@@ -56,7 +56,7 @@ function Home() {
         console.log(state[item.idBCP])
         setModal('Guardando')
         const object = {
-            ...state[item.idBCP], ['nombre cliente']: userDB[0].nombre, ['uuid autorizadora']: user.uuid, rol: user.rol
+            ...state[item.idBCP], ['nombre cliente']: userDB.nombre, ['uuid autorizadora']: user.uuid, rol: user.rol
         }
         await updateUserData('Pedido', object, item.idBCP, 'idBCP')
         const obj = { ...state }
@@ -64,8 +64,8 @@ function Home() {
         setState(obj)
 
 
-        userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
-            ? await readUserData('Pedido', userDB[0]['ID Verificador'], setUserPedidos, 'cliente')
+        userDB && userDB.access === 'Verificadora' && userDB['ID Verificador']
+            ? await readUserData('Pedido', userDB['ID Verificador'], setUserPedidos, 'cliente')
             : await readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
 
 
@@ -129,8 +129,8 @@ function Home() {
 
 
     useEffect(() => {
-        userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador']
-            ? readUserData('Pedido', userDB[0]['ID Verificador'], setUserPedidos, 'cliente')
+        userDB && userDB.access === 'Verificadora' && userDB['ID Verificador']
+            ? readUserData('Pedido', userDB['ID Verificador'], setUserPedidos, 'cliente')
             : readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
     }, [userDB])
 
@@ -199,7 +199,7 @@ function Home() {
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
                                 <td className="px-3 py-4 w-[200px] text-gray-900 text-center border-r">
-                                    {userDB && userDB[0].access === 'Verificadora' && userDB[0]['ID Verificador'] && i.estado === 'Pendiente'
+                                    {userDB && userDB.access === 'Verificadora' && userDB['ID Verificador'] && i.estado === 'Pendiente'
                                         ? <Select arr={['Pendiente', 'Rechazado', 'Autorizado']} name='autorizacion' defaultValue={i.autorizacion} uuid={i.idBCP} click={onClickHandlerCategory} />
                                         : <span className={`inline-block px-3 py-4 font-semibold  w-[150px] text-center rounded-full ${i.autorizacion == 'Rechazado' && 'bg-red-400'} ${i.autorizacion == 'Autorizado' && 'bg-green-300'} ${i.autorizacion == 'Pendiente' && 'bg-gray-400'}`}>
                                             {i['autorizacion']}
@@ -246,7 +246,7 @@ function Home() {
 
                                     {state[i.idBCP]
                                         ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>)
-                                        : (userDB[0].access === 'Verificadora'
+                                        : (userDB.access === 'Verificadora'
                                             ? (i.estado === 'Atendido' ? 'No permitido' : <Button theme={"Disable"} >Guardar</Button>)
                                             : (i.autorizacion === 'Pendiente' || i.autorizacion === 'Rechazado') && i.estado === 'Pendiente'
                                                 ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>

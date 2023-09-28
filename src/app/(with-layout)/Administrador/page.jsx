@@ -45,7 +45,7 @@ function Home() {
     }
     async function save(e) {
         e.preventDefault()
-        if (userDB && userDB[0]['whatsapp']) {
+        if (userDB && userDB['whatsapp']) {
             setUserSuccess('Cargando')
             await updateUserData('Administrador', { ...state, ciudad: user.ciudad }, user.uuid)
             router.push('/Administrador/Perfil')
@@ -72,11 +72,11 @@ function Home() {
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
                     <Label htmlFor="">Teléfono</Label>
-                    <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} defValue={userDB && userDB[0]['telefono']} />
+                    <Input type="text" name="telefono" reference={inputRefPhone} onChange={onChangeHandler} defValue={userDB && userDB['telefono']} />
                 </div>
                 <div>
                     <Label htmlFor="">Whatsapp</Label>
-                    <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB[0]['whatsapp']} require />
+                    <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB['whatsapp']} require />
                 </div>
             </div>
             <br />

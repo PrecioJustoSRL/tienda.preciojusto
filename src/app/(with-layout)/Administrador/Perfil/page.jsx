@@ -28,9 +28,9 @@ function Home() {
                     <h3 className='text-center text-[14px] pb-3 font-bold'>Datos Empresariales</h3>
                     <br />
                     <div className=''>
-                        <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB[0]['whatsapp']}</Paragraph>
-                        <Paragraph> <img className="inline pr-5" src="/telefono.svg" alt="" />{userDB[0]['telefono']}</Paragraph>
-                        <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB[0]['ciudad']}</Paragraph>
+                        <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB['whatsapp']}</Paragraph>
+                        <Paragraph> <img className="inline pr-5" src="/telefono.svg" alt="" />{userDB['telefono']}</Paragraph>
+                        <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB['ciudad']}</Paragraph>
                     </div>
                     <br />
                     <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Editar Perfil</Button>

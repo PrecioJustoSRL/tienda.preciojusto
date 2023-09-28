@@ -37,6 +37,10 @@ function Home() {
     }
 
     const importacionConfirm = async (e) => {
+        if (userDB === null) {
+            setModal('VerificaD')
+            return
+        }
         setModal('')
 
         setUserSuccess('Actualizando')
@@ -48,17 +52,17 @@ function Home() {
         await data.map(async i => {
             const obj = { ...i }
             delete obj.id
-            await writeUserData('Producto', { ...obj, uuid: generateUUID(), empresa: userDB[0].nombre, whatsapp: userDB[0].whatsapp, distribuidor: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente', 'Perfil')
+            await writeUserData('Producto', { ...obj, uuid: generateUUID(), empresa: userDB.nombre, whatsapp: userDB.whatsapp, distribuidor: user.uuid, ciudad: user.ciudad }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente', 'Perfil')
         })
         setUserDistributorPDB(undefined)
         await readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
         return setUserSuccess('')
     }
-    console.log(userDB)
     const importacionHandler = async (e) => {
+        console.log(userDB)
 
 
-        if (userDB === undefined) {
+        if (userDB === null) {
             setModal('VerificaD')
             return
         }
