@@ -24,6 +24,7 @@ function Home() {
     const router = useRouter()
     const [state, setState] = useState({})
     const refFirst = useRef(null);
+    const [envio, setEnvio] = useState('')
 
     function delet(i) {
         setUserItem(i)
@@ -145,6 +146,17 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
+            <h3 className='font-medium text-[16px]'>Pedidos</h3>
+
+            <div className=' flex justify-start items-center w-[500px] my-5  '>
+                    <h3 className="flex pr-12 text-[14px]">Estado de envios</h3>
+                    <div className="grid grid-cols-3 gap-4 w-[500px] " >
+                        <Tag theme={envio == 'Pendiente' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Pendiente' ? '' : 'Pendiente')}>Pendiente</Tag>
+                        <Tag theme={envio == 'Atendido' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Atendido' ? '' : 'Atendido')}>Atendido</Tag>
+                        <Tag theme={envio == 'Felicitaciones' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Felicitaciones' ? '' : 'Felicitaciones')}>Felicitaciones</Tag>
+                    </div>
+                </div>
+                
                 <table className="relative w-[1800px]  border-[1px] border-t-4 border-t-gray-400">
                     <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
@@ -194,7 +206,7 @@ function Home() {
                     </thead>
                     <tbody className='w-full'>
                         {pedidos && pedidos !== undefined && pedidos.sort(sortArray).map((i, index) => {
-                            return <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
+                            return i.estado.includes(envio) && <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
                                 <td className="px-3 py-4 text-gray-900 text-center font-bold border-r">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>

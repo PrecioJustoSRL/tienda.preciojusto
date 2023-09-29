@@ -22,9 +22,7 @@ function Home() {
     }
 
     console.log(userDB)
-    useEffect(() => {
-        if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
-    }, []);
+  
     return (
         <div className='w-full flex justify-center p-5'>
             {userDB !== undefined && userDB !== null
