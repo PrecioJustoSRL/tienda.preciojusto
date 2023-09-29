@@ -29,17 +29,17 @@ function Home() {
                 ? <div className=" bg-white  w-full max-w-[800px] p-5 py-10 shadow-2xl ">
                     <br />
                     <div className="flex justify-center">
-                        <img className='h-[100px] w-[100px] rounded-full' src={userDB[0].url} alt="" />
+                        <img className='h-[100px] w-[100px] rounded-full' src={userDB.url} alt="" />
                     </div>
                     <br />
-                    <h3 className='w-full font-base  font-normal text-center '>{userDB[0]['nombre']}</h3>
+                    <h3 className='w-full font-base  font-normal text-center '>{userDB['nombre']}</h3>
                     <br />
                     <Subtitle styled="flex">Quienes Somos</Subtitle>
-                    <Paragraph> {userDB[0]['descripcion']}</Paragraph>
+                    <Paragraph> {userDB['descripcion']}</Paragraph>
                     <Subtitle styled="flex">Contactos</Subtitle>
                     <div className=''>
-                    <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB[0]['whatsapp']}</Paragraph>
-                        <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB[0]['ciudad']}</Paragraph></div>
+                    <Paragraph> <img className="inline pr-5" src="/whatsapp.svg" alt="" />{userDB['whatsapp']}</Paragraph>
+                        <Paragraph> <img className="inline pr-5" src="/ubicacion.svg" alt="" />{userDB['ciudad']}</Paragraph></div>
                     <br />
                     <Button theme="Success" click={() => redirectHandler('Distribuidor/')}>Editar Perfil</Button>
                 </div>
