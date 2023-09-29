@@ -75,7 +75,7 @@ function Home() {
     //       behavior: 'smooth',
     //     });
     //   };
-    console.log(cart)
+    console.log(pedidos)
 
     // window.onbeforeunload = function () {
     //     // return "¿Desea recargar la página web?";

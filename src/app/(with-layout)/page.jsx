@@ -122,16 +122,16 @@ function Home() {
 
 
 
-    window.onbeforeunload =  function (e) {
-        e.preventDefault()
-        const confirms =  confirm('Estas seguro de salir, se perderan tus datos')
-        // if (confirms !== true) {
-        //     router.push('/Cliente')
-        //     return
-        // }
-        console.log(confirms)
-        return confirms
-    };
+    // window.onbeforeunload =  function (e) {
+    //     e.preventDefault()
+    //     const confirms =  confirm('Estas seguro de salir, se perderan tus datos')
+    //     // if (confirms !== true) {
+    //     //     router.push('/Cliente')
+    //     //     return
+    //     // }
+    //     console.log(confirms)
+    //     return confirms
+    // };
 
 
 
@@ -156,19 +156,19 @@ function Home() {
     //    window.history.pushState({}, '')
     //  })
 
-    // window.onbeforeunload = function () {
-    //    window.open('https://youtube.com')
-    //     return 'guyutut'
-    // };
+    window.onbeforeunload = function () {
+        return 'Desea salir, perdera sus datos'
+    };
     // window.history.forward()
  // console.log()
         // setTimeout(console.log(123),1000)
         // return () => {
             // 
         // }
-
-        history.pushState({}, '', '/Salir');
+// router.push('/Salir')
+// router.push('/')
         history.pushState({}, '', '/');
+        // history.pushState({}, '', '/');
         // window.addEventListener('popstate', function (e) {
         
         //     router.replace('/Salir')

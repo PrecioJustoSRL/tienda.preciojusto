@@ -121,7 +121,7 @@ const getSpecificData = async (rute, eq, uuid, updateContext, eq2, uuid2) => {
     // console.log(error)
 }
 
-const readUserData = async (rute, uuid, updateContext, eq,) => {
+const readUserData = async (rute, uuid, updateContext, eq, object) => {
     const result = await supabase
         .from(rute)
         .select()
@@ -129,7 +129,7 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
         console.log(result)
     if (updateContext) {
         result.data !== null && result.data.length !== 0
-            ? (result.data.length === 1 ? updateContext(result.data[0]) : updateContext(result.data))
+            ? (object ? updateContext(result.data[0]) : updateContext(result.data))
             : updateContext(null)
     }
     // console.log(result)
