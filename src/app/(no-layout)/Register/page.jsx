@@ -38,7 +38,7 @@ function Home() {
         let nombre = e.target[0].value
 
         if (ciudad !== 'Seleccionar' && rol && user) {
-            const res = await writeUserData('Users', { uuid: user.id, nombre, rol, ciudad, correo: user.email }, user.id, user, setUserProfile)
+            const res = await writeUserData('Users', { uuid: user.id, nombre, rol, ciudad, correo: user.email }, user.id, user, null)
     
         } else {
             setUserSuccess('Complete')
