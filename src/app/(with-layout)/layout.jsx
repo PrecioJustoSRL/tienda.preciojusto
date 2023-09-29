@@ -154,7 +154,7 @@ function Home({ children }) {
 
     <div>
 
-      {user && user.rol !== undefined 
+      {user && user.rol !== undefined && userDB !== undefined
         
         ? <div className="h-screen bg-gray-white">
 
