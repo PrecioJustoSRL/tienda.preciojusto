@@ -167,7 +167,7 @@ function Home() {
         // }
 // router.push('/Salir')
 // router.push('/')
-        history.pushState({}, '', '/');
+        // history.pushState({}, '', '/');
         // history.pushState({}, '', '/');
         // window.addEventListener('popstate', function (e) {
         
