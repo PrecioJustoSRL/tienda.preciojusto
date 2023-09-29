@@ -77,11 +77,6 @@ function Home() {
                         <Label htmlFor="">Quienes somos</Label>
                         <Input type="text" name="descripcion" onChange={onChangeHandler} />
                     </div>
-
-                    <div>
-                        <Label htmlFor="">Ciudad</Label>
-                        <Select arr={['La Paz', 'Cochabamba', 'Santa Cruz']} name='ciudad' click={onClickHandler} />
-                    </div>
                     <div>
                         <Label htmlFor="">Whatsapp</Label>
                         <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} category='phone'  require />
