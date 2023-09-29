@@ -114,7 +114,7 @@ function Comprar({ theme, styled, click, children }) {
         estado: 'Pendiente', 
         cliente: user.uuid, 
         correo: user.correo, 
-        ...write, ['nombre cliente']: userDB !== undefined ? userDB.nombre  : null , rol: user.rol }
+        ...write, ['nombre cliente']: userDB && userDB !== undefined ? userDB.nombre  : null , rol: user.rol }
         , null, null, null, null, null, null)
 
       router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
