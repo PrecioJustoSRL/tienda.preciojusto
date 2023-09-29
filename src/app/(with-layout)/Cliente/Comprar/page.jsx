@@ -26,6 +26,7 @@ function Comprar({ theme, styled, click, children }) {
   const inputRefWhatsApp = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
   const inputRefWhatsApp2 = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
   const [pay, setPay] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
 
@@ -71,8 +72,10 @@ function Comprar({ theme, styled, click, children }) {
 
 
 
-  
+
   const requestQR = async () => {
+    setIsLoading(true)
+
     const amount = calculator()
     try {
       console.log('her')
@@ -104,21 +107,23 @@ function Comprar({ theme, styled, click, children }) {
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
         return data
       })
-      await writeUserData('Pedido', { 
-        fecha: getDayMonthYear(), distribuidor: arr[0].distribuidor, 
-        empresa: arr[0].empresa, 
-        whatsapp: arr[0].whatsapp, 
-        compra: arr, 
-        envio: check, 
-        ...state, 
-        estado: 'Pendiente', 
-        cliente: user.uuid, 
-        correo: user.correo, 
-        ...write, ['nombre cliente']: userDB && userDB !== undefined ? userDB.nombre  : null , rol: user.rol }
+      await writeUserData('Pedido', {
+        fecha: getDayMonthYear(), distribuidor: arr[0].distribuidor,
+        empresa: arr[0].empresa,
+        whatsapp: arr[0].whatsapp,
+        compra: arr,
+        envio: check,
+        ...state,
+        estado: 'Pendiente',
+        cliente: user.uuid,
+        correo: user.correo,
+        ...write, ['nombre cliente']: userDB && userDB !== undefined ? userDB.nombre : null, rol: user.rol
+      }
         , null, null, null, null, null, null)
 
       router.replace(`/Cliente/Comprar/Qr?idBCP=${data.data.id}`)
 
+      setIsLoading(false)
 
       return setModal('')
     } catch (err) {
@@ -157,11 +162,20 @@ function Comprar({ theme, styled, click, children }) {
     <InvoicePDF />
 
     {pay && <Modal
-      funcion={handlerPay}
-      successText={user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora' ? 'Confirmar Solicitud' : 'Confirmar compra'}
-      cancelText="Revisar"
-      primary="bg-amber-400 hover:bg-amber-400  text-black font-bold">
-      Revisar una vez mas mis productos
+      primary="bg-amber-400 hover:bg-amber-400  text-black font-bold"
+      alert={true}
+      cancel={()=>isLoading ? '':setPay('')}>
+      {user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora' ? 'Ya casi tienes tus productos, confirma tu Solicitud...' : 'Ya casi tienes tus productos, confirmar tu compra...'}
+      <br />
+      <br />
+      <div className='w-full grid grid-cols-2 gap-[2px]'>
+        <Button type="button" theme="TransparentW" click={()=>isLoading ? '':setPay('')}>
+          Volver
+        </Button>
+        {isLoading ? <Button type="submit" theme="Loading" click={(e)=>e.stopPropagation()} /> : <Button type="button" theme="Warning"   click={handlerPay}>
+        {user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora' ? 'Confirmar' : 'Confirmar'}
+        </Button>}
+      </div>
     </Modal>}
 
     {success == 'Complete' && <Msg>Complete el formulario</Msg>}
@@ -208,10 +222,10 @@ function Comprar({ theme, styled, click, children }) {
       </div>
       {user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora'
         ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0  left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5 z-50">
-          <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Solicitud' : 'Solicitar'}</Button>
+          {isLoading ? <Button type="submit" theme="Loading" /> : <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Solicitud' : 'Solicitar'}</Button>}
         </div>
         : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0 left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5 z-50">
-          <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Compra' : 'Pagar por QR'}</Button>
+          {isLoading ? <Button type="submit" theme="Loading" /> : <Button theme="SuccessBuy" styled={pay ? 'bg-amber-400' : ''} click={handlerPay}> {pay ? 'Confirmar Compra' : 'Pagar por QR'}</Button>}
         </div>
       }
     </form>
