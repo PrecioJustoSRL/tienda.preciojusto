@@ -266,7 +266,7 @@ function Home() {
 }
 
 
-export default WithAuth(Home)
+export default Home
 
 
     // console.log({ bloqueado: !item.bloqueado })

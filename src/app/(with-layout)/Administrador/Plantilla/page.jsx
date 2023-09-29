@@ -276,7 +276,7 @@ function Home() {
 
 
 
-export default WithAuth(Home)
+export default Home
 
 
    // await deleteUserData('Producto', userUuid)
@@ -655,4 +655,4 @@ export default WithAuth(Home)
 
 
 
-// export default WithAuth(Home)
+// export default Home
