@@ -137,10 +137,11 @@ function Home({ children }) {
     if (user === null) router.push('/Login')
     if (user && user.role === 'authenticated') { router.push('/Register') }
     if (user !== undefined && user !== null && user.rol !== undefined && user.rol !== null && userDB === undefined) {
-        readUserData(user.rol, user.uuid, setUserData, true)
+        readUserData(user.rol, user.uuid, setUserData,null, true)
     }
+
     if (user !== undefined && user !== null && user.rol && businessData === undefined) {
-        readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData, true)
+        readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData, null, true)
     }
         user !== undefined && user !== null && readUserData('Producto', user.ciudad, setUserProduct, 'ciudad')
     // readUserAllData('Producto', productDB, setUserProduct)
@@ -148,12 +149,12 @@ function Home({ children }) {
 
 
 
-  console.log(user)
+  console.log(userDB)
   return (
 
     <div>
 
-      {user && user.rol !== undefined
+      {user && user.rol !== undefined && (user.rol === 'Cliente' || (userDB && userDB !== undefined ))
         
         ? <div className="h-screen bg-gray-white">
 

@@ -17,9 +17,9 @@ function Home() {
         router.push(ref)
     }
 
-    console.log(user)
+    console.log(userDB)
     useEffect(() => {
-        if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
+        // if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
     }, [user]);
     return (
         <div className='w-full flex justify-center p-5'>
@@ -30,7 +30,7 @@ function Home() {
                         <img className='h-[100px] w-[100px] rounded-full' src={userDB.url} alt="" />
                     </div>
                     <br />
-                    <h3 className='w-full text-[14px] text-center '>{userDB['nombre'].toUpperCase()}</h3>
+                    <h3 className='w-full text-[14px] text-center uppercase '>{userDB['nombre']}</h3>
     
                     <h3 className='w-full text-[14px] text-center '>{userDB['especialidad']}</h3>
                     <br />
@@ -56,4 +56,4 @@ function Home() {
     )
 }
 
-export default WithAuth(Home)
+export default Home

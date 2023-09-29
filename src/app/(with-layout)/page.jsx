@@ -94,7 +94,7 @@ function Home() {
         // setSearch(false)
     }
 
-    // console.log(history)
+   
    
     // console.log(window.history.length)
     // console.log(window.location.href)
@@ -182,12 +182,11 @@ function Home() {
     // year = Date().getFullYear()
     // console.log(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0))
     useEffect(() => {
-
+ // console.log(history)
         if (tienda === undefined) {
             user && user.rol !== 'Medico' ? setTienda('Comprar') : setTienda('Recetar')
         }
         user && user.rol === 'Cliente' && user.video === false && videoHandler()
-        if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
         const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0)
         getSpecificData('Pedido', 'cliente', user.uuid, setUltimoPedido, 'fecha', getDayMonthYear())
     }, [user, filterQR]);
