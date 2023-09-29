@@ -70,6 +70,7 @@ function Comprar({ theme, styled, click, children }) {
         }
 
         const res = await readUserData('Pedido', idBCP ? idBCP : idBCPdiferido, null,  idBCP ? 'idBCP' : 'idBCPdiferido')
+        // console.log(res)
         if (idBCPdiferido) {
             router.replace(`/Cliente/Comprar/Qr?idBCP=${res[0].idBCP}`)
             return
@@ -132,12 +133,11 @@ function Comprar({ theme, styled, click, children }) {
 
     async function verify() {
         setModal('verify')
-        console.log(idBCP)
-        console.log(idBCPdiferido)
+
 
         const res = await readUserData('Pedido', idBCP ? idBCP : idBCPdiferido, null, idBCP ?'idBCP':'idBCPdiferido')
         console.log(res)
-        console.log(idBCP? JSON.parse(res[0].qrBase64) : JSON.parse(res[0].qrBase64diferido))
+        // console.log(idBCP? JSON.parse(res[0].qrBase64) : JSON.parse(res[0].qrBase64diferido))
         setDataQR(idBCP? JSON.parse(res[0].qrBase64) : JSON.parse(res[0].qrBase64diferido))
         res[0].message === 'Correcto' && router.push(`/Cliente/Comprar/Detalle?idBCP=${idBCP}`)
         // const mySuscription = supabase
@@ -148,7 +148,6 @@ function Comprar({ theme, styled, click, children }) {
         // .subscribe()
         setModal('')
     }
-    console.log(dataQR)
 
     useEffect(() => {
     (idBCP || idBCPdiferido )&& verify()
@@ -158,7 +157,7 @@ function Comprar({ theme, styled, click, children }) {
         {success == 'Complete' && <Msg>Complete el formulario</Msg>}
        
 
-        <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-30">
+        <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-40">
             <div className='relative p-10 bg-white'>
                 <button type="button" className="absolute top-3 right-2.5 text-gray-600 bg-gray-200 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white p-3" onClick={closeModal}>
                     <span className='text-[12px] text-gray-600  pr-5'>Finalizar </span>
@@ -188,11 +187,15 @@ function Comprar({ theme, styled, click, children }) {
                 {dataQR !== undefined && <a
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
                     href={`data:image/png;base64,${dataQR.qrBase64}`} download>Guardar ImagenQR</a>}
-                <br />
-                {dataQR !== undefined && <button
+               
+                {user.rol === 'Clinica' && dataQR !== undefined && 
+                 <>
+                 <br />
+                 <button
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
                     onClick={requestQR}
-                >{idBCP ? 'Pagar por diferido': 'Pagar al contado '}</button>}
+                >{idBCP ? 'Pagar por diferido': 'Pagar al contado '}</button>
+                 </>}
                 <br />
                 {dataQR !== undefined && <button
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"

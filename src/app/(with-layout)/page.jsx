@@ -166,10 +166,12 @@ function Home() {
         // return () => {
             // 
         // }
+
+        history.pushState({}, '', '/Salir');
+        history.pushState({}, '', '/');
         // window.addEventListener('popstate', function (e) {
-        //    console.log('pathname')
-        //     setModal('Exit')
-        //     router.replace('/')
+        
+        //     router.replace('/Salir')
         //     // window.location.assign("https://preciojusto.pro/");
         //   });
     function confeti() {

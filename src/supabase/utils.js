@@ -127,8 +127,6 @@ const readUserData = async (rute, uuid, updateContext, eq,) => {
         .select()
         .eq(eq ? eq : 'uuid', uuid)
         console.log(result)
-        console.log(result.data.lenght)
-console.log(result.data.length === 1)
     if (updateContext) {
         result.data !== null && result.data.length !== 0
             ? (result.data.length === 1 ? updateContext(result.data[0]) : updateContext(result.data))
