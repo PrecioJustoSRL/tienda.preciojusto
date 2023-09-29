@@ -94,7 +94,7 @@ function Home() {
         // setSearch(false)
     }
 
-    console.log(history)
+    // console.log(history)
    
     // console.log(window.history.length)
     // console.log(window.location.href)
