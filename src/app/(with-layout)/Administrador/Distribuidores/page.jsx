@@ -56,14 +56,14 @@ function Home() {
     }
     async function blockConfirm() {
         console.log(item)
-        await updateUserData('Users', { bloqueado: !item.bloqueado }, item.uuid, null)
-        await readUserAllData('Users', null, setTemporal)
+        await updateUserData('Distribuidor', { bloqueado: !item.bloqueado }, item.uuid, null)
+        await readUserAllData('Distribuidor', null, setTemporal)
         setModal('')
 
     }
     async function deletConfirm() {
-        await deleteUserData('Users', item.uuid)
-        readUserAllData('Users', null, setTemporal)
+        await deleteUserData('Distribuidor', item.uuid)
+        readUserAllData('Distribuidor', null, setTemporal)
         setModal('')
 
     }
