@@ -13,7 +13,7 @@ import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAl
 import { uploadStorage } from '@/supabase/storage'
 
 function Home() {
-    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, item} = useUser()
+    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, item } = useUser()
 
     const router = useRouter()
     const [state, setState] = useState({})
@@ -29,10 +29,10 @@ function Home() {
         setModal('autorizar')
     }
     async function autorizarConfirm() {
-        console.log(item) 
-        await updateUserData('Clinica', {autorizacion: !item.autorizacion}, item.uuid, null)
-        await updateUserData('Clinica', {autorizacion: !item.autorizacion}, item['ID Verificador'], null)
-        await readUserAllData('Clinica', null, setTemporal)
+        console.log(item)
+        await updateUserData('Distribuidor', { autorizacion: !item.autorizacion }, item.uuid, null)
+        // await updateUserData('Distribuidor', { autorizacion: !item.autorizacion }, item['ID Verificador'], null)
+        await readUserAllData('Distribuidor', null, setTemporal)
         setModal('')
     }
     function onChangeHandler(e) {
@@ -50,9 +50,22 @@ function Home() {
         await deleteUserData('Producto', userUuid)
         readUserData('Producto', userUuid, setUserDistributorPDB, 'distribuidor')
     }
-    function delet(i) {
+    function delet(i, data) {
         setUserItem(i)
-        setModal('Delete')
+        setModal(data)
+    }
+    async function blockConfirm() {
+        console.log(item)
+        await updateUserData('Users', { bloqueado: !item.bloqueado }, item.uuid, null)
+        await readUserAllData('Users', null, setTemporal)
+        setModal('')
+
+    }
+    async function deletConfirm() {
+        await deleteUserData('Users', item.uuid)
+        readUserAllData('Users', null, setTemporal)
+        setModal('')
+
     }
     function redirect(id) {
         setUserUuid(id)
@@ -76,9 +89,10 @@ function Home() {
 
         <div className='h-full'>
             <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh]">
-            {modal === 'autorizar' && <Modal funcion={autorizarConfirm}>Estas seguro de {item.autorizacion ? 'AUTORIZAR' :'DESAUTORIZAR'} al siguiente usuario: {item.nombre}</Modal>}
+                {modal === 'autorizar' && <Modal funcion={autorizarConfirm}>Estas seguro de {item.autorizacion ? 'AUTORIZAR' : 'DESAUTORIZAR'} al siguiente usuario: {item.nombre}</Modal>}
 
-                {modal === 'Delete' && <Modal click={deletConfirm} funcion={() => delet(i)}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
+                {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de ELIMINAR al siguiente usuario: {item.nombre}</Modal>}
+                {modal === 'Block' && <Modal funcion={blockConfirm}>Estas seguro de BLOQUEAR al siguiente usuario {item.nombre}</Modal>}
                 <h3 className='font-medium text-[16px]'>Distribuidores</h3>
                 <br />
                 <div className='flex justify-center w-full'>
@@ -125,7 +139,7 @@ function Home() {
                             <th scope="col" className="px-3 py-3">
                                 Ver Productos
                             </th>
-                            
+
                             <th scope="col" className="px-3 py-3">
                                 Autorización
                             </th>
@@ -177,11 +191,14 @@ function Home() {
                                     }
                                 </td>
                                 <td className="px-3 py-4">
-                                    <Button theme={"Danger"} click={() => delet(i)}>Bloquear</Button>
+                                    {i.bloqueado == true
+                                        ? <Button theme={"Success"} click={() => delet(i, 'Block')}>Desbloquear</Button>
+                                        : <Button theme={"Secondary"} click={() => delet(i, 'Block')}>Bloquear</Button>
+                                    }
                                 </td>
                                 <td className="px-3 py-4">
-                                    <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
-                                </td>
+                                            <Button theme={"Danger"} click={() => delet(i, 'Delete')}>Eliminar</Button>
+                                        </td>
                             </tr>
                         })
                         }
