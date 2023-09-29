@@ -149,12 +149,12 @@ function Home({ children }) {
 
 
 
-  console.log(userDB)
+  // console.log(user && user.rol !== undefined && (user.rol === 'Cliente' || (userDB && userDB !== undefined )))
   return (
 
     <div>
 
-      {user && user.rol !== undefined && (user.rol === 'Cliente' || (userDB && userDB !== undefined ))
+      {user && user.rol !== undefined 
         
         ? <div className="h-screen bg-gray-white">
 

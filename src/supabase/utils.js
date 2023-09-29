@@ -74,14 +74,14 @@ const passwordRedirect = async (email) => {
 
 //--------------------------CRUD----------------------------------
 
-const writeUserData = async (rute, object, uuid, context, updateContext, setUserSuccess, msg, key) => {
+const writeUserData = async (rute, object, uuid, context, updateContext, setUserSuccess, msg, eq, obj) => {
 
     const result = await supabase
         .from(rute)
         .insert(object)
     console.log(result)
     setUserSuccess ? setUserSuccess(msg) : ''
-    result.status == 201 && updateContext ? readUserData(rute, uuid, updateContext) : (setUserSuccess ? setUserSuccess(msg) : '')
+    result.status == 201 && updateContext ? readUserData(rute, uuid, updateContext, eq, obj) : (setUserSuccess ? setUserSuccess(msg) : '')
     // console.log(result)
     return result
 }

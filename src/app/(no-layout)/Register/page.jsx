@@ -23,6 +23,7 @@ function Home() {
 
     const [rol, setRol] = useState('Cliente')
     const [ciudad, setCiudad] = useState('Seleccionar')
+    const  [isLoading, setIsLoading] = useState(false)
 
 
     const onClickHandler = (name, value) => {
@@ -34,15 +35,23 @@ function Home() {
     }
     const registerHandler = async (e) => {
         e.preventDefault()
-        console.log('button')
+        if(isLoading){return}
+        setIsLoading(true)
         let nombre = e.target[0].value
 
+        if (user === null) {
+            router.push('/Login')
+        }
+
         if (ciudad !== 'Seleccionar' && rol && user) {
-            const res = await writeUserData('Users', { uuid: user.id, nombre, rol, ciudad, correo: user.email }, user.id, user, null)
-    
+            const res = await writeUserData('Users', { uuid: user.id, nombre, rol, ciudad, correo: user.email }, user.id, user, setUserProfile, null, null, null, true)
+            setIsLoading(false)                    
+            //    (rute, object, uuid, context, updateContext, setUserSuccess, msg, eq, object)
         } else {
             setUserSuccess('Complete')
+            setIsLoading(false)
         }
+        setIsLoading(false)
     }
 
     const redirectLogin = () => {
@@ -53,6 +62,9 @@ function Home() {
 
     useEffect(() => {
         user === undefined && onAuth(setUserProfile)
+        if (user === null) {
+            router.push('/Login')
+        }
         if (user && user.rol) { router.push('/') }
     }, [user]);
     console.log(user)
@@ -96,7 +108,7 @@ function Home() {
                             <Link href="/Politicas" className="ml-2 text-[14px] font-medium text-gray-100 underline">Políticas de Servicio</Link>
                         </div>
                     </div>
-                    <Button type="submit" theme="Primary">Continuar</Button>
+                   { isLoading ?<Button type="submit" theme="Loading" />  : <Button type="submit" theme="Primary">Continuar</Button>}
                     <br />
                     <div className="text-[14px] text-center font-medium text-white dark:text-gray-300">Ya tienes una cuenta? <span onClick={redirectLogin} className="text-gray-100 font-bold underline cursor-pointer">Inicia Sessión</span >
                     </div>

@@ -1,7 +1,7 @@
 'use client';
 import { useUser } from '@/context/Context'
 import { onAuth, signUpWithEmailAndPassword } from '@/supabase/utils'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import style from '@/app/page.module.css'
@@ -17,25 +17,29 @@ export default function Home() {
 
   const { user, introVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG } = useUser()
   const router = useRouter()
-
+  const  [isLoading, setIsLoading] = useState(false)
 
   const signUpHandler = async (e) => {
     e.preventDefault()
+    if(isLoading){return}
+    setIsLoading(true)
     let email = e.target[0].value
     let password = e.target[1].value
 
    if ( email.length == 0 && password.length == 0 ){
     setUserSuccess('Complete')
-    return
+    return setIsLoading(false)
    }
    if ( password.length < 8 ){
     setUserSuccess('ContraseñaCorta')
-    return
+    return setIsLoading(false)
    }
     const data = await signUpWithEmailAndPassword(email, password, setUserProfile)
     console.log(data)
     setUserProfile(data.user)
     data.user == null ?  setUserSuccess('CuentaExiste') : router.push('/Register')
+
+   return setIsLoading(false)
   }
 
   useEffect(() => {
@@ -63,16 +67,16 @@ export default function Home() {
           <br />
           <div>
             <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-white">Email</label>
-            <Input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
+            <Input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" require />
           </div>
           <div>
             <label htmlFor="password" className="block mb-2 text-[16px] text-left  font-medium text-white">Contraseña</label>
-            <Input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-100 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+            <Input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-100 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" require />
           </div>
           <div className="flex items-start">
           <Link href="/Resetear" className="ml-auto text-[14px] text-gray-100 underline">Olvidaste tu contraseña?</Link>
           </div>
-          <Button type="submit" theme="Primary">Continuar</Button>
+          {isLoading ?<Button type="submit" theme="Loading" />  :<Button type="submit" theme="Primary">Continuar</Button>}
           <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100  font-bold  underline">Inicia Sessión</Link >
           </div>
         </form>
