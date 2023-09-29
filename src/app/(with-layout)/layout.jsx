@@ -78,7 +78,7 @@ function Home({ children }) {
   }
 
   const soporte = () => {
-    businessData && window.open(`https://api.whatsapp.com/send?phone=${businessData[0].whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20y%20mi%20cuenta%20esta%20bloqueada%20¿Pueden%20ayudarme?%20`, '_blank')
+    businessData && window.open(`https://api.whatsapp.com/send?phone=${businessData.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20y%20mi%20cuenta%20esta%20bloqueada%20¿Pueden%20ayudarme?%20`, '_blank')
     setNav(false)
     // setWhatsapp(!whatsapp)
   }
@@ -129,7 +129,7 @@ function Home({ children }) {
   // }, [user, userDB]);
 
 
-
+console.log(businessData)
 
 
   useEffect(() => {
@@ -154,17 +154,17 @@ function Home({ children }) {
 
     <div>
 
-      {user && user.rol !== undefined && userDB !== undefined
+      {user && user.rol !== undefined && userDB !== undefined && businessData !== undefined
         
         ? <div className="h-screen bg-gray-white">
 
 
-          {(user && user.bloqueado === true) || (userDB && userDB.bloqueado === true) ? <Modal funcion={soporte} alert={true} close={true}> 
+          {(user && user.bloqueado === true) || (userDB && userDB.bloqueado === true) ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar"> 
             Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
-            <br /><br />
-            <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
+            <br />
+            {/* <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
               Contactar
-            </button>
+            </button> */}
           </Modal>: ''}
           {modal === 'RequireAutorization' && <Modal funcion={soporte} alert={true} close={true}>
             Su cuenta debe ser verificada, <br />por favor comuniquese con soporte.

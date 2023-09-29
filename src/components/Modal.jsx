@@ -2,7 +2,7 @@
 // import style from '../styles/Loader.module.css' 
 import { useUser } from '@/context/Context.js'
 
-export default function Modal ({children, funcion, cancel, alert, successText, cancelText, primary}) {
+export default function Modal ({children, funcion, cancel, alert, successText, cancelText, primary, block}) {
 
     const { user, setUserUuid, userDB, msg, setMsg,  modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, } = useUser()
 
@@ -26,11 +26,10 @@ export default function Modal ({children, funcion, cancel, alert, successText, c
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         <h3 className="mb-2 text-lg font-normal text-gray-500 dark:text-gray-400">{children}   <br /> {msg}   </h3>
-                       {!alert && <> <button type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-[14px] font-medium px-5 py-4 hover:text-gray-900 focus:z-10 mr-2" onClick={cancelHandler}>{cancelText ? cancelText : 'Cancelar'}</button>
+                       {!alert && <><button type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-[14px] font-medium px-5 py-4 hover:text-gray-900 focus:z-10 mr-2" onClick={cancelHandler}>{cancelText ? cancelText : 'Cancelar'}</button>
                         <button type="button" className={`focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-300 font-bold rounded-lg text-[14px] inline-flex items-center px-5 py-4 text-center ${primary? primary : 'bg-red-600 hover:bg-red-800 text-white '}`} onClick={funcion}>
                            {successText ? successText : 'Si, confirmar.'}
-                        </button></>
-                        }
+                        </button></>}
                     </div>
                 </div>
             </div>
