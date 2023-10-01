@@ -20,7 +20,7 @@ const onAuth = (setUserProfile) => {
                 : setUserProfile(session.user)
             return
         } else {
-            return setUserProfile(undefined)
+            return setUserProfile(null)
         }
     })
     data.data.subscription.callback( async (event, session) => {
