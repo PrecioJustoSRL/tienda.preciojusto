@@ -115,38 +115,40 @@ function Home() {
                 <table className="w-[1900px]  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
                     <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 #
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Nombre empresarial
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Descripcón
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Ciudad
                             </th>
-                            <th scope="col" className="px-8 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Telefono
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 font-bold border-r">
                                 Whatsapp
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Ver Pedidos
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Ver Productos
                             </th>
 
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Estado de<br />
                                 Autorización
                             </th>
-                            <th scope="col" className="px-3 py-3">
-                                Bloquear
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
+                                Estado de<br />
+                                Actividad
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="px-3 py-3 text-center font-bold border-r">
                                 Eliminar
                             </th>
                         </tr>
@@ -154,49 +156,50 @@ function Home() {
                     <tbody>
                         {temporal && temporal !== undefined && temporal.sort(sortArray).map((i, index) => {
 
-                            return i.ciudad.includes(ciudad) && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                                <td className="px-3 py-4  flex font-semibold text-gray-900 dark:text-white">
+                            return i.ciudad.includes(ciudad) && i.nombre.toLowerCase().includes(filter) && 
+                            <tr className="text-[14px] border-b hover:bg-gray-50" key={index}>
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white" onClick={(e) => redirect(i.uuid)}>
+                                <td className="px-3 py-4 text-gray-900 border-r" onClick={(e) => redirect(i.uuid)}>
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                     {i['nombre']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 2' defaultValue={i['nombre de producto 2']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                     {i['descripcion']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 3' defaultValue={i['nombre de producto 3']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                     {i['ciudad']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                     {i['telefono']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                                <td className="px-3 py-4 text-gray-900 border-r">
                                     {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Write your thoughts here..."></textarea> */}
                                     {i['whatsapp']}
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="px-3 py-4 border-r">
                                     <Button theme={"Primary"} click={(e) => redirectPedidos(i.uuid)}>Ver pedidos</Button>
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="px-3 py-4 border-r">
                                     <Button theme={"Primary"} click={(e) => redirect(i.uuid)}>Ver productos</Button>
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900">
+                                <td className="px-3 py-4 border-r">
                                     {i.autorizacion == true
-                                        ? <Button theme={"Success"} click={() => autorizar(i, 'Access')}>No autorizar</Button>
-                                        : <Button theme={"Secondary"} click={() => autorizar(i, 'Access')}>Autorizar</Button>
+                                        ? <Button theme={"Danger"} click={() => autorizar(i, 'Access')}>Sin autoriación</Button>
+                                        : <Button theme={"Success"} click={() => autorizar(i, 'Access')}>Autorizado</Button>
                                     }
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="px-3 py-4 border-r">
                                     {i.bloqueado == true
-                                        ? <Button theme={"Success"} click={() => delet(i, 'Block')}>Desbloquear</Button>
-                                        : <Button theme={"Secondary"} click={() => delet(i, 'Block')}>Bloquear</Button>
+                                        ? <Button theme={"Danger"} click={() => delet(i, 'Block')}>Bloqueado</Button>
+                                        : <Button theme={"Success"} click={() => delet(i, 'Block')}>Activo</Button>
                                     }
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="px-3 py-4 ">
                                             <Button theme={"Danger"} click={() => delet(i, 'Delete')}>Eliminar</Button>
                                         </td>
                             </tr>

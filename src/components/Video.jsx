@@ -39,6 +39,10 @@ export default function Button({ theme, click, children }) {
     // setSound(true)
     videoRef.current.muted = false
   };
+
+
+
+  console.log(introVideo)
   return (
     <div className='w-full '>
       <div className='z-30 absolute top-0 p-5 h-[50px] w-full '>

@@ -62,6 +62,30 @@ const [reload, setReload] = useState(true)
 
 
 
+
+// const readIndexedDB = {
+//     getItem: async (name) => {
+//      const data = await localStorage.getItem(name)
+//      return data
+//     },
+  
+//     setItem: async (name, value) => {
+//         return await localStorage.setItem(name, value)
+//     },
+  
+//     removeItem: async (name) => {
+//       return await localStorage.removeItem(name)
+//     },
+//   };
+
+
+
+  
+
+
+
+
+
   const signInHandler = async (e) => {
     e.preventDefault()
     setIsDisable(true)

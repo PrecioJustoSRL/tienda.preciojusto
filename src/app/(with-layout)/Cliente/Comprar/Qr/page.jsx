@@ -149,6 +149,13 @@ function Comprar({ theme, styled, click, children }) {
         setModal('')
     }
 
+
+console.log(dataQR && `data:image/png;base64,${dataQR.qrImage}`)
+console.log(dataQR)
+    
+
+
+
     useEffect(() => {
     (idBCP || idBCPdiferido )&& verify()
     }, [idBCP]);
@@ -186,7 +193,7 @@ function Comprar({ theme, styled, click, children }) {
                 <br />
                 {dataQR !== undefined && <a
                     className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
-                    href={`data:image/png;base64,${dataQR.qrBase64}`} download>Guardar ImagenQR</a>}
+                    href={`data:image/png;base64,${dataQR.qrImage}`} download>Guardar ImagenQR</a>}
                
                 {user.rol === 'Clinica' && dataQR !== undefined && 
                  <>

@@ -21,7 +21,7 @@ export default function BottomNavigation({ rol }) {
     }
 
     const redirectHandlerWindow = () => {
-        window.open(`https://api.whatsapp.com/send?phone=${businessData[0].whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
+        window.open(`https://api.whatsapp.com/send?phone=${businessData.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
         setNav(false)
         // setWhatsapp(!whatsapp)
     }
