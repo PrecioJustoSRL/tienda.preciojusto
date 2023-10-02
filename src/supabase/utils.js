@@ -15,12 +15,12 @@ const onAuth = (setUserProfile) => {
                 .select()
                 .eq('uuid', session.user.id)
             console.log(data)
+            console.log(session)
             data !== null && data !== undefined  && data.length
                 ? setUserProfile(data[0])
                 : setUserProfile(session.user)
-            return
         } else {
-            return setUserProfile(null)
+             setUserProfile('repeat')
         }
     })
     data.data.subscription.callback( async (event, session) => {

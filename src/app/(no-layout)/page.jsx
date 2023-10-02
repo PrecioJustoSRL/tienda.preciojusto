@@ -17,7 +17,7 @@ export default function Home() {
   const { user, introVideo, setSound, setBusinessData, businessData, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, } = useUser()
   const [isDisable, setIsDisable] = useState(false)
   const router = useRouter()
-
+const [reload, setReload] = useState(true)
 
 
   function readIndexedDB() {
@@ -79,7 +79,10 @@ export default function Home() {
   console.log(user)
 
   useEffect(() => {
+    
     if(user === undefined ) onAuth(setUserProfile)
+    if(user === 'repeat' ) onAuth(setUserProfile)
+
     if (user && user.role === 'authenticated') router.push('/Register') 
     if (user !== undefined && user !== null && user.rol )router.replace('/Cliente')
     if (user !== undefined && user !== null && user.rol && userDB === undefined) {
@@ -90,6 +93,7 @@ export default function Home() {
       readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData)
     }
     introVideo == undefined ? readIndexedDB() : ''
+
   }, [user, introVideo, userDB, businessData])
 
   return (
