@@ -62,7 +62,7 @@ export default function WebCamp({ takePhoto }) {
     screenshotFormat="image/webp"
     width={width}
     videoConstraints={videoConstraints}
-    mirrored={false}
+    mirrored={true}
   />
 
 

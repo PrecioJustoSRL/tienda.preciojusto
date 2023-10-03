@@ -143,6 +143,10 @@ console.log(businessData)
     if (user !== undefined && user !== null && user.rol && businessData === undefined) {
         readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData, null, true)
     }
+    if (user !== undefined && user !== null && user.rol && businessData === undefined) {
+       readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor', true)
+
+  }
         user !== undefined && user !== null && readUserData('Producto', user.ciudad, setUserProduct, 'ciudad')
     // readUserAllData('Producto', productDB, setUserProduct)
 }, [user, userDB, businessData])

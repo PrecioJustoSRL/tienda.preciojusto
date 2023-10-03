@@ -213,8 +213,6 @@ function Home() {
 
 
 
-
-
                 <div className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] grid grid-cols-2 lg:min-w-[600px]  text-gray-950 text-[16px] h-[50px] rounded-full px-0 z-20' >
                     <label htmlFor="qr" className='w-[100%] block relative flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full px-[5px] z-20' >
                         <span className='py-[10px] pl-[10px] pr-[5px] lg:px-[20px]'>
@@ -253,18 +251,7 @@ function Home() {
                 </div>
                 <input id="qr" type="file" className='hidden' onChange={HandlerOnChange} accept="image/* " />
             </div>}
-            {/* {webScann && <div className={`lg:hidden w-screen relative left-0 bg-white z-50`}>
-
-                <button type="button" className="absolute z-50 top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={() => setWebScann(false)}>
-                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span className="sr-only">Close modal</span>
-                </button>
-
-                <QRscanner></QRscanner>
-
-            </div>} */}
+ 
 
             {filterQR.length > 0 && <div className='relative flex flex-col justify-between items-center left-0 right-0 mx-auto bg-white w-full p-5 max-w-[800px] my-5 z-20'>
                 <Title>RECETA MÉDICA</Title>
