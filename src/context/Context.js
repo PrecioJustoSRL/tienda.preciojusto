@@ -30,7 +30,7 @@ export function UserProvider({ children }) {
 	const [msg, setMsg] = useState('')
 	const [tienda, setTienda] = useState(undefined)
 	const timer = useRef(null);
-
+	const webcamRef1 = useRef()
 	const videoRef = useRef();
 	const [play, setPlay] = useState(true)
 	const [sound, setSound] = useState(false)
@@ -51,7 +51,7 @@ export function UserProvider({ children }) {
 	const [paySuccess, setPaySuccess] = useState(undefined)
 	const [filterDis, setFilterDis] = useState('')
 	const [check, setCheck] = useState(false)
-
+	const [image1, setImage1] = useState(undefined)
 	const setUserProfile = (data) => {
 		setUser(data)
 	}
@@ -145,6 +145,7 @@ export function UserProvider({ children }) {
 			introVideo,
 			play,
 			sound,
+			webcamRef1,
 			videoRef,
 			state,
 			videoClientRef,
@@ -160,6 +161,7 @@ export function UserProvider({ children }) {
 			session,
 			cartDB,
 			precioJustoPDB, ultimoPedido, 
+			image1, setImage1,
 			setUltimoPedido, setPrecioJustoPDB,
 			setCartDB,
 			setSession,
@@ -205,7 +207,9 @@ export function UserProvider({ children }) {
 		soundClient,
 		introClientVideo,
 		search,
+		webcamRef1,
 		sound1,
+		image1,
 		sound2, whatsapp,
 		businessData,
 		webScann,
