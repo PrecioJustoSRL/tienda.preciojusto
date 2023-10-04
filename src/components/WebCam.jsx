@@ -1,53 +1,52 @@
-'use client'
-import Webcam from "react-webcam";
-import React, { useState, useEffect } from 'react'
-import Button from '@/components/Button'
-import { useUser } from '@/context/Context.js'
+import React, { useRef, useState, useEffect } from 'react';
+
+const CamScreen = () => {
+
+    const videoRef = useRef(null);
+    const [mediaStream, setMediaStream] = useState(null);
+
+    const sendVideoData = (data) => {
+        socket.emit("videoData", data);
+    };
+
+    useEffect(() => {
+        const enableVideoStream = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                setMediaStream(stream);
+            } catch (error) {
+                console.error('Error accessing webcam', error);
+            }
+        };
+
+        enableVideoStream();
+    }, []);
 
 
-const videoConstraints = {
-    width: 360,
-    height: 360,
-    facingMode: "environment"
-};
+console.log(videoRef)
+console.log(mediaStream)
 
-export default function WebCamp({ takePhoto }) {
-    const { image1, setImage1, webcamRef1 } = useUser()
+    useEffect(() => {
+        if (videoRef.current && mediaStream) {
+            videoRef.current.srcObject = mediaStream;
+        }
+    }, [videoRef, mediaStream]);
 
-    // function Base64ToImage(base64img) {
-    //     var img = new Image();
-    //     img.src = base64img;
-    //     return img;
-    // }
+    useEffect(() => {
+        return () => {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach((track) => {
+                    track.stop();
+                });
+            }
+        };
+    }, [mediaStream]);
 
-    const height = 360
-    const width = 360
-
-     React.useCallback(
-        () => {
-            const  imageSrc = webcamRef1.current.getScreenshot();
-            //    const img = Base64ToImage(imageSrc)
-               console.log(imageSrc)
-            setImage1(imageSrc)
-        },
-        [webcamRef1]
-    );
-
-
-    return <div className="relative">
-        <Webcam
-            audio={false}
-            height={height}
-            ref={webcamRef1}
-            screenshotFormat="image/webp"
-            width={width}
-            videoConstraints={videoConstraints}
-            mirrored={true}
-        />
-
-    </div>
-
+    return (
+        <div>
+            <video ref={videoRef} autoPlay={true} />
+        </div>
+    )
 
 }
-
-
+export default CamScreen;
