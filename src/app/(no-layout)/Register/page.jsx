@@ -43,7 +43,7 @@ function Home() {
    const redirectLogin = () => {
     setUserProfile(null)
     signOut()
-    router.push('/')
+    router.push('/Login')
 }
 
     console.log(user)

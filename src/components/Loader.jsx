@@ -8,7 +8,7 @@ export default function Loader() {
     const { filterDis, setFilterDis, user, setUserProfile, userDB, cart, setUserCart, modal, setUserData, setModal, productDB, setUserProduct, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann, qrBCP, setQrBCP } = useUser()
 
     useEffect(() => {
-        if (user === undefined) onAuth(setUserProfile)
+        // if (user === undefined) onAuth(setUserProfile)
     })
 
     return (

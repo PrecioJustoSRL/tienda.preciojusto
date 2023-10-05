@@ -71,7 +71,7 @@ export default function Home() {
                     </div>
                  
                     <Button type="submit" theme="Transparent">Continuar</Button>
-                    <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/" className="text-gray-100 hover:underline">Inicia Sessión</Link >
+                    <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 hover:underline">Inicia Sessión</Link >
           </div>
                 </form>
             </div>

@@ -12,16 +12,22 @@ import MiniCard from '@/components/MiniCard'
 import Input from '@/components/Input'
 import { useRouter } from 'next/navigation';
 import Confeti from '@/components/Confeti';
+import { useSearchParams } from 'next/navigation'
+
 // import { useEffect } from 'react/ts5.0';
 
 function Comprar({ theme, styled, click, children }) {
 
-  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess } = useUser()
+  const { user, userDB, cart, setUserCart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess } = useUser()
   const [add, setAdd] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [state, setState] = useState({})
   const router = useRouter()
+  const [dataQR, setDataQR] = useState(undefined)
 
+  const searchParams = useSearchParams()
+  const idBCP = searchParams.get('idBCP')
+  console.log(idBCP)
   function onChangeHandler(e) {
     setState({ ...state, [e.target.name]: e.target.value })
   }
@@ -36,16 +42,25 @@ function Comprar({ theme, styled, click, children }) {
     router.push('/Cliente/Pedidos')
   }
   function redirect () {
-    router.push('/Cliente')
+    // router.push('/Cliente')
   }
+async function getDetaill () {
+  const res = await readUserData('Pedido', idBCP, null, 'idBCP')
+  setUserCart(JSON.parse(res[0].compra))
+  setDataQR(res[0])
 
+}
+
+
+window.history.forward()
   useEffect(() => {
+    getDetaill() 
     window.navigator.vibrate([1000])
   }, []);
   console.log(cart)
   return (<div className='w-screen p-5'>
     <Confeti />
-    <audio src="/sound.mpeg" autoPlay></audio>
+  <audio src="/sound.mpeg" autoPlay></audio>
 
     <div className='w-1/2 py-4'>
       <Button theme='Primary'>Imprimir</Button>

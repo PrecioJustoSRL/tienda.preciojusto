@@ -47,6 +47,7 @@ export function UserProvider({ children }) {
 	const [qrBCP, setQrBCP] = useState(undefined)
 	const [paySuccess, setPaySuccess] = useState(undefined)
     const [filterDis, setFilterDis] = useState('')
+	const [check, setCheck] = useState(false)
 
 	const setUserProfile = (data) => {
 		setUser(data)
@@ -148,7 +149,9 @@ export function UserProvider({ children }) {
 			whatsappMSG,
 			businessData, 
 			webScann, 
-			qrBCP,paySuccess, filterDis, setFilterDis,
+			qrBCP,paySuccess, filterDis, check, 
+			setCheck,
+			 setFilterDis,
 			setPaySuccess, setQrBCP,
 			setWebScann, 
 			setBusinessData,
@@ -194,7 +197,7 @@ export function UserProvider({ children }) {
 		businessData,
 		webScann,
 		qrBCP,
-		paySuccess, filterDis])
+		paySuccess, filterDis, check])
 
 	return (
 		<UserContext.Provider value={value} >

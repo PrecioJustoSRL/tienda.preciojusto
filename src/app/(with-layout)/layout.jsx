@@ -44,14 +44,14 @@ function Home({ children }) {
 
   const signOutConfirm = async () => {
     await signOut()
-    setUserProfile(undefined)
+    setUserProfile(null)
     setUserCart({})
     setUserProduct(undefined),
       setRecetaDB(undefined),
       setUserDistributorPDB(undefined)
     setUserData(undefined)
     setModal('')
-    return router.push('/')
+    return router.push('/Login')
   }
 
   function sortArray(x, y) {
@@ -89,10 +89,7 @@ function Home({ children }) {
     // user && user.bloqueado === true && setModal('Bloqueado')
     readUserAllData('Producto', productDB, setUserProduct)
     // readUserAllData('Receta', recetaDBP, setRecetaDBP)
-    if (user === undefined) onAuth(setUserProfile)
-
-
-
+    // if (user === undefined) onAuth(setUserProfile)
   }, [user]);
 
 
@@ -130,7 +127,7 @@ function Home({ children }) {
       <main className={`relative min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
         {/* <img src="/bg.png" className='fixed bottom-[60px] lg:bottom-0 right-[20px] w-[60vw] lg:w-[40vw]' alt="" /> */}
         <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm flex items-center justify-between bg-[#2A52BE]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
-          {pathname !== '/Cliente' && <div className='flex  hidden lg:block'>
+          {pathname !== '/' && <div className='flex  hidden lg:block'>
             <div className='flex '>
               <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg hidden lg:block" onClick={openNav}>
                 <svg className="w-9 h-9 text-white" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
@@ -140,7 +137,7 @@ function Home({ children }) {
           </div>
 
           }
-          {pathname === '/Cliente' ?
+          {pathname === '/' ?
             <div className='flex '>
               <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg  " onClick={openNav}>
                 <svg className="w-9 h-9 text-gray-900" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
@@ -154,7 +151,7 @@ function Home({ children }) {
               </svg>
             </button>}
 
-          {pathname === '/Cliente' && <div className="relative lg:min-w-[500px]">
+          {pathname === '/' && <div className="relative lg:min-w-[500px]">
             <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
               <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
               <span className="sr-only">Search icon</span>

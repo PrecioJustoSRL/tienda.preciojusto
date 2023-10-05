@@ -2,7 +2,7 @@ import { supabase } from './config'
 
 //--------------------------Authentications----------------------------------
 
-const onAuth = (setUserProfile) => {
+const onAuth = (setUserProfile, router) => {
 
     console.log('onAuth')
     const data = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -10,6 +10,7 @@ const onAuth = (setUserProfile) => {
         if (session) {
             console.log(session.user.id)
             console.log('session')
+            // session.user.id && router && router.push('/Cliente')
             const { data } = await supabase
                 .from('Users')
                 .select()
@@ -19,27 +20,28 @@ const onAuth = (setUserProfile) => {
             data !== null && data !== undefined  && data.length
                 ? setUserProfile(data[0])
                 : setUserProfile(session.user)
-        } else {
-             setUserProfile('repeat')
-        }
+                return
+        } 
+             setUserProfile(null)
+        
     })
-    data.data.subscription.callback( async (event, session) => {
-        console.log('onAuthStateChange')
-        if (session) {
-            console.log('session')
-            const { data } = await supabase
-                .from('Users')
-                .select()
-                .eq('uuid', session.user.id)
-            // console.log(data)
-            data !== null && data !== undefined  && data.length
-                ? setUserProfile(data[0])
-                : setUserProfile(session.user)
-            return
-        } else {
-            return setUserProfile(null)
-        }
-    })
+    // data.data.subscription.callback( async (event, session) => {
+    //     console.log('onAuthStateChange')
+    //     if (session) {
+    //         console.log('session')
+    //         const { data } = await supabase
+    //             .from('Users')
+    //             .select()
+    //             .eq('uuid', session.user.id)
+    //         // console.log(data)
+    //         data !== null && data !== undefined  && data.length
+    //             ? setUserProfile(data[0])
+    //             : setUserProfile(session.user)
+    //         return
+    //     } else {
+    //         return setUserProfile(null)
+    //     }
+    // })
 
 }
 
@@ -58,10 +60,6 @@ const signInWithEmailAndPassword = async (email, password, setUserSuccess) => {
         email,
         password,
     })
-    console.log(result.data.user.id)
-
-
-
     // if (result.data.user !== null && result.data.user.id) {
     //     console.log(session.user.id)
     //     console.log('session')

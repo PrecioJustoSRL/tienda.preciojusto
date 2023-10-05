@@ -80,18 +80,9 @@ const [reload, setReload] = useState(true)
 
   useEffect(() => {
     
-    if(user === undefined ) onAuth(setUserProfile)
-    if(user === 'repeat' ) onAuth(setUserProfile)
-
+    if(user === undefined ) onAuth(setUserProfile, router)
     if (user && user.role === 'authenticated') router.push('/Register') 
-    if (user !== undefined && user !== null && user.rol )router.replace('/Cliente')
-    if (user !== undefined && user !== null && user.rol && userDB === undefined) {
-      readUserData(user.rol, user.uuid, setUserData)
-      router.replace('/Cliente')
-    }
-    if (user !== undefined && user !== null && user.rol && businessData === undefined) {
-      readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData)
-    }
+    if (user !== undefined && user !== null && user.rol )router.replace('/')
     introVideo == undefined ? readIndexedDB() : ''
 
   }, [user, introVideo, userDB, businessData])

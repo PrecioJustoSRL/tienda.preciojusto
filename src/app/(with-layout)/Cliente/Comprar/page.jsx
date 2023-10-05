@@ -21,11 +21,7 @@ const InvoicePDF = dynamic(() => import("@/components/ProformaPDF"), {
 
 function Comprar({ theme, styled, click, children }) {
 
-  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP, paySuccess, setPaySuccess } = useUser()
-  const [add, setAdd] = useState(false)
-  const [showCart, setShowCart] = useState(false)
-  const [check, setCheck] = useState(false)
-  const [payQR, setPayQR] = useState(false)
+  const { user, userDB, cart, productDB, setUserProduct, setUserItem, setUserData, setUserSuccess, success, state, setState, modal, setModal, qrBCP, setQrBCP, paySuccess, setPaySuccess, check, setCheck } = useUser()
   const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
   const inputRefWhatsApp2 = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
 
@@ -38,12 +34,15 @@ function Comprar({ theme, styled, click, children }) {
 
   function handlerPay(e) {
     e.preventDefault()
+    const val = calculator()
+// router.push(`/Cliente/Comprar/6465?val=${val}&amount=${amount + (check ? 350 : 0)}`)
     if (state['nombre del paciente'] && state['celular del paciente'] && state['referencia del paciente']) {
       setModal('SuccessFull')
 
       const val = calculator()
 
-      return val >= 0 && requestQR()
+      val >= 0 && requestQR()
+      // return router.push()
     } else {
       setUserSuccess('Complete')
     }
@@ -84,7 +83,8 @@ function Comprar({ theme, styled, click, children }) {
         idBCP: data.data.id,
         expiration: data.data.expirationDate,
         amount: amount + (check ? 350 : 0),
-        message: 'Inconcluso'
+        message: 'Inconcluso',
+        qrBase64: data.data
       }
       const arr = Object.values(cart).map((i) => {
         const data = { ...i }
@@ -93,20 +93,14 @@ function Comprar({ theme, styled, click, children }) {
         // writeUserData('Pedido', { ...data, envio: check, ...state, estado: 'nuevo', cliente: user.uuid, ...write }, null, null, null, null, null, null)
         return data
       })
-     await writeUserData('Pedido', { compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
-
-     const interval = setTimeout(() => {verify()}, 10000)
+      await writeUserData('Pedido', { compra: arr, envio: check, ...state, estado: 'Pendiente', cliente: user.uuid, correo: user.correo, ...write }, null, null, null, null, null, null)
 
 
-// return clearInterval(interval)
 
-      // router.push('/Cliente/Comprar/Detalle')
-      // setTimeout(() => { updateUserData('Pedido', { message: 'Correcto' }, data.data.id, 'idBCP') }, 6000)
 
-      // const interval = setInterval(() => {
-      //   readUserData('Pedido', data.data.id, setPaySuccess, 'idBCP' )
-      // }, 3000)
+      router.push(`/Cliente/Comprar/6465?idBCP=${data.data.id}`)
 
+      // const interval = setTimeout(() => { verify() }, 10000)
     } catch (err) {
       console.log(err)
     }
@@ -117,20 +111,15 @@ function Comprar({ theme, styled, click, children }) {
     setQrBCP(undefined)
   }
 
-  // window.location.hash = "no-back-button"
-  // window.onhashchange = function () {
-  //   window.location.hash = "no-back-button"
-  //   window.location.hash = "Again-No-back-button"
 
-  // }
   window.onbeforeunload = function () {
     return "¿Desea recargar la página web?";
   };
 
-  async function  verify () {
-  const res = await readUserData('Pedido', qrBCP.id, null, 'idBCP')
-  res[0].message === 'Correcto' && router.push('/Cliente/Comprar/Detalle')
-}
+  async function verify() {
+    const res = await readUserData('Pedido', qrBCP.id, null, 'idBCP')
+    res[0].message === 'Correcto' && router.push('/Cliente/Comprar/Detalle')
+  }
 
 
   useEffect(() => {
@@ -150,15 +139,15 @@ function Comprar({ theme, styled, click, children }) {
         </div>
         <div>
           <Label htmlFor="">Celular del paciente</Label>
-          <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp2} require/>
+          <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp2} require />
 
           {/* <Input type="text" name="celular del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require/> */}
         </div>
         <div>
           <Label htmlFor="">Numero de celular de referencia</Label>
-          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require/>
+          <Input type="text" name="referencia del paciente" onChange={onChangeHandler} reference={inputRefWhatsApp} require />
 
-      {/* <Input type="number" name="referencia del paciente" reference={inputRefWhatsApp} onChange={onChangeHandler} require /> */}
+          {/* <Input type="number" name="referencia del paciente" reference={inputRefWhatsApp} onChange={onChangeHandler} require /> */}
         </div>
         <div>
           <div className="mb-2">
@@ -192,7 +181,7 @@ function Comprar({ theme, styled, click, children }) {
       }
     </form>
 
-    {modal === 'SuccessFull' && <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
+    {/* {modal === 'SuccessFull' && <div className="fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-[#000000c2] z-50">
       <div className='relative p-10 bg-white'>
         <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-[14px] w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={closeModal}>
           <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -219,9 +208,9 @@ function Comprar({ theme, styled, click, children }) {
         {qrBCP !== undefined && <span
           className="block text-gray-950 w-full rounded-full bg-[#32CD32] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-[14px]  py-4 text-center z-50"
           onClick={verify}
-          >Verificar estado de cancelación</span>}
+        >Verificar estado de cancelación</span>}
       </div>
-    </div>}
+    </div>} */}
 
 
     <div className='relative border-t-4 border-t-gray-400 bg-white overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >

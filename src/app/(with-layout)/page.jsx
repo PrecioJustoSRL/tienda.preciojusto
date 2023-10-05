@@ -2,20 +2,15 @@
 import { readUserAllData, updateUserData, readUserData } from '@/supabase/utils'
 import { useUser } from '@/context/Context.js'
 
-import style from './Cliente.module.css'
 import Button from '@/components/Button'
 import Subtitle from '@/components/Subtitle'
 import Card from '@/components/Card'
 import CardM from '@/components/CardM'
 import QRreader from '@/components/QRreader'
-import Tag from '../../../components/Tag'
-import Cart from '../../../components/Cart'
+import Tag from '@/components/Tag'
 import Modal from '@/components/Modal'
 import QRscanner from '@/components/QRscanner'
-
-
 import { useRouter } from 'next/navigation';
-
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect } from 'react'
 import QrcodeDecoder from 'qrcode-decoder';
@@ -152,8 +147,9 @@ function Home() {
     window.onbeforeunload = function () {
         return "¿Desea recargar la página web?";
       };
+      window.history.forward()
 
-    console.log(window.history)
+    console.log(history.length)
 
 
 

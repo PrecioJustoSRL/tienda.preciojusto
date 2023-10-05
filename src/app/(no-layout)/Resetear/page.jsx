@@ -83,7 +83,7 @@ export default function Home() {
                         <br />
                         <br />
                         <Button type="submit" theme="Transparent">Recuperar</Button>
-                        <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/" className="text-gray-100 underline">Inicia Sesión</Link ></div>
+                        <div className="text-[14px] text-center font-medium text-white">Ya tienes una cuenta? <Link href="/Login" className="text-gray-100 underline">Inicia Sesión</Link ></div>
                     </form>
                 </div>
                 {success == 'AccountNonExist' && <Msg>Cuenta inexistente</Msg>}
