@@ -12,10 +12,11 @@ import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import { getDayMonthYear } from '@/utils/DateFormat'
+import Modal from '@/components/Modal'
 
 
 function Home() {
-    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, cart } = useUser()
+    const { user, userDB, distributorPDB, setUserDistributorPDB, pedidos, setUserPedidos, setUserItem, setUserData, setUserSuccess, cart, modal,setModal, item, } = useUser()
     const router = useRouter()
     const [state, setState] = useState({})
     const refFirst = useRef(null);
@@ -24,11 +25,17 @@ function Home() {
 
 
     function delet(i) {
-        deleteUserData('Pedido', i.uuid)
-        // postImage[i.uuid] && uploadStorage('Producto', postImage[i.uuid], i.uuid, updateUserData, true)
-        // const obj = { ...state }
-        // delete obj[i.uuid]
-        // setState(obj)
+        setUserItem(i)
+        setModal('Delete')
+        console.log(item)
+    }
+
+    async function deletConfirm() {
+        await deleteUserData('Pedido', item.idBCP, 'idBCP')
+        userDB && userDB.access === 'Verificadora' && userDB['ID Verificador']
+            ? readUserData('Pedido', userDB['ID Verificador'], setUserPedidos, 'cliente')
+            : readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
+        setModal('')
     }
 
     function calculator(data) {
@@ -94,12 +101,14 @@ function Home() {
 
     return (
         <div className='h-full'>
+            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el pedido del siguiente paciente:  {item['nombre del paciente']}</Modal>}
+
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
-            <h3 className='font-medium text-[16px]'>Pedidos</h3>
+                <h3 className='font-medium text-[16px]'>Pedidos</h3>
 
-            <div className=' flex justify-start items-center w-[500px] my-5  '>
+                <div className=' flex justify-start items-center w-[500px] my-5  '>
                     <h3 className="flex pr-12 text-[14px]">Estado de envios</h3>
                     <div className="grid grid-cols-3 gap-4 w-[500px] " >
                         <Tag theme={envio == 'Pendiente' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Pendiente' ? '' : 'Pendiente')}>Pendiente</Tag>
@@ -107,7 +116,7 @@ function Home() {
                         <Tag theme={envio == 'Felicitaciones' ? 'Primary' : 'Secondary'} click={() => setEnvio(envio == 'Felicitaciones' ? '' : 'Felicitaciones')}>Felicitaciones</Tag>
                     </div>
                 </div>
-               
+
                 <table className="w-full min-w-[1100px] border-[1px] border-t-4 border-t-gray-400">
                     <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
@@ -141,9 +150,9 @@ function Home() {
                             <th scope="col" className="px-3 py-3 text-center font-bold">
                                 Fecha
                             </th>
-                            {/* <th scope="col" className="px-3 py-3 text-center">
-                            Eliminar
-                        </th> */}
+                            <th scope="col" className="px-3 py-3 text-center font-bold">
+                                Eliminar
+                            </th>
                         </tr>
                     </thead>
                     <tbody className='w-full'>
@@ -181,13 +190,12 @@ function Home() {
                                 <td className="w-[100px] px-3 py-4 text-gray-900 text-center border-r">
                                     {i.fecha}
                                 </td>
-                                {/* 
-                            <td className="px-3 py-4">
-                                {state[i.uuid]
-                                    ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
-                                    : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
-                                }
-                            </td> */}
+                                <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
+                                    {i.estado === 'Pendiente' && i.message !== 'Correcto'
+                                        ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
+                                        : 'No permitido'
+                                    }
+                                </td>
                             </tr>
                         })
                         }

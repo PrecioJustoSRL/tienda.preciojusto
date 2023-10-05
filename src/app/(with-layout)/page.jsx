@@ -211,7 +211,7 @@ function Home() {
             </Modal>}
             {user.rol !== 'Distribuidor' && filterQR.length < 1 && webScann === false && <div>
 
-                <WebCam></WebCam>
+                {/* <WebCam></WebCam> */}
 
                 <div className='w-[90vw] relative mb-3 left-0 right-0 m-auto  max-w-[600px] grid grid-cols-2 lg:min-w-[600px]  text-gray-950 text-[16px] h-[50px] rounded-full px-0 z-20' >
                     <label htmlFor="qr" className='w-[100%] block relative flex justify-between items-center text-gray-950 text-[16px] h-[50px] bg-[#32CD32] rounded-full px-[5px] z-20' >

@@ -29,7 +29,19 @@ function Home() {
     const inputRefCVC = useMask({ mask: '___', replacement: { _: /\d/ } });
     const inputRefPhone = useMask({ mask: '_ ___ ___', replacement: { _: /\d/ } });
     const inputRefWhatsApp = useMask({ mask: '__ ___ ___', replacement: { _: /\d/ } });
+    function delet(i) {
+        setUserItem(i)
+        setModal('Delete')
+        console.log(item)
+    }
 
+    async function deletConfirm() {
+        await deleteUserData('Pedido', item.idBCP, 'idBCP')
+        userDB && userDB.access === 'Verificadora' && userDB['ID Verificador']
+            ? readUserData('Pedido', userDB['ID Verificador'], setUserPedidos, 'cliente')
+            : readUserData('Pedido', user.uuid, setUserPedidos, 'cliente')
+        setModal('')
+    }
     function manageInputIMG(e) {
         const file = e.target.files[0]
 
@@ -53,19 +65,21 @@ function Home() {
             setUserSuccess('')
         } else {
             setUserSuccess('Cargando')
-            await writeUserData('Medico', { especialidad: 'Traumatologo', ...state, uuid: user.uuid, ciudad: user.ciudad, nombre: user.nombre  }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
+            await writeUserData('Medico', { especialidad: 'Traumatologo', ...state, uuid: user.uuid, ciudad: user.ciudad, nombre: user.nombre }, user.uuid, userDB, setUserData, setUserSuccess, 'Se ha guardado correctamente',)
             await uploadStorage('Medico', postImage, user.uuid, updateUserData)
             router.push('/Medico/Perfil')
             setUserSuccess('')
         }
     }
-// console.log(user.nombre)
+    // console.log(user.nombre)
     useEffect(() => {
         // if (user && user.rol !== undefined) readUserData(user.rol, user.uuid, setUserData,)
     }, [user]);
 
     return (
         <div className='w-full flex justify-center p-5'>
+            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el pedido del siguiente paciente:  {item['nombre del paciente']}</Modal>}
+
             <form className='p-5 py-10 bg-white w-full max-w-[800px] shadow-2xl' onSubmit={save} >
                 {success === "Cargando" && <LoaderBlack></LoaderBlack>}
                 <h3 className='text-left text-[14px] pb-3'>Bienvenido {user.nombre}</h3>
@@ -90,14 +104,17 @@ function Home() {
                     </div>
                     <div>
                         <Label htmlFor="">Whatsapp</Label>
-                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB['whatsapp']} category='phone'  require  />
+                        <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={userDB && userDB['whatsapp']} category='phone' require />
                     </div>
                 </div>
                 <br />
                 <br />
-                <div className='flex w-full justify-around'>
-                    <Button theme='Primary'>Guardar</Button>
-                </div>
+                <td className="w-[150px] px-3 py-4 text-gray-900 text-center border-r">
+                    {i.estado === 'Pendiente' && i.message !== 'Correcto'
+                        ? <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>
+                        : 'No permitido'
+                    }
+                </td>
             </form>
         </div>
     )
