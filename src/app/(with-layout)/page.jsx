@@ -37,16 +37,16 @@ function Comprar({ theme, styled, click, children }) {
 
    
 
-function closeApp () {
-    console.log('close')
-router.back()
-// window.history.back()
-// navigator.app.exitApp()
-    // let new_window = window.open(location, '_self')
-    // // window.open(location, '_self')
-    // new_window.close()
-    // document.getElementsByTagName('html')[0].remove()
-}
+// function closeApp () {
+//     console.log('close')
+// router.back()
+// // window.history.back()
+// // navigator.app.exitApp()
+//     // let new_window = window.open(location, '_self')
+//     // // window.open(location, '_self')
+//     // new_window.close()
+//     // document.getElementsByTagName('html')[0].remove()
+// }
 
     function closeModal() {
         router.push('/Cliente')
@@ -62,7 +62,7 @@ router.back()
 
 
     return ( <div className={` w-screen h-screen fixed top-0 flex items-center justify-center left-0 bg-[#000000C2] z-40`}>
-     <Modal funcion={closeApp} cancel={closeModal}>Estas Seguro de salir de la aplicación</Modal>
+     <Modal  cancel={closeModal}>Estas por salir de la aplicación de PRECIO JUSTO.</Modal>
     </div>)
 }
 
