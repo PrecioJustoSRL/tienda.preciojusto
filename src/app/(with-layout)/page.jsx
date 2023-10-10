@@ -39,9 +39,10 @@ function Comprar({ theme, styled, click, children }) {
 
 function closeApp () {
     console.log('close')
-    window.open(location, '_self').close()
+    // window.open(location, '_self')
+window.close()
+    document.getElementsByTagName('html')[0].remove()
 }
-
 
     function closeModal() {
         router.push('/Cliente')
@@ -49,8 +50,10 @@ function closeApp () {
 
 
 // useEffect(() => {
-//     filterQR !== '' ? router.replace('/'):''
-// }, [filterQR]);
+//     window.open(location, '_self')
+
+//     window.close()
+// }, []);
 
 
 
