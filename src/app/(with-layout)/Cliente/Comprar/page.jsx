@@ -143,9 +143,6 @@ function Comprar({ theme, styled, click, children }) {
   }
 
 
-  window.onbeforeunload = function () {
-    return "¿Desea recargar la página web?";
-  };
 
   async function verify() {
     const res = await readUserData('Pedido', qrBCP.id, null, 'idBCP')

@@ -155,14 +155,14 @@ const pathname = usePathname()
     // window.addEventListener('load', function() {
     //    window.history.pushState({}, '')
     //  })
-if (pathname !== '/'){
-    console.log(pathname)
-    window.onbeforeunload = function () {
-        return 'Desea salir, perdera sus datos'
-    };
-} else {
-    console.log('no' + pathname)
-}
+// if (pathname.length > 1){
+//     console.log(pathname)
+//     window.onbeforeunload = function () {
+//         return 'Desea salir, perdera sus datos'
+//     };
+// } else {
+//     console.log('no' + pathname)
+// }
     
     // window.history.forward()
  // console.log()

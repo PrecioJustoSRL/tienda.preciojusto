@@ -87,15 +87,15 @@ function Home({ children }) {
   // window.addEventListener('popstate', function (e) {
   //   // console.log(e)
   //   // console.log(pathname)
-  //   pathname === '/' ? setModal('Exit') : ''
-  //   //  router.replace('/')
+  //   pathname === '/Cliente' ? setModal('Exit') : ''
+  //   //  router.replace('/Cliente')
   //    // window.location.assign("https://preciojusto.pro/");
   //  });
 
 
 // window.location.hash="#";
 
-// if(pathname === '/') {
+// if(pathname === '/Cliente') {
 //   window.addEventListener('popstate', function(event) {
 //     history.pushState(null, null, window.location.pathname);
 //     history.pushState(null, null, window.location.pathname);
@@ -208,7 +208,7 @@ console.log(businessData)
  
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
             <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm flex items-center justify-between bg-[#2A52BE]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
-              {pathname !== '/' && <div className='flex  hidden lg:block'>
+              {pathname !== '/Cliente' && <div className='flex  hidden lg:block'>
                 <div className='flex '>
                   <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg hidden lg:block" onClick={openNav}>
                     <svg className="w-9 h-9 text-white" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
@@ -218,7 +218,7 @@ console.log(businessData)
               </div>
 
               }
-              {pathname === '/' ?
+              {pathname === '/Cliente' ?
                 <div className='flex '>
                   <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg  " onClick={openNav}>
                     <svg className="w-9 h-9 text-gray-900" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
@@ -232,7 +232,7 @@ console.log(businessData)
                   </svg>
                 </button>}
 
-              {pathname === '/' && <div className="relative lg:min-w-[500px]">
+              {pathname === '/Cliente' && <div className="relative lg:min-w-[500px]">
                 <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
                   <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#2A52BE" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                   <span className="sr-only">Search icon</span>
@@ -240,7 +240,7 @@ console.log(businessData)
                 <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar producto..." />
               </div>}
 
-              {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/' && <Cart />}
+              {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/Cliente' && <Cart />}
             </nav>
 
             {search

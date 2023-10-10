@@ -50,9 +50,6 @@ function Comprar({ theme, styled, click, children }) {
 
 
 
-    window.onbeforeunload = function () {
-        return "¿Desea recargar la página web?";
-    };
 
 
 

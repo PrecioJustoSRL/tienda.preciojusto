@@ -164,7 +164,7 @@ export default function BottomNavigation({ rol }) {
                     <Order />
                     <span className="inline-block  text-[12px] text-white   ">Pedidos</span>
                 </Button>
-                <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
+                <Button click={() => redirectHandler('/Cliente', 'Cliente')} name={'Cliente'}>
                     <Store />
                     <span className="text-[12px] text-white   ">Tienda</span>
                 </Button>
@@ -189,7 +189,7 @@ export default function BottomNavigation({ rol }) {
                     </svg>
                     <span className="text-[12px] text-white   ">Recetas</span>
                 </Button>
-                <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
+                <Button click={() => redirectHandler('/Cliente')} name={'Cliente'}>
                     <Store />
                     <span className="text-[12px] text-white   ">Tienda</span>
                 </Button>
@@ -204,7 +204,7 @@ export default function BottomNavigation({ rol }) {
         case 'Clinica':
             return userDB && userDB.access && userDB.access == 'verificador'
                 ? <div className={`grid h-full max-w-lg grid-cols-4 mx-auto font-medium `}>
-                    <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
+                    <Button click={() => redirectHandler('/Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[12px] text-white   ">Tienda</span>
                     </Button>
@@ -233,7 +233,7 @@ export default function BottomNavigation({ rol }) {
 
                         <span className="text-[12px] text-white   ">Pedidos</span>
                     </Button>
-                    <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
+                    <Button click={() => redirectHandler('/Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[12px] text-white   ">Tienda</span>
                     </Button>
@@ -247,7 +247,7 @@ export default function BottomNavigation({ rol }) {
                 </div>
         case 'Distribuidor':
             return <div className={`grid h-full max-w-lg ${rol === 'Distribuidor' ? 'grid-cols-5' : 'grid-cols-4'} mx-auto font-medium z-50`}>
-                <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
+                <Button click={() => redirectHandler('/Cliente')} name={'Cliente'}>
                     <Store />
                     <span className="text-[12px] text-white   ">Tienda</span>
                 </Button>
@@ -274,7 +274,7 @@ export default function BottomNavigation({ rol }) {
             </div>
         case 'Administrador':
             return <div className={`grid h-full max-w-lg   grid-cols-3 mx-auto font-medium z-50`}>
-                <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
+                <Button click={() => redirectHandler('/Cliente')} name={'Cliente'}>
                     <Store />
                     <span className="text-[12px] text-white   ">Tienda</span>
                 </Button>

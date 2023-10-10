@@ -49,7 +49,7 @@ export default function BottomNavigation({ rol }) {
 
     const Store = () => {
         return <li className="px-5">
-            <Link href="/" onClick={() => setNav(false)} className="flex items-center p-2 rounded-lg    hover:bg-[#00000030] ">
+            <Link href="/Cliente" onClick={() => setNav(false)} className="flex items-center p-2 rounded-lg    hover:bg-[#00000030] ">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_522_477)">
                         <mask id="mask0_522_477" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
