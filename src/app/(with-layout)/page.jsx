@@ -43,7 +43,7 @@ function closeApp () {
 
 
     function closeModal() {
-        router.back()
+        router.push('Cliente')
     }
 
 
