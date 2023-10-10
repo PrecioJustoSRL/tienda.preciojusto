@@ -39,9 +39,12 @@ function Comprar({ theme, styled, click, children }) {
 
 function closeApp () {
     console.log('close')
-    // window.open(location, '_self')
-window.close()
-    document.getElementsByTagName('html')[0].remove()
+
+window.history.back()
+    // let new_window = window.open(location, '_self')
+    // // window.open(location, '_self')
+    // new_window.close()
+    // document.getElementsByTagName('html')[0].remove()
 }
 
     function closeModal() {
