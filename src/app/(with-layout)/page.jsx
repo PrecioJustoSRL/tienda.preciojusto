@@ -38,12 +38,13 @@ function Comprar({ theme, styled, click, children }) {
    
 
 function closeApp () {
+    console.log('close')
     window.close()
 }
 
 
     function closeModal() {
-        router.push('Cliente')
+        router.push('/Cliente')
     }
 
 
