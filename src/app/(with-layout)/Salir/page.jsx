@@ -47,9 +47,10 @@ function closeApp () {
     }
 
 
-useEffect(() => {
-    filterQR !== '' ? router.replace('/'):''
-}, [filterQR]);
+// useEffect(() => {
+//     if (user !== undefined && user !== null && user.rol !== undefined && user.rol !== null && userDB === undefined) {
+//         router.push('/Cliente')
+//       }}, [user]);
 
 
 
@@ -58,4 +59,4 @@ useEffect(() => {
     </div>)
 }
 
-export default WithAuth(Comprar)
+export default Comprar
