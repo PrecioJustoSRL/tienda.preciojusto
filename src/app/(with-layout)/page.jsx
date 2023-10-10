@@ -39,8 +39,9 @@ function Comprar({ theme, styled, click, children }) {
 
 function closeApp () {
     console.log('close')
-
-window.history.back()
+router.back()
+// window.history.back()
+// navigator.app.exitApp()
     // let new_window = window.open(location, '_self')
     // // window.open(location, '_self')
     // new_window.close()
