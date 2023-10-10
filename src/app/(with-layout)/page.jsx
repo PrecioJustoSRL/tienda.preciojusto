@@ -39,7 +39,7 @@ function Comprar({ theme, styled, click, children }) {
 
 function closeApp () {
     console.log('close')
-    window.close()
+    window.open(location, '_self').close()
 }
 
 
@@ -54,7 +54,7 @@ function closeApp () {
 
 
 
-    return ( <div className={` w-screen h-screen fixed top-0 flex items-center justify-center left-0 bg-[#000000C2] z-50`}>
+    return ( <div className={` w-screen h-screen fixed top-0 flex items-center justify-center left-0 bg-[#000000C2] z-40`}>
      <Modal funcion={closeApp} cancel={closeModal}>Estas Seguro de salir de la aplicación</Modal>
     </div>)
 }

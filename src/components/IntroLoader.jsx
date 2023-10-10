@@ -21,7 +21,7 @@ export default function Loader() {
         off()
     }, []);
     return (
-        visible && <div className={`fixed top-0 left-0 w-screen h-screen flex flex-col justify-center  items-center z-40 ${style.animation}`}>
+        visible && <div className={`fixed top-0 left-0 w-screen h-screen flex flex-col justify-center  items-center z-50 ${style.animation}`}>
             <div className={`relative h-[100px] w-[100px] inline-block`}>
                 <img src='/logo-circle.png' className={`h-[100px] w-[100px] rounded-full ${style.animation1}`} />
                 </div>

@@ -19,7 +19,7 @@ import { useState } from 'react'
 import Title from '@/components/Title'
 import styles from '@/app/page.module.css'
 import { getDayMonthYear } from '@/utils/DateFormat'
-
+import { usePathname } from 'next/navigation'
 function Home() {
     const { filterDis, setFilterDis,
         user, userDB, cart, setUserCart,
@@ -33,7 +33,7 @@ function Home() {
     const router = useRouter()
     const [filterNav, setFilterNav] = useState(false)
 
-
+const pathname = usePathname()
     function HandlerCheckOut() {
         router.push('/Cliente/Comprar')
     }
@@ -155,10 +155,15 @@ function Home() {
     // window.addEventListener('load', function() {
     //    window.history.pushState({}, '')
     //  })
-
+if (pathname !== '/'){
+    console.log(pathname)
     window.onbeforeunload = function () {
         return 'Desea salir, perdera sus datos'
     };
+} else {
+    console.log('no' + pathname)
+}
+    
     // window.history.forward()
  // console.log()
         // setTimeout(console.log(123),1000)
