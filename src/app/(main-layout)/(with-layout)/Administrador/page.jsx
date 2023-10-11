@@ -22,7 +22,7 @@ function Home() {
 
     const [postImage, setPostImage] = useState(null)
     const [urlPostImage, setUrlPostImage] = useState(null)
-
+        
 
     const inputRefCard = useMask({ mask: '____ ____ ____ ____', replacement: { _: /\d/ } });
     const inputRefDate = useMask({ mask: '__/__', replacement: { _: /\d/ } });
