@@ -3,12 +3,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import Input from '../../../components/Input'
-import Select from '../../../components/Select'
-import Button from '../../../components/Button'
-import Subtitle from '../../../components/Subtitle'
+import Input from '@/components/Input'
+import Select from '@/components/Select'
+import Button from '@/components/Button'
+import Subtitle from '@/components/Subtitle'
 
-import Tag from '../../../components/Tag'
+import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/Context.js'
 

@@ -3,12 +3,12 @@
 import { writeUserData, readUserData, updateUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import { useState, useEffect } from 'react'
-import { useUser } from '../../../context/Context.js'
-import Input from '../../../components/Input'
-import Select from '../../../components/Select'
+import { useUser } from '@//Context.js'
+import Input from '@/nts/Input'
+import Select from '@/nts/Select'
 import Label from '@/components/Label'
 import LoaderBlack from '@/components/LoaderBlack'
-import Button from '../../../components/Button'
+import Button from '@/nts/Button'
 import { useMask } from '@react-input/mask';
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'

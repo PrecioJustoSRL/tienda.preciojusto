@@ -3,13 +3,13 @@
 // import { uploadStorage } from '@/supabase/storage'
 
 // import { useState } from 'react'
-// import { useUser } from '../../../context/Context.js'
-// import Input from '../../../components/Input'
-// import Select from '../../../components/Select'
+// import { useUser } from '@/context/Context.js'
+// import Input from '@/components/Input'
+// import Select from '@/components/Select'
 // import Label from '@/components/Label'
 // import Checkbox from '@/components/Checkbox'
 
-// import Button from '../../../components/Button'
+// import Button from '@/components/Button'
 // import { useMask } from '@react-input/mask';
 // import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
