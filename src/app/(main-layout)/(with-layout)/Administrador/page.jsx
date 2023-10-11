@@ -13,7 +13,7 @@ import { useMask } from '@react-input/mask';
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 
-        
+                  
 function Home() {
     const router = useRouter()
 
