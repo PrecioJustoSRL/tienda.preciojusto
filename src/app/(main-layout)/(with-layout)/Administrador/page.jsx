@@ -3,7 +3,7 @@
 import { writeUserData, readUserData, updateUserData } from '@/supabase/utils'
 import { uploadStorage } from '@/supabase/storage'
 import { useState, useEffect } from 'react'
-import { useUser } from '@//Context.js'
+import { useUser } from '@/Context.js'
 import Input from '@/components/Input'
 import Select from '@/components/Select'
 import Label from '@/components/Label'
