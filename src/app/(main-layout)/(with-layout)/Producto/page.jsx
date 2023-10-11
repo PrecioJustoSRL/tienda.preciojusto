@@ -15,7 +15,7 @@ import { useUser } from '@/context/Context.js'
 import { useMask } from '@react-input/mask';
 import { WithAuth } from '@/HOCs/WithAuth'
 
-
+          
 function Home() {
 
     const { cart, productDB, setUserProduct, setUserCart, setUserItem, item, tienda, setTienda } = useUser()
