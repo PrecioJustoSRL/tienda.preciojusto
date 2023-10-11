@@ -37,27 +37,14 @@ function Comprar({ theme, styled, click, children }) {
 
    
 
-// function closeApp () {
-//     console.log('close')
-// router.back()
-// // window.history.back()
-// // navigator.app.exitApp()
-//     // let new_window = window.open(location, '_self')
-//     // // window.open(location, '_self')
-//     // new_window.close()
-//     // document.getElementsByTagName('html')[0].remove()
-// }
+
 
     function closeModal() {
-        router.push('/Cliente')
+        router.push(user === null ? '/Login' : '/Cliente')
     }
 
 
-// useEffect(() => {
-//     window.open(location, '_self')
 
-//     window.close()
-// }, []);
 
 
 
@@ -66,4 +53,4 @@ function Comprar({ theme, styled, click, children }) {
     </div>)
 }
 
-export default WithAuth(Comprar)
+export default Comprar

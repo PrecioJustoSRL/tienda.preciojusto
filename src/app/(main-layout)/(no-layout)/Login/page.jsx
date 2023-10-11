@@ -15,7 +15,7 @@ import IntroLoader from '@/components/IntroLoader'
 
 
 export default function Home() {
-  const { user, introVideo, setSound, setBusinessData, businessData, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setSession } = useUser()
+  const { user, introVideo, setSound, setBusinessData, businessData, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setSession, isBack, setBack} = useUser()
   const [isDisable, setIsDisable] = useState(false)
   const router = useRouter()
 const [reload, setReload] = useState(true)
@@ -103,8 +103,12 @@ const [reload, setReload] = useState(true)
 
   console.log(user)
 
+
   useEffect(() => {
-    
+//    if( user === null){ 
+//   router.push('/')
+//   router.push('/Login')
+// }
     if(user === undefined ) onAuth(setUserProfile)
     if (user && user.role === 'authenticated') router.push('/Register') 
     if (user !== undefined && user !== null && user.rol )router.replace('/')

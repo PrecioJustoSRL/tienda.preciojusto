@@ -20,7 +20,7 @@ import Whatsapp from '@/components/Whatsapp'
 import { onAuth } from '@/supabase/utils'
 function Home({ children }) {
   const router = useRouter()
-  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData } = useUser()
+  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, isBack, setBack } = useUser()
   const pathname = usePathname()
 
   const redirectHandler = (ref) => {
@@ -52,7 +52,9 @@ function Home({ children }) {
     setUserData(undefined)
     setModal('')
     setTienda(undefined)
-    return router.push('/Login')
+
+    return  router.push('/Login')
+  
   }
 
   function sortArray(x, y) {
@@ -93,26 +95,26 @@ function Home({ children }) {
   //  });
 
 
-// window.location.hash="#";
+  // window.location.hash="#";
 
-// if(pathname === '/Cliente') {
-//   window.addEventListener('popstate', function(event) {
-//     history.pushState(null, null, window.location.pathname);
-//     history.pushState(null, null, window.location.pathname);
-//     }, false)
-// }
-// else {
-//   // window.location.hash="";
-//   window.location.hash="";
-//   // window.onhashchange=function(){window.location.hash="";}
-// }
-// console.log(window.location)
-// console.log(history.length)
+  // if(pathname === '/Cliente') {
+  //   window.addEventListener('popstate', function(event) {
+  //     history.pushState(null, null, window.location.pathname);
+  //     history.pushState(null, null, window.location.pathname);
+  //     }, false)
+  // }
+  // else {
+  //   // window.location.hash="";
+  //   window.location.hash="";
+  //   // window.onhashchange=function(){window.location.hash="";}
+  // }
+  // console.log(window.location)
+  // console.log(history.length)
 
-// window.addEventListener('popstate', function(event) {
-// 	history.pushState(null, null, window.location.pathname);
-// 	history.pushState(null, null, window.location.pathname);
-// 	}, false)
+  // window.addEventListener('popstate', function(event) {
+  // 	history.pushState(null, null, window.location.pathname);
+  // 	history.pushState(null, null, window.location.pathname);
+  // 	}, false)
 
   // useEffect(() => {
   //   if (user === undefined) onAuth(setUserProfile)
@@ -129,29 +131,32 @@ function Home({ children }) {
   // }, [user, userDB]);
 
 
-console.log(businessData)
+  console.log(businessData)
 
 
   useEffect(() => {
+    console.log('layout cliente')
     if (user === undefined) onAuth(setUserProfile)
-    if (user === null) router.push('/Login')
+    if (user === null) {
+      setBack(isBack + 1)
+      router.push('/Login')
+    }
     if (user && user.role === 'authenticated') { router.push('/Register') }
     if (user !== undefined && user !== null && user.rol !== undefined && user.rol !== null) {
-      router.push('/Cliente')  
+      router.push('/Cliente')
     }
     if (user !== undefined && user !== null && user.rol !== undefined && user.rol !== null && userDB === undefined) {
-      readUserData(user.rol, user.uuid, setUserData,null, true)
-    }
-
-    if (user !== undefined && user !== null && user.rol && businessData === undefined) {
-        readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData, null, true)
+      readUserData(user.rol, user.uuid, setUserData, null, true)
     }
     if (user !== undefined && user !== null && user.rol && businessData === undefined) {
-       readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor')
-  }
-        user !== undefined && user !== null && readUserData('Producto', user.ciudad, setUserProduct, 'ciudad')
+      readUserData('Administrador', 'b9fe0a69-b218-4689-b4ac-03f52e8fe4cc', setBusinessData, null, true)
+    }
+    if (user !== undefined && user !== null && user.rol && businessData === undefined) {
+      readUserData('Producto', 'Precio-Justo-SRL-Data', setPrecioJustoPDB, 'distribuidor')
+    }
+    user !== undefined && user !== null && readUserData('Producto', user.ciudad, setUserProduct, 'ciudad')
     // readUserAllData('Producto', productDB, setUserProduct)
-}, [user, userDB, businessData])
+  }, [user, userDB, businessData])
 
 
 
@@ -161,17 +166,17 @@ console.log(businessData)
     <div>
 
       {user && user.rol !== undefined && userDB !== undefined && businessData !== undefined
-        
+
         ? <div className="h-screen bg-gray-white">
 
 
-          {(user && user.bloqueado === true) || (userDB && userDB.bloqueado === true) ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar"> 
+          {(user && user.bloqueado === true) || (userDB && userDB.bloqueado === true) ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar">
             Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
             <br />
             {/* <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
               Contactar
             </button> */}
-          </Modal>: ''}
+          </Modal> : ''}
           {modal === 'RequireAutorization' && <Modal funcion={soporte} alert={true} close={true}>
             Su cuenta debe ser verificada, <br />por favor comuniquese con soporte.
             <br /><br />
@@ -205,7 +210,7 @@ console.log(businessData)
           {whatsapp && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={handlerWhatsapp}></div>}
           {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
           {webScann && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
- 
+
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-gray-100 lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }}>
             <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm flex items-center justify-between bg-[#2A52BE]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
               {pathname !== '/Cliente' && <div className='flex  hidden lg:block'>
@@ -272,12 +277,12 @@ console.log(businessData)
 
           </main>
         </div>
-        
-      : <LoaderWithLogo></LoaderWithLogo>
-      } 
-        
+
+        : <LoaderWithLogo></LoaderWithLogo>
+      }
+
     </div>
-   
+
   )
 }
 
