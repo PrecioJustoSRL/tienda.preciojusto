@@ -53,7 +53,7 @@ function Home({ children }) {
     setModal('')
     setTienda(undefined)
 
-    return  router.push('/Login')
+    // return  router.push('/Login')
   
   }
 
@@ -138,7 +138,6 @@ function Home({ children }) {
     console.log('layout cliente')
     if (user === undefined) onAuth(setUserProfile)
     if (user === null) {
-      setBack(isBack + 1)
       router.push('/Login')
     }
     if (user && user.role === 'authenticated') { router.push('/Register') }

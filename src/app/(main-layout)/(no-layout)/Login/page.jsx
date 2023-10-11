@@ -105,10 +105,6 @@ const [reload, setReload] = useState(true)
 
 
   useEffect(() => {
-//    if( user === null){ 
-//   router.push('/')
-//   router.push('/Login')
-// }
     if(user === undefined ) onAuth(setUserProfile)
     if (user && user.role === 'authenticated') router.push('/Register') 
     if (user !== undefined && user !== null && user.rol )router.replace('/')
