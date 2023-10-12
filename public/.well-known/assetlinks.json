@@ -1,14 +1,11 @@
 [
   {
-    "relation": [
-      "delegate_permission/common.handle_all_urls"
-    ],
+    "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
       "package_name": "pro.preciojusto.tienda.twa",
-      "sha256_cert_fingerprints": [
-        "06:59:FD:5F:8D:0A:88:B6:A3:B8:D7:4E:8D:5E:34:05:8C:DE:01:9B:9C:36:C3:4B:8D:E7:6B:99:73:87:94:DC"
-      ]
+      "sha256_cert_fingerprints":
+        ["4E:7A:34:15:E2:97:4A:39:32:09:68:2A:79:A1:EC:4F:2E:B9:AF:B3:9D:9B:1A:F2:1F:0F:F9:6F:9A:46:BE:13"]
     }
   }
 ]
