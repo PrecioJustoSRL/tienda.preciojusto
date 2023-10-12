@@ -41,7 +41,7 @@ function Comprar({ theme, styled, click, children }) {
 
 
     function closeModal() {
-        router.replace('/')
+        router.replace('/Cliente')
     }
 
 
