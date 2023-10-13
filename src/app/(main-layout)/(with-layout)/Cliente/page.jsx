@@ -182,6 +182,11 @@ const pathname = usePathname()
     function confeti() {
         router.push(`/Cliente/Comprar/Detalle?idBCP=${ultimoPedido.idBCP}`)
     }
+    const redirectHandlerWindow = () => {
+        window.open(`https://api.whatsapp.com/send?phone=${businessData.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
+        setNav(false)
+        // setWhatsapp(!whatsapp)
+    }
     // year = Date().getFullYear()
     // year = Date().getFullYear()
     // year = Date().getFullYear()
@@ -386,6 +391,30 @@ const pathname = usePathname()
                 </div>
             </div>
 
+
+
+
+            
+
+
+            {Object.entries(cart).length !== 0 && <div className="fixed w-screen px-5 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+                {tienda === 'Recetar'
+                    ? <Button theme="SuccessReceta" click={HandlerRecetar}>Completar Receta</Button>
+                    : (user.rol == 'Clinica' && userDB && userDB.access == 'Solicitadora'
+                        ? Object.values(cart).length > 0 && <div className="fixed w-screen px-5  lg:px-0 left-0 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+                            <Button theme="SuccessBuy" click={HandlerCheckOut}> Solicitar</Button>
+                        </div>
+                        : Object.values(cart).length > 0 && <div className="fixed w-screen px-5 lg:px-0  left-0  bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
+                            <Button theme="SuccessBuy" click={redirectHandlerWindow}> Pagar por QR</Button>
+                        </div>)
+                }
+            </div>}
+
+
+
+
+
+            {/* 
             {Object.entries(cart).length !== 0 && <div className="fixed w-screen px-5 bottom-[70px] lg:w-[250px] lg:bottom-auto lg:top-[75px] lg:left-auto lg:right-5  z-20">
                 {tienda === 'Recetar'
                     ? <Button theme="SuccessReceta" click={HandlerRecetar}>Completar Receta</Button>
@@ -397,7 +426,8 @@ const pathname = usePathname()
                             <Button theme="SuccessBuy" click={HandlerCheckOut}> Pagar por QR</Button>
                         </div>)
                 }
-            </div>}
+            </div>} 
+            */}
             <img src="/bg.png" className='fixed lg:w-[600px] bottom-[70px] lg:bottom-0 lg:right-0 ' alt="" />
         </main>
     )

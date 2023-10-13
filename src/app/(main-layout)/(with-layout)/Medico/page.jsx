@@ -78,7 +78,6 @@ function Home() {
 
     return (
         <div className='w-full flex justify-center p-5'>
-            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar el pedido del siguiente paciente:  {item['nombre del paciente']}</Modal>}
 
             <form className='p-5 py-10 bg-white w-full max-w-[800px] shadow-2xl' onSubmit={save} >
                 {success === "Cargando" && <LoaderBlack></LoaderBlack>}
