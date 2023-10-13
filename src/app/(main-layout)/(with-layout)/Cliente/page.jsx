@@ -27,7 +27,7 @@ function Home() {
         setModal, productDB,
         setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
         qrBCP, setQrBCP,
-        ultimoPedido, setUltimoPedido } = useUser()
+        ultimoPedido, setUltimoPedido, setNav } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
     const [categoria, setCategoria] = useState('')
     const router = useRouter()
@@ -183,7 +183,7 @@ const pathname = usePathname()
         router.push(`/Cliente/Comprar/Detalle?idBCP=${ultimoPedido.idBCP}`)
     }
     const redirectHandlerWindow = () => {
-        window.open(`https://api.whatsapp.com/send?phone=${businessData.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
+        window.open(`https://api.whatsapp.com/send?phone=+59169941749&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
         setNav(false)
         // setWhatsapp(!whatsapp)
     }
