@@ -11,12 +11,12 @@ const onAuth = (setUserProfile, router) => {
             console.log(session.user.id)
             console.log('session')
             // session.user.id && router && router.push('/Cliente')
-            const { data } = await supabase
+            const { data, error } = await supabase
                 .from('Users')
                 .select()
                 .eq('uuid', session.user.id)
             console.log(data)
-            console.log(session)
+            console.log(error)
             data !== null && data !== undefined  && data.length
                 ? setUserProfile(data[0])
                 : setUserProfile(session.user)
